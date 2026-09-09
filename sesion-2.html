@@ -6,33 +6,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Roboto:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="deck-stage.js"></script>
 <style>
   :root{
-    /* Tokens de Casa de las Baterias — tomados de mercadeocasabat/src/styles/global.css */
-    --ink:#0A1322;        /* --color-bg (dark) */
-    --ink-2:#0E1A30;      /* --color-bg2 (dark) */
-    --bone:#EAEEF5;       /* --color-ink (dark) */
-    --bone-2:#A6B2C7;     /* --color-ink-dim (dark) */
-    --paper:#F4F7F5;      /* --color-surface (light) */
-    --graphite:#141715;   /* --color-ink (light) */
-    --graphite-2:#2A2E2B;
-    --muted-d:#8494AC;    /* --color-ink-mute (dark) */
-    --muted-l:#6D7570;    /* --color-ink-mute (light) */
-    --rule-d:#1A2F50;     /* --color-surface2 (dark) */
-    --rule-l:#D3DBD6;
-    --green:#289448;      /* --color-green (light) — acento sobre papel */
-    --green-br:#2FAE57;   /* --color-green (dark) — acento sobre tinta */
-    --cyan:#1FACC0;       /* --color-cyan */
-    --red:#C32421;        /* --color-red-acc */
-    --gold:#A97F14;       /* --color-gold */
+    /* Identidad de Casa de las Baterias — tomada de
+       casabat-comparador-cliente/app/globals.css y del logotipo. */
+    --brand:#1C5C92;       /* azul del logotipo — acento sobre papel */
+    --brand-br:#4E9BD6;    /* el mismo azul aclarado para leerse sobre tinta */
+    --brand-dark:#14456E;
+    --brand-light:#E8F1F9;
+    --red:#C0392B;         /* rojo del techo y de #SomosEnergia */
+    --red-br:#E0685A;
+
+    --ink:#0E2A43;         /* tinta: el azul de marca llevado a fondo */
+    --ink-2:#14456E;
+    --bone:#EDF3F9;
+    --bone-2:#A9C2D8;
+    --paper:#F4F7FB;       /* --canvas del comparador */
+    --graphite:#0F172A;    /* --foreground del comparador */
+    --graphite-2:#334155;
+    --muted-d:#7D9AB5;
+    --muted-l:#5B6B81;     /* --color-slate-500 */
+    --rule-d:#1D4E7A;
+    --rule-l:#D3DEEA;
 
     --pad-x: 96px;
     --pad-top: 80px;
 
     --display: 'Antonio', 'Arial Narrow', 'Helvetica Neue', sans-serif;
-    --sans: 'Roboto', system-ui, -apple-system, sans-serif;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
     --mono: 'IBM Plex Mono', 'Menlo', monospace;
   }
 
@@ -67,8 +70,8 @@
   section.paper .footer{color:var(--muted-l);}
   .footer .lhs{display:flex;gap:36px;align-items:center;white-space:nowrap;}
   .footer .lhs span, .footer .rhs{white-space:nowrap;}
-  .footer .dot{width:5px;height:5px;background:var(--green-br);border-radius:50%;flex-shrink:0;}
-  section.paper .footer .dot{background:var(--green);}
+  .footer .dot{width:5px;height:5px;background:var(--brand-br);border-radius:50%;flex-shrink:0;}
+  section.paper .footer .dot{background:var(--brand);}
   .footer .rhs{letter-spacing:0.3em;font-variant-numeric:tabular-nums;}
 
   /* === Top rail === */
@@ -93,8 +96,16 @@
     font-weight:500;color:var(--muted-d);
   }
   section.paper .label{color:var(--muted-l);}
-  .label.acc{color:var(--green);}
-  section:not(.paper) .label.acc{color:var(--green-br);}
+  .label.acc{color:var(--brand);}
+  section:not(.paper) .label.acc{color:var(--brand-br);}
+
+  /* La marca va sobre una placa blanca: el logotipo original tiene fondo blanco
+     y sobre la tinta azul se leería como un recorte sucio. */
+  .marca{
+    position:absolute;top:58px;right:var(--pad-x);
+    width:168px;height:168px;background:#fff;padding:13px;
+    box-sizing:border-box;object-fit:contain;
+  }
 
   /* ===== Portada ===== */
   .cover .frame{justify-content:space-between;}
@@ -103,10 +114,10 @@
     font-size:250px;line-height:0.95;letter-spacing:-0.01em;
     font-weight:700;color:var(--bone);margin:0;
   }
-  .cover h1 .acc{color:var(--green-br);}
+  .cover h1 .acc{color:var(--brand-br);}
   .cover .eyebrow{
     font-size:24px;letter-spacing:0.4em;text-transform:uppercase;
-    color:var(--green-br);margin-bottom:64px;font-weight:500;
+    color:var(--brand-br);margin-bottom:64px;font-weight:500;
   }
   .cover .sub{
     font-family:var(--sans);font-size:34px;line-height:1.3;font-weight:300;
@@ -118,10 +129,10 @@
   .ag-block{padding:20px 0 0;border-top:1px solid var(--rule-d);}
   section.paper .ag-block{border-top-color:var(--rule-l);}
   .ag-block .bnum{
-    font-family:var(--mono);font-size:22px;color:var(--green-br);
+    font-family:var(--mono);font-size:22px;color:var(--brand-br);
     letter-spacing:0.18em;text-transform:uppercase;font-weight:500;margin-bottom:14px;
   }
-  section.paper .ag-block .bnum{color:var(--green);}
+  section.paper .ag-block .bnum{color:var(--brand);}
   .ag-block h3{
     font-family:var(--display);font-size:40px;line-height:1.05;
     font-weight:600;margin:0 0 14px;letter-spacing:0;
@@ -147,17 +158,17 @@
   ul.files li:last-child{border-bottom:none;}
   ul.files li code{
     font-family:var(--mono);font-size:19px;background:none;padding:0;
-    color:var(--green);display:block;margin-bottom:3px;
+    color:var(--brand);display:block;margin-bottom:3px;
     overflow-wrap:anywhere;
   }
-  section:not(.paper) ul.files li code{color:var(--green-br);}
+  section:not(.paper) ul.files li code{color:var(--brand-br);}
   ul.files li span{display:block;line-height:1.3;font-size:21px;}
 
   /* ===== Divider de bloque ===== */
   .section-div .frame{padding-top:96px;padding-bottom:96px;}
   .section-div .block-no{
     font-family:var(--display);font-size:560px;line-height:0.78;
-    letter-spacing:-0.03em;color:var(--green-br);font-weight:700;margin:0;
+    letter-spacing:-0.03em;color:var(--brand-br);font-weight:700;margin:0;
   }
   .section-div h1{
     font-family:var(--display);font-size:112px;line-height:1.02;
@@ -174,11 +185,51 @@
     letter-spacing:0.25em;text-transform:uppercase;margin-bottom:12px;
   }
 
+  /* ===== Teoria + demo externa ===== */
+  .teoria{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:28px;}
+  .teoria .label{display:block;margin-bottom:18px;}
+  ol.ideas{margin:0;padding:0;list-style:none;counter-reset:idea;}
+  ol.ideas li{
+    counter-increment:idea;padding:0 0 20px 56px;position:relative;
+    font-size:24px;line-height:1.42;color:var(--graphite-2);
+  }
+  section:not(.paper) ol.ideas li{color:var(--bone-2);}
+  ol.ideas li::before{
+    content:counter(idea,decimal-leading-zero);
+    position:absolute;left:0;top:1px;font-family:var(--display);font-weight:700;
+    font-size:34px;color:var(--brand);line-height:1;
+  }
+  section:not(.paper) ol.ideas li::before{color:var(--brand-br);}
+  ol.ideas li b{display:block;font-family:var(--display);font-weight:600;font-size:30px;
+    color:var(--graphite);margin-bottom:6px;line-height:1.1;}
+  section:not(.paper) ol.ideas li b{color:var(--bone);}
+
+  .demo{background:var(--brand-light);border-left:4px solid var(--brand);padding:26px 30px;}
+  section:not(.paper) .demo{background:rgba(78,155,214,0.12);border-left-color:var(--brand-br);}
+  .demo .label{color:var(--brand);margin-bottom:14px;}
+  section:not(.paper) .demo .label{color:var(--brand-br);}
+  .demo a.url{
+    display:block;font-family:var(--mono);font-size:22px;color:var(--brand-dark);
+    text-decoration:underline;text-underline-offset:5px;margin-bottom:22px;overflow-wrap:anywhere;
+  }
+  section:not(.paper) .demo a.url{color:var(--bone);}
+  .demo ol.steps li{font-size:22px;padding-bottom:12px;}
+  .demo .observa{
+    margin:16px 0 0;padding-top:16px;border-top:1px solid var(--rule-l);
+    font-size:22px;line-height:1.4;color:var(--graphite-2);
+  }
+  section:not(.paper) .demo .observa{color:var(--bone-2);border-top-color:var(--rule-d);}
+  .demo .observa b{
+    display:block;color:var(--brand);font-size:20px;text-transform:uppercase;
+    letter-spacing:0.26em;margin-bottom:10px;font-weight:600;font-family:var(--sans);
+  }
+  section:not(.paper) .demo .observa b{color:var(--brand-br);}
+
   /* ===== Ejercicios ===== */
   .ex-header{display:grid;grid-template-columns:170px 1fr;gap:40px;margin:36px 0 28px;align-items:end;}
   .ex-num-label{font-size:22px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted-l);margin-bottom:10px;font-weight:500;}
-  .ex-num{font-family:var(--display);font-size:150px;line-height:0.8;letter-spacing:-0.02em;color:var(--green);font-weight:700;}
-  section:not(.paper) .ex-num{color:var(--green-br);}
+  .ex-num{font-family:var(--display);font-size:150px;line-height:0.8;letter-spacing:-0.02em;color:var(--brand);font-weight:700;}
+  section:not(.paper) .ex-num{color:var(--brand-br);}
   .ex-title{
     font-family:var(--display);font-size:58px;line-height:1.08;
     letter-spacing:0;font-weight:600;color:var(--graphite);margin:0;
@@ -186,8 +237,8 @@
   section:not(.paper) .ex-title{color:var(--bone);}
   .ex-tool{margin-top:12px;font-size:23px;color:var(--muted-l);font-weight:400;}
   section:not(.paper) .ex-tool{color:var(--bone-2);}
-  .ex-tool b{color:var(--green);text-transform:uppercase;letter-spacing:0.18em;font-size:22px;margin-right:14px;font-weight:600;}
-  section:not(.paper) .ex-tool b{color:var(--green-br);}
+  .ex-tool b{color:var(--brand);text-transform:uppercase;letter-spacing:0.18em;font-size:22px;margin-right:14px;font-weight:600;}
+  section:not(.paper) .ex-tool b{color:var(--brand-br);}
 
   .ex-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
   .col{display:flex;flex-direction:column;gap:24px;}
@@ -195,8 +246,8 @@
   .concept-block .label{margin-bottom:16px;display:block;}
   .concept{font-family:var(--display);font-size:33px;line-height:1.16;color:var(--graphite);font-weight:600;}
   section:not(.paper) .concept{color:var(--bone);}
-  .concept b{color:var(--green);font-weight:600;}
-  section:not(.paper) .concept b{color:var(--green-br);}
+  .concept b{color:var(--brand);font-weight:600;}
+  section:not(.paper) .concept b{color:var(--brand-br);}
 
   .steps-block .label{margin-bottom:18px;display:block;}
   ol.steps{margin:0;padding:0;list-style:none;counter-reset:step;}
@@ -209,9 +260,9 @@
     content:counter(step,decimal-leading-zero);
     position:absolute;left:0;top:0;
     font-family:var(--mono);font-weight:500;font-size:22px;
-    color:var(--green);letter-spacing:0.06em;
+    color:var(--brand);letter-spacing:0.06em;
   }
-  section:not(.paper) ol.steps li::before{color:var(--green-br);}
+  section:not(.paper) ol.steps li::before{color:var(--brand-br);}
   ol.steps li:last-child{padding-bottom:0;}
   ol.steps li b{color:var(--graphite);font-weight:700;}
   section:not(.paper) ol.steps li b{color:var(--bone);}
@@ -220,7 +271,7 @@
   .prompt-card{
     background:var(--ink);color:var(--bone);border-radius:0;
     padding:28px 32px;font-family:var(--mono);font-size:22px;line-height:1.45;
-    position:relative;border-left:4px solid var(--green-br);
+    position:relative;border-left:4px solid var(--brand-br);
   }
   /* Densidad segun cuanto texto lleva el prompt: el slide nunca debe desbordar. */
   .prompt-card.dense{font-size:20px;line-height:1.36;padding:24px 28px;}
@@ -229,41 +280,44 @@
   .prompt-card.denser .label{margin-bottom:14px;font-size:20px;}
   .prompt-card.dense p{margin-bottom:9px;}
   .prompt-card.denser p{margin-bottom:8px;}
-  section:not(.paper) .prompt-card{background:var(--paper);color:var(--graphite);border-left:4px solid var(--green);}
+  section:not(.paper) .prompt-card{background:var(--paper);color:var(--graphite);border-left:4px solid var(--brand);}
   .prompt-card .label{
-    color:var(--green-br);margin-bottom:22px;display:block;
+    color:var(--brand-br);margin-bottom:22px;display:block;
     font-family:var(--sans);font-size:22px;letter-spacing:0.28em;
   }
-  section:not(.paper) .prompt-card .label{color:var(--green);}
+  section:not(.paper) .prompt-card .label{color:var(--brand);}
   .prompt-card p{margin:0 0 10px;}
   .prompt-card p:last-child{margin-bottom:0;}
-  .prompt-card .kw{color:var(--green-br);font-weight:500;}
-  section:not(.paper) .prompt-card .kw{color:var(--green);}
+  .prompt-card .kw{color:var(--brand-br);font-weight:500;}
+  section:not(.paper) .prompt-card .kw{color:var(--brand);}
 
   /* Resultado esperado */
-  .result{padding:16px 0 0;border-top:1px solid var(--rule-l);font-size:22px;line-height:1.38;color:var(--graphite-2);}
+  .result{padding:14px 0 0;border-top:1px solid var(--rule-l);font-size:22px;line-height:1.38;color:var(--graphite-2);}
   section:not(.paper) .result{color:var(--bone-2);border-top-color:var(--rule-d);}
   .result b{
-    color:var(--green);display:block;font-size:22px;text-transform:uppercase;
+    color:var(--brand);display:block;font-size:22px;text-transform:uppercase;
     letter-spacing:0.28em;margin-bottom:14px;font-weight:500;font-family:var(--sans);
   }
-  section:not(.paper) .result b{color:var(--green-br);}
+  section:not(.paper) .result b{color:var(--brand-br);}
 
   /* Aviso de limite — honestidad sobre lo que la IA no hace */
   .caveat{
-    margin-top:14px;border-left:4px solid var(--gold);padding:12px 18px;
-    font-size:19px;line-height:1.38;color:var(--graphite-2);background:rgba(169,127,20,0.07);
+    margin-top:10px;border-left:4px solid var(--red);padding:10px 16px;
+    font-size:18.5px;line-height:1.36;color:var(--graphite-2);background:rgba(192,57,43,0.07);
   }
-  section:not(.paper) .caveat{color:var(--bone-2);background:rgba(232,184,66,0.10);}
-  .caveat b{color:var(--gold);text-transform:uppercase;letter-spacing:0.2em;font-size:17px;font-weight:600;display:block;margin-bottom:6px;}
-  section:not(.paper) .caveat b{color:#E8B842;}
+  section:not(.paper) .caveat{color:var(--bone-2);background:rgba(224,104,90,0.12);}
+  /* solo el primer <b> es el rotulo; los demas son enfasis dentro del texto */
+  .caveat > b:first-child{color:var(--red);text-transform:uppercase;letter-spacing:0.2em;font-size:17px;font-weight:600;display:block;margin-bottom:6px;}
+  .caveat b{color:var(--graphite);font-weight:600;}
+  section:not(.paper) .caveat > b:first-child{color:var(--red-br);}
+  section:not(.paper) .caveat b{color:var(--bone);}
 
   /* ===== Tres pasos / tarjetas ===== */
   .howto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:64px;}
   .howto-card{border-top:1px solid var(--rule-l);padding-top:32px;}
   section:not(.paper) .howto-card{border-top-color:var(--rule-d);}
-  .howto-card .n{font-family:var(--display);font-size:104px;color:var(--green);line-height:0.88;font-weight:700;margin-bottom:32px;letter-spacing:-0.02em;}
-  section:not(.paper) .howto-card .n{color:var(--green-br);}
+  .howto-card .n{font-family:var(--display);font-size:104px;color:var(--brand);line-height:0.88;font-weight:700;margin-bottom:32px;letter-spacing:-0.02em;}
+  section:not(.paper) .howto-card .n{color:var(--brand-br);}
   .howto-card h3{font-family:var(--display);font-size:40px;font-weight:600;margin:0 0 18px;line-height:1.12;}
   .howto-card p{font-size:23px;line-height:1.45;color:var(--graphite-2);margin:0;}
   section:not(.paper) .howto-card p{color:var(--bone-2);}
@@ -272,20 +326,61 @@
   .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;margin-top:64px;}
   .stat .label{display:block;margin-bottom:16px;}
   .stat b{
-    font-family:var(--display);font-size:136px;line-height:0.95;color:var(--green-br);
+    font-family:var(--display);font-size:136px;line-height:0.95;color:var(--brand-br);
     font-weight:700;letter-spacing:-0.02em;margin-bottom:24px;
     display:flex;align-items:flex-end;min-height:130px;
   }
   /* Valores que son palabras y no cifras: caben en su columna sin invadir la vecina. */
   .stat b.word{font-size:72px;line-height:1.06;letter-spacing:-0.01em;}
-  section.paper .stat b{color:var(--green);}
+  section.paper .stat b{color:var(--brand);}
   .stat p{font-size:22px;line-height:1.4;color:var(--bone-2);margin:0;}
   section.paper .stat p{color:var(--graphite-2);}
 
+  /* ===== Dos columnas contrapuestas ===== */
+  .contraste{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:26px;}
+  .cc{padding-top:18px;border-top:3px solid var(--brand);}
+  .cc.no{border-top-color:var(--red);}
+  .cc .label{display:block;margin-bottom:12px;color:var(--brand);}
+  .cc.no .label{color:var(--red);}
+  section:not(.paper) .cc .label{color:var(--brand-br);}
+  section:not(.paper) .cc.no .label{color:var(--red-br);}
+  .cc h3{font-family:var(--display);font-size:44px;font-weight:600;line-height:1.06;margin:0 0 16px;color:var(--graphite);}
+  section:not(.paper) .cc h3{color:var(--bone);}
+  .cc ul{margin:0;padding:0;list-style:none;}
+  .cc li{font-size:23px;line-height:1.42;color:var(--graphite-2);padding:9px 0 9px 26px;position:relative;}
+  section:not(.paper) .cc li{color:var(--bone-2);}
+  .cc li::before{content:'';position:absolute;left:0;top:19px;width:12px;height:2px;background:var(--brand);}
+  .cc.no li::before{background:var(--red);}
+  section:not(.paper) .cc li::before{background:var(--brand-br);}
+  section:not(.paper) .cc.no li::before{background:var(--red-br);}
+  .cc li b{color:var(--graphite);font-weight:600;}
+  section:not(.paper) .cc li b{color:var(--bone);}
+  .cc-cierre{
+    margin:28px 0 0;padding-top:18px;border-top:1px solid var(--rule-l);
+    font-size:25px;line-height:1.4;color:var(--graphite);max-width:1560px;
+  }
+  section:not(.paper) .cc-cierre{color:var(--bone);border-top-color:var(--rule-d);}
+  .cc-cierre b{color:var(--brand);font-weight:600;}
+  section:not(.paper) .cc-cierre b{color:var(--brand-br);}
+
+  /* ===== Rejilla de tarjetas (anexos) ===== */
+  .intro-cards{font-size:23px;line-height:1.45;color:var(--graphite-2);max-width:1560px;margin:16px 0 0;}
+  section:not(.paper) .intro-cards{color:var(--bone-2);}
+  .cards-grid{display:grid;gap:26px 40px;margin-top:26px;}
+  .tc{border-top:2px solid var(--brand);padding-top:16px;}
+  section:not(.paper) .tc{border-top-color:var(--brand-br);}
+  .tc h3{font-family:var(--display);font-size:31px;font-weight:600;margin:0 0 8px;line-height:1.08;color:var(--graphite);}
+  section:not(.paper) .tc h3{color:var(--bone);}
+  .tc .cuando{font-size:20px;line-height:1.35;color:var(--graphite-2);margin:0 0 8px;}
+  section:not(.paper) .tc .cuando{color:var(--bone-2);}
+  .tc .ej{font-family:var(--mono);font-size:17.5px;line-height:1.35;color:var(--brand);margin:0;
+    background:var(--brand-light);padding:8px 10px;}
+  section:not(.paper) .tc .ej{color:var(--bone);background:rgba(78,155,214,0.14);}
+
   /* ===== Gobernanza ===== */
   .gov-grid{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
-  .gov-item{border-top:2px solid var(--green-br);padding-top:28px;}
-  section.paper .gov-item{border-top-color:var(--green);}
+  .gov-item{border-top:2px solid var(--brand-br);padding-top:28px;}
+  section.paper .gov-item{border-top-color:var(--brand);}
   .gov-item h3{font-family:var(--display);font-size:36px;font-weight:600;margin:0 0 18px;line-height:1.16;}
   .gov-item p{font-size:22px;color:var(--bone-2);line-height:1.5;margin:0;}
   section.paper .gov-item p{color:var(--graphite-2);}
@@ -295,14 +390,23 @@
     font-family:var(--display);font-size:190px;line-height:0.98;letter-spacing:-0.01em;
     font-weight:700;margin:0;color:var(--bone);
   }
-  .closing h1 .acc{color:var(--green-br);}
+  .closing h1 .acc{color:var(--brand-br);}
   .closing .layout{margin:auto 0;}
   .closing .next{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;border-top:1px solid var(--rule-d);padding-top:36px;}
   .closing .next p{font-size:23px;line-height:1.5;color:var(--bone-2);margin:0;}
-  .closing .next .lbl{color:var(--green-br);font-size:22px;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:14px;font-weight:500;display:block;}
+  .closing .next .lbl{color:var(--brand-br);font-size:22px;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:14px;font-weight:500;display:block;}
 
-  code{font-family:var(--mono);font-size:0.94em;background:rgba(40,148,72,0.12);padding:1px 8px;border-radius:2px;color:var(--green);}
-  section:not(.paper) code{background:rgba(47,174,87,0.16);color:var(--green-br);}
+  /* Los nombres de archivo son enlaces al material: se abre sin salir del deck. */
+  a.mat{text-decoration:none;border-bottom:1px solid currentColor;color:inherit;}
+  a.mat code{cursor:pointer;}
+  a.mat:hover code,a.mat:focus-visible code{background:rgba(28,92,146,0.22);}
+  section:not(.paper) a.mat:hover code,section:not(.paper) a.mat:focus-visible code{background:rgba(78,155,214,0.3);}
+  a.mat:focus-visible{outline:2px solid var(--brand-br);outline-offset:2px;}
+  a.mat::after{content:' \2197';font-family:var(--sans);font-size:0.78em;opacity:.75;}
+  ul.files a.mat::after{content:none;}
+
+  code{font-family:var(--mono);font-size:0.94em;background:rgba(28,92,146,0.12);padding:1px 8px;border-radius:2px;color:var(--brand);}
+  section:not(.paper) code{background:rgba(78,155,214,0.18);color:var(--brand-br);}
 </style>
 </head>
 <body>
@@ -312,7 +416,8 @@
 <!-- ===== 01 · Portada ===== -->
 <section class="cover" data-label="01 Portada">
   <div class="frame">
-    <div class="top-rail"><span></span><span>Sesión 2 · 2026</span></div>
+    <div class="top-rail"><span>Sesión 2 · 2026</span><span></span></div>
+    <img class="marca" src="assets/logo-casabat.jpg" alt="La Casa de las Baterías" width="1080" height="1080" />
     <div style="margin:auto 0;">
       <div class="eyebrow">CASA DE LAS BATERÍAS · ADMINISTRACIÓN Y GERENCIA COMERCIAL</div>
       <h1>DATOS Y<br/><span class="acc">DOCUMENTOS</span>.</h1>
@@ -325,14 +430,36 @@
   </div>
 </section>
 
-<!-- ===== 02 · Dónde quedamos ===== -->
-<section data-label="02 Dónde quedamos">
+<!-- ===== 02 · Calcular no es predecir ===== -->
+<section class="paper" data-label="02 Calcular no es predecir">
   <div class="frame">
-    <div class="top-rail"><span>ANTES DE ARRANCAR</span><span>02 / 30</span></div>
-    <div style="margin:auto 0;">
-      <h1 class="display" style="font-size:84px;max-width:1560px;">Diez días después.<br/><span style="color:var(--green-br);">¿Qué se atascó?</span></h1>
-      <p style="font-size:30px;line-height:1.45;color:var(--bone-2);max-width:1400px;margin-top:36px;">Quince minutos de apertura, no de cortesía: cada quien dice cuál de sus dos compromisos usó y cuál no. Lo que <b style="color:var(--bone);">no</b> se usó importa más que lo que sí — ahí está el obstáculo real, y esta sesión se ajusta a eso. Después entramos a los dos frentes que la encuesta marcó con nombre propio: <b style="color:var(--bone);">los datos que hoy no puedes analizar</b> y <b style="color:var(--bone);">los procedimientos que revisas a mano</b>.</p>
+    <div class="top-rail"><span>ANTES DE ABRIR NINGÚN ARCHIVO</span><span>02 / 29</span></div>
+    <h1 class="display" style="margin-top:26px;font-size:78px;max-width:1560px;">Con datos, la IA hace<br/>dos cosas <span style="color:var(--brand);">muy distintas</span>.</h1>
+    <p class="intro-cards">La diferencia entre un análisis que se sostiene y uno que se cae está en cuál de las dos hizo. Es el criterio técnico de toda esta sesión y se reconoce a simple vista.</p>
+    <div class="contraste">
+      <div class="cc si">
+        <span class="label">CUANDO EJECUTA CÓDIGO</span>
+        <h3>Calcula.</h3>
+        <ul>
+          <li>Subes el archivo y escribe código que lo procesa. El número sale de una <b>operación real</b> sobre tus filas.</li>
+          <li>Es <b>determinista</b>: la misma pregunta sobre el mismo archivo da el mismo resultado.</li>
+          <li>Es <b>auditable</b>: puedes pedirle el código o la fórmula y reproducirla en Excel o en Sheets.</li>
+          <li>Aquí entran conteos, sumas, promedios, Pareto, tendencias, dispersión y detección de atípicos.</li>
+        </ul>
+      </div>
+      <div class="cc no">
+        <span class="label">CUANDO SOLO REDACTA</span>
+        <h3>Predice.</h3>
+        <ul>
+          <li>Sin ejecutar nada, completa la cifra <b>más probable</b> según el texto — el mecanismo del primer día.</li>
+          <li>Es <b>plausible y puede estar mal</b>: el error no se ve, porque el número suena razonable.</li>
+          <li>No es reproducible: preguntado dos veces, puede responder distinto.</li>
+          <li>Aquí entran los totales «de memoria», los porcentajes redondeados y las causas presentadas como hechos.</li>
+        </ul>
+      </div>
     </div>
+    <p class="cc-cierre">La regla operativa de la sesión: <b>exige siempre el procedimiento</b> —la fórmula o el código— y <b>comprueba una fila a mano</b> contra el archivo. Si no puede mostrarte cómo llegó al número, lo predijo.</p>
+
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
       <div class="rhs">02</div>
@@ -340,26 +467,8 @@
   </div>
 </section>
 
-<!-- ===== 03 · Los dos frentes ===== -->
-<section class="paper" data-label="03 Los dos frentes">
-  <div class="frame">
-    <div class="top-rail"><span>LO QUE PIDIÓ LA ENCUESTA, TEXTUALMENTE</span><span>03 / 30</span></div>
-    <h1 class="display" style="margin-top:48px;font-size:88px;max-width:1560px;">Dos necesidades con nombre propio.</h1>
-    <div class="stats-grid">
-      <div class="stat"><span class="label">ANÁLISIS</span><b>2/3</b><p>Piden resolver más rápido el análisis de datos: "organización de cuadros, analíticas".</p></div>
-      <div class="stat"><span class="label">LA BARRERA</span><b class="word">MINITAB</b><p>Una de las respuestas nombra la falta de licencia como el obstáculo — no la falta de habilidad.</p></div>
-      <div class="stat"><span class="label">SE QUIEREN LLEVAR</span><b class="word">UN TABLERO</b><p>"Ejemplo de dashboard o gráficos" fue una de las tres respuestas a qué llevarse.</p></div>
-      <div class="stat"><span class="label">EL CASO MÁS CONCRETO</span><b class="word">20 DÍAS</b><p>Actualizar procedimientos con control de nomenclatura y cruce de anexos, contra reloj.</p></div>
-    </div>
-    <div class="footer">
-      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">03</div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 04 · Agenda ===== -->
-<section class="paper" data-label="04 Agenda">
+<!-- ===== 03 · Agenda ===== -->
+<section class="paper" data-label="03 Agenda">
   <div class="frame">
     <div class="top-rail"><span>AGENDA DE LA SESIÓN</span><span>4 BLOQUES <span class="sep"></span> 18 EJERCICIOS <span class="sep"></span> 180 MIN</span></div>
     <h1 class="display" style="margin-top:52px;font-size:96px;">Lo que vamos a recorrer.</h1>
@@ -409,20 +518,51 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">03</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 04 · Cómo se ejecuta cada ejercicio ===== -->
+<section class="paper" data-label="04 Cómo se ejecuta cada ejercicio">
+  <div class="frame">
+    <div class="top-rail"><span>ANTES DE EMPEZAR</span><span>04 / 29</span></div>
+    <h1 class="display" style="margin-top:52px;font-size:88px;max-width:1560px;">Hoy se trabaja<br/>con <span style="color:var(--brand);">archivos de verdad</span>.</h1>
+    <div class="howto-grid">
+      <div class="howto-card"><div class="n">01</div><h3>Los archivos están en la carpeta</h3><p>Cada ejercicio dice cuál abrir. Son casos de práctica con el contexto de Casa de las Baterías, y traen los mismos defectos que traen los archivos reales. Si trajiste el tuyo, mejor: úsalo.</p></div>
+      <div class="howto-card"><div class="n">02</div><h3>Aplica el semáforo antes de subir</h3><p>La lista roja de la sesión 1 sigue vigente: nada de datos personales, contratos ni credenciales. Si trabajas con un archivo tuyo, borra esas columnas antes de subirlo. Toma treinta segundos.</p></div>
+      <div class="howto-card"><div class="n">03</div><h3>Verifica una fila a mano</h3><p>Cuando el resultado sea un número, comprueba uno tú mismo contra el archivo. Una sola fila. Es la diferencia entre usar el resultado y confiar en él.</p></div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
       <div class="rhs">04</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 05 · Cómo se ejecuta cada ejercicio ===== -->
-<section class="paper" data-label="05 Cómo se ejecuta cada ejercicio">
+<!-- ===== 05 · Los materiales ===== -->
+<section class="paper" data-label="05 Los materiales">
   <div class="frame">
-    <div class="top-rail"><span>ANTES DE EMPEZAR</span><span>05 / 30</span></div>
-    <h1 class="display" style="margin-top:52px;font-size:88px;max-width:1560px;">Hoy se trabaja<br/>con <span style="color:var(--green);">archivos de verdad</span>.</h1>
-    <div class="howto-grid">
-      <div class="howto-card"><div class="n">01</div><h3>Los archivos están en la carpeta</h3><p>Cada ejercicio dice cuál abrir. Son casos de práctica con el contexto de Casa de las Baterías, y traen los mismos defectos que traen los archivos reales. Si trajiste el tuyo, mejor: úsalo.</p></div>
-      <div class="howto-card"><div class="n">02</div><h3>Aplica el semáforo antes de subir</h3><p>La lista roja de la sesión 1 sigue vigente: nada de datos personales, contratos ni credenciales. Si trabajas con un archivo tuyo, borra esas columnas antes de subirlo. Toma treinta segundos.</p></div>
-      <div class="howto-card"><div class="n">03</div><h3>Verifica una fila a mano</h3><p>Cuando el resultado sea un número, comprueba uno tú mismo contra el archivo. Una sola fila. Es la diferencia entre usar el resultado y confiar en él.</p></div>
+    <div class="top-rail"><span>LA CARPETA DEL TALLER</span><span>05 / 29</span></div>
+    <h1 class="display" style="margin-top:44px;font-size:88px;">Los archivos de hoy<br/><span style="color:var(--brand);">ya tienen los defectos</span>.</h1>
+    <p style="font-size:24px;line-height:1.45;color:var(--graphite-2);max-width:1500px;margin:20px 0 0;">Material de práctica con el contexto real de Casa de las Baterías y datos ficticios. El archivo de ventas trae suciedad y patrones puestos a propósito; el expediente trae desviaciones de nomenclatura y referencias rotas. Si no encuentras nada, no es que el archivo esté limpio: revisa el pedido.</p>
+    <div class="agenda-grid" style="margin-top:28px;">
+      <div class="ag-block">
+        <div class="bnum">BLOQUES 1 Y 2 · DATOS</div>
+        <ul class="files">
+          <li><a class="mat" href="materiales/04_ventas_sucursales_2026.csv" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.csv</code></a><span>357 filas, 4 países, 6 meses · EJ 1 a 7</span></li>
+          <li><a class="mat" href="materiales/08_reporte_mensual_mayo.md" target="_blank" rel="noopener"><code>08_reporte_mensual_mayo.md</code></a><span>El reporte del mes anterior · EJ 8</span></li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">BLOQUE 3 · DOCUMENTOS</div>
+        <ul class="files">
+          <li><a class="mat" href="index.html#expediente" target="_blank" rel="noopener"><code>expediente-PR-ADM-014/</code></a><span>Procedimiento y 5 anexos · EJ 10 a 12</span></li>
+          <li><a class="mat" href="materiales/09_reglas_de_nomenclatura.md" target="_blank" rel="noopener"><code>09_reglas_de_nomenclatura.md</code></a><span>La regla contra la que se audita · EJ 11</span></li>
+          <li><a class="mat" href="materiales/07_notas_comite_operaciones.md" target="_blank" rel="noopener"><code>07_notas_comite_operaciones.md</code></a><span>Lo que pidió el dueño del proceso · EJ 13</span></li>
+          <li><a class="mat" href="materiales/10_PR-ADM-014_v3_BORRADOR.md" target="_blank" rel="noopener"><code>10_PR-ADM-014_v3_BORRADOR.md</code></a><span>La versión nueva · EJ 14</span></li>
+        </ul>
+      </div>
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
@@ -431,39 +571,8 @@
   </div>
 </section>
 
-<!-- ===== 06 · Los materiales ===== -->
-<section class="paper" data-label="06 Los materiales">
-  <div class="frame">
-    <div class="top-rail"><span>LA CARPETA DEL TALLER</span><span>06 / 30</span></div>
-    <h1 class="display" style="margin-top:44px;font-size:88px;">Los archivos de hoy<br/><span style="color:var(--green);">ya tienen los defectos</span>.</h1>
-    <p style="font-size:24px;line-height:1.45;color:var(--graphite-2);max-width:1500px;margin:20px 0 0;">Material de práctica con el contexto real de Casa de las Baterías y datos ficticios. El archivo de ventas trae suciedad y patrones puestos a propósito; el expediente trae desviaciones de nomenclatura y referencias rotas. Si no encuentras nada, no es que el archivo esté limpio: revisa el pedido.</p>
-    <div class="agenda-grid" style="margin-top:28px;">
-      <div class="ag-block">
-        <div class="bnum">BLOQUES 1 Y 2 · DATOS</div>
-        <ul class="files">
-          <li><code>04_ventas_sucursales_2026.csv</code><span>357 filas, 4 países, 6 meses · EJ 1 a 7</span></li>
-          <li><code>08_reporte_mensual_mayo.md</code><span>El reporte del mes anterior · EJ 8</span></li>
-        </ul>
-      </div>
-      <div class="ag-block">
-        <div class="bnum">BLOQUE 3 · DOCUMENTOS</div>
-        <ul class="files">
-          <li><code>expediente-PR-ADM-014/</code><span>Procedimiento y 5 anexos · EJ 10 a 12</span></li>
-          <li><code>09_reglas_de_nomenclatura.md</code><span>La regla contra la que se audita · EJ 11</span></li>
-          <li><code>07_notas_comite_operaciones.md</code><span>Lo que pidió el dueño del proceso · EJ 13</span></li>
-          <li><code>10_PR-ADM-014_v3_BORRADOR.md</code><span>La versión nueva · EJ 14</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer">
-      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">06</div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 07 · Bloque 1 ===== -->
-<section class="section-div" data-label="07 Bloque 1">
+<!-- ===== 06 · Bloque 1 ===== -->
+<section class="section-div" data-label="06 Bloque 1">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 1 DE 4</span><span>50 MIN <span class='sep'></span> 5 EJERCICIOS</span></div>
     <div class="layout">
@@ -477,13 +586,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">07</div>
+      <div class="rhs">06</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 08 · Ejercicio 1 · La hoja lista ===== -->
-<section class="paper" data-label="08 Ejercicio 1 · La hoja lista">
+<!-- ===== 07 · Ejercicio 1 · La hoja lista ===== -->
+<section class="paper" data-label="07 Ejercicio 1 · La hoja lista">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> CONVERSA CON TUS DATOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -505,16 +614,16 @@
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Sube <b><code>04_ventas_sucursales_2026.csv</code></b> tal como está. No lo limpies antes.</li>
+            <li>Sube <b><a class="mat" href="materiales/04_ventas_sucursales_2026.csv" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.csv</code></a></b> tal como está. No lo limpies antes.</li>
             <li>Pide el diagnóstico de calidad <b>antes</b> de pedir cualquier análisis.</li>
             <li>Corrige tú lo que decida corregirse. La limpieza automática silenciosa es el peor hábito posible.</li>
           </ol>
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card dense">
+        <div class="prompt-card denser">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
-          <p>Te subo <code>04_ventas_sucursales_2026.csv</code>. <span class="kw">No lo analices todavía.</span> Primero dame un diagnóstico de calidad del archivo:</p>
+          <p>Te subo <a class="mat" href="materiales/04_ventas_sucursales_2026.csv" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.csv</code></a>. <span class="kw">No lo analices todavía.</span> Primero dame un diagnóstico de calidad del archivo:</p>
           <p>1. Cuántas filas y columnas, y qué representa cada columna según lo que ves.<br/>2. Celdas vacías por columna, en número y porcentaje.<br/>3. Duplicados: qué filas se repiten y por qué criterio.<br/>4. Formatos inconsistentes: fechas en dos formatos, números como texto, espacios sobrantes, la misma categoría escrita de varias maneras.<br/>5. Valores imposibles o sospechosos, con la fila donde están.</p>
           <p>Devuélvelo como tabla y termina con: <span class="kw">qué habría que arreglar antes de confiar en cualquier análisis de este archivo</span>.</p>
         </div>
@@ -526,13 +635,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">08</div>
+      <div class="rhs">07</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 09 · Ejercicio 2 · Que te lo explique ===== -->
-<section class="paper" data-label="09 Ejercicio 2 · Que te lo explique">
+<!-- ===== 08 · Ejercicio 2 · Que te lo explique ===== -->
+<section class="paper" data-label="08 Ejercicio 2 · Que te lo explique">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> CONVERSA CON TUS DATOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -575,13 +684,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">09</div>
+      <div class="rhs">08</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 10 · Ejercicio 3 · Lo de Minitab ===== -->
-<section class="paper" data-label="10 Ejercicio 3 · Lo de Minitab">
+<!-- ===== 09 · Ejercicio 3 · Lo de Minitab ===== -->
+<section class="paper" data-label="09 Ejercicio 3 · Lo de Minitab">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> CONVERSA CON TUS DATOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -618,20 +727,20 @@
         </div>
         <div class="result">
           <b>RESULTADO ESPERADO</b>
-          Los cuatro análisis con su gráfico y su procedimiento a la vista. En este archivo: tres líneas concentran el 84 % del ingreso, el servicio a domicilio cae de 107 a 29 unidades en seis meses, hay un ingreso de 34.500 contra una mediana de 950, y un país devuelve quince veces más que el resto.
+          Los cuatro análisis con su procedimiento a la vista. En este archivo: tres líneas concentran el 84 % del ingreso, domicilio cae de 107 a 29 unidades, un ingreso de 34.500 contra mediana de 950, y un país devuelve quince veces más.
         </div>
-        <div class="caveat"><b>Límite</b>Sirve para explorar y decidir, no para certificar. Si el análisis alimenta una decisión auditable de calidad, hace falta una herramienta validada y reproducible: eso es una decisión de licenciamiento que el taller no resuelve. Comprueba siempre un número a mano.</div>
+        <div class="caveat"><b>Límite</b>Sirve para explorar y decidir, no para certificar: un análisis auditable exige herramienta validada, y eso es una decisión de licenciamiento. Comprueba siempre un número a mano.</div>
       </div>
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">10</div>
+      <div class="rhs">09</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 11 · Ejercicio 4 · Causa y acción ===== -->
-<section class="paper" data-label="11 Ejercicio 4 · Causa y acción">
+<!-- ===== 10 · Ejercicio 4 · Causa y acción ===== -->
+<section class="paper" data-label="10 Ejercicio 4 · Causa y acción">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> CONVERSA CON TUS DATOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -655,7 +764,7 @@
           <ol class="steps">
             <li>Pide los hallazgos en formato de cuatro columnas obligatorias.</li>
             <li>Exige que distinga lo que el dato demuestra de lo que solo sugiere. Esa línea es tuya, no suya.</li>
-            <li>Contrasta la causa que propone para las devoluciones con lo que dice el comité en <b><code>07_notas_comite_operaciones.md</code></b>: ahí hay una explicación que el dato no contiene.</li>
+            <li>Contrasta la causa que propone para las devoluciones con lo que dice el comité en <b><a class="mat" href="materiales/07_notas_comite_operaciones.md" target="_blank" rel="noopener"><code>07_notas_comite_operaciones.md</code></a></b>: ahí hay una explicación que el dato no contiene.</li>
           </ol>
         </div>
       </div>
@@ -663,24 +772,24 @@
         <div class="prompt-card">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
           <p>Con base en el análisis anterior, dame <span class="kw">cinco hallazgos</span> en tabla de cuatro columnas:</p>
-          <p><span class="kw">1. HALLAZGO ·</span> qué muestra el dato, con la cifra.<br/><span class="kw">2. EVIDENCIA ·</span> de qué filas o columnas sale.<br/><span class="kw">3. CAUSA PROBABLE ·</span> tu hipótesis, marcada claramente como hipótesis.<br/><span class="kw">4. ACCIÓN ·</span> qué haría alguien de [tu área] esta semana con esto.</p>
+          <p><span class="kw">1. HALLAZGO ·</span> qué muestra el dato, con la cifra. <span class="kw">2. EVIDENCIA ·</span> de qué filas sale. <span class="kw">3. CAUSA PROBABLE ·</span> tu hipótesis, marcada como tal. <span class="kw">4. ACCIÓN ·</span> qué haría alguien de tu área esta semana.</p>
           <p>Separa explícitamente lo que <span class="kw">el dato demuestra</span> de lo que <span class="kw">el dato sugiere</span>. Si un hallazgo no tiene acción posible, no lo incluyas.</p>
         </div>
         <div class="result">
           <b>RESULTADO ESPERADO</b>
-          Cinco filas que se pegan tal cual en un correo o en un comité. La causa que proponga para Guatemala será una hipótesis razonable y probablemente equivocada: el comité ya dijo que allá registran los cambios por garantía como devolución. El dato solo no podía saberlo, y ese es el punto.
+          Cinco filas que se pegan tal cual en un comité. La causa que proponga para Guatemala será razonable y probablemente equivocada: el comité ya dijo que allá registran los cambios por garantía como devolución. El dato solo no podía saberlo.
         </div>
       </div>
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">11</div>
+      <div class="rhs">10</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 12 · Ejercicio 5 · El límite ===== -->
-<section class="paper" data-label="12 Ejercicio 5 · El límite">
+<!-- ===== 11 · Ejercicio 5 · El límite ===== -->
+<section class="paper" data-label="11 Ejercicio 5 · El límite">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> CONVERSA CON TUS DATOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -709,7 +818,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card">
+        <div class="prompt-card dense">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
           <p>Antes de que yo use esto, dime <span class="kw">qué no se puede concluir</span> con este archivo:</p>
           <p>1. Qué preguntas parecen respondidas pero no lo están, y qué dato faltaría.<br/>2. Dónde el tamaño de la muestra o el período es demasiado corto para afirmar algo.<br/>3. Qué diferencias podrían ser variación normal y no un cambio real.<br/>4. Qué sesgo tiene la forma en que se recogieron estos datos.</p>
@@ -723,13 +832,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">12</div>
+      <div class="rhs">11</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 13 · Bloque 2 ===== -->
-<section class="section-div" data-label="13 Bloque 2">
+<!-- ===== 12 · Bloque 2 ===== -->
+<section class="section-div" data-label="12 Bloque 2">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 2 DE 4</span><span>40 MIN <span class='sep'></span> 4 EJERCICIOS</span></div>
     <div class="layout">
@@ -743,13 +852,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">13</div>
+      <div class="rhs">12</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 14 · Ejercicio 6 · El gráfico correcto ===== -->
-<section class="paper" data-label="14 Ejercicio 6 · El gráfico correcto">
+<!-- ===== 13 · Ejercicio 6 · El gráfico correcto ===== -->
+<section class="paper" data-label="13 Ejercicio 6 · El gráfico correcto">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> TABLEROS Y REPORTES</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -778,7 +887,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card">
+        <div class="prompt-card dense">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
           <p>Para cada uno de mis hallazgos, dime <span class="kw">qué tipo de gráfico</span> lo comunica mejor y por qué, considerando: comparar categorías, ver evolución en el tiempo, mostrar composición, ver relación entre dos variables o ver distribución.</p>
           <p>Descarta explícitamente los que no sirven para cada caso y di por qué.</p>
@@ -792,13 +901,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">14</div>
+      <div class="rhs">13</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 15 · Ejercicio 7 · Tu tablero ===== -->
-<section class="paper" data-label="15 Ejercicio 7 · Tu tablero">
+<!-- ===== 14 · Ejercicio 7 · Tu tablero ===== -->
+<section class="paper" data-label="14 Ejercicio 7 · Tu tablero">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> TABLEROS Y REPORTES</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -820,7 +929,7 @@
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Las cinco preguntas salen de <b><code>08_reporte_mensual_mayo.md</code></b>: son las que ese reporte contesta todos los meses. Si tu jefatura pregunta otras cosas, cámbialas.</li>
+            <li>Las cinco preguntas salen de <b><a class="mat" href="materiales/08_reporte_mensual_mayo.md" target="_blank" rel="noopener"><code>08_reporte_mensual_mayo.md</code></a></b>: son las que ese reporte contesta todos los meses. Si tu jefatura pregunta otras cosas, cámbialas.</li>
             <li>Pide el tablero como página de un solo archivo, que abra en el navegador sin instalar nada.</li>
             <li>Ábrelo y verifica un número contra el CSV antes de compartirlo con nadie.</li>
           </ol>
@@ -829,7 +938,7 @@
       <div class="col">
         <div class="prompt-card denser">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
-          <p>Con los datos de <code>04_ventas_sucursales_2026.csv</code>, arma un <span class="kw">tablero de una sola página</span> que responda: 1) ingreso por línea de producto, 2) comportamiento por país, 3) evolución mensual del servicio a domicilio, 4) devoluciones sobre unidades por país, 5) las cinco sucursales de mayor ingreso.</p>
+          <p>Con los datos de <a class="mat" href="materiales/04_ventas_sucursales_2026.csv" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.csv</code></a>, arma un <span class="kw">tablero de una sola página</span> que responda: 1) ingreso por línea de producto, 2) comportamiento por país, 3) evolución mensual del servicio a domicilio, 4) devoluciones sobre unidades por país, 5) las cinco sucursales de mayor ingreso.</p>
           <p>Estructura: arriba las [4] cifras que resumen el período, con su variación contra el período anterior; en el medio los gráficos que responden las preguntas; abajo la tabla de detalle.</p>
           <p>Entrégamelo como <span class="kw">un archivo HTML autocontenido</span> que se abra en cualquier navegador sin conexión ni instalación. Que cada cifra indique de qué columna del archivo sale.</p>
         </div>
@@ -842,13 +951,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">15</div>
+      <div class="rhs">14</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 16 · Ejercicio 8 · El reporte mensual ===== -->
-<section class="paper" data-label="16 Ejercicio 8 · El reporte mensual">
+<!-- ===== 15 · Ejercicio 8 · El reporte mensual ===== -->
+<section class="paper" data-label="15 Ejercicio 8 · El reporte mensual">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> TABLEROS Y REPORTES</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -870,18 +979,18 @@
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Abre <b><code>08_reporte_mensual_mayo.md</code></b> y pide que extraiga la plantilla, no que lo resuma.</li>
+            <li>Abre <b><a class="mat" href="materiales/08_reporte_mensual_mayo.md" target="_blank" rel="noopener"><code>08_reporte_mensual_mayo.md</code></a></b> y pide que extraiga la plantilla, no que lo resuma.</li>
             <li>Guarda la plantilla con marcas claras de qué se rellena cada mes.</li>
             <li>Rellénala con los datos del CSV y compárala con el reporte de mayo: fíjate en qué se repite.</li>
           </ol>
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card">
+        <div class="prompt-card dense">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
           <p>Te pego el reporte del mes anterior. <span class="kw">No lo resumas ni lo mejores.</span></p>
           <p>Extrae su estructura como plantilla reutilizable: qué secciones tiene, en qué orden, qué tipo de contenido va en cada una, qué extensión, y <span class="kw">qué partes cambian cada mes</span> frente a cuáles se mantienen.</p>
-          <p>Después rellénala con los datos de <code>04_ventas_sucursales_2026.csv</code> para junio, respetando la forma de escribir del original. Donde falte un dato, deja [FALTA] visible — no lo completes con lo del mes pasado.</p>
+          <p>Después rellénala con los datos de <a class="mat" href="materiales/04_ventas_sucursales_2026.csv" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.csv</code></a> para junio, respetando la forma de escribir del original. Donde falte un dato, deja [FALTA] visible — no lo completes con lo del mes pasado.</p>
         </div>
         <div class="result">
           <b>RESULTADO ESPERADO</b>
@@ -891,13 +1000,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">16</div>
+      <div class="rhs">15</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 17 · Ejercicio 9 · El deck de decisión ===== -->
-<section class="paper" data-label="17 Ejercicio 9 · El deck de decisión">
+<!-- ===== 16 · Ejercicio 9 · El deck de decisión ===== -->
+<section class="paper" data-label="16 Ejercicio 9 · El deck de decisión">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> TABLEROS Y REPORTES</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -926,7 +1035,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card">
+        <div class="prompt-card dense">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
           <p>Con los hallazgos del bloque anterior, arma una presentación de <span class="kw">exactamente cinco slides</span> para [audiencia] cuyo objetivo es que decidan [decisión concreta]:</p>
           <p><span class="kw">1.</span> La situación en una frase y una cifra.<br/><span class="kw">2.</span> Qué está pasando, con el gráfico que lo demuestra.<br/><span class="kw">3.</span> Por qué pasa: hipótesis, marcada como hipótesis.<br/><span class="kw">4.</span> Las opciones sobre la mesa, con lo que cuesta cada una.<br/><span class="kw">5.</span> Lo que recomiendo y qué necesito que se decida hoy.</p>
@@ -940,13 +1049,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">17</div>
+      <div class="rhs">16</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 18 · Bloque 3 ===== -->
-<section class="section-div" data-label="18 Bloque 3">
+<!-- ===== 17 · Bloque 3 ===== -->
+<section class="section-div" data-label="17 Bloque 3">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 3 DE 4</span><span>50 MIN <span class='sep'></span> 5 EJERCICIOS</span></div>
     <div class="layout">
@@ -960,13 +1069,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">18</div>
+      <div class="rhs">17</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 19 · Ejercicio 10 · El inventario ===== -->
-<section class="paper" data-label="19 Ejercicio 10 · El inventario">
+<!-- ===== 18 · Ejercicio 10 · El inventario ===== -->
+<section class="paper" data-label="18 Ejercicio 10 · El inventario">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> PROCEDIMIENTOS Y ANEXOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -988,7 +1097,7 @@
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Sube los <b>seis archivos</b> de <b><code>expediente-PR-ADM-014/</code></b>, con todo y sus nombres.</li>
+            <li>Sube los <b>seis archivos</b> de <b><a class="mat" href="index.html#expediente" target="_blank" rel="noopener"><code>expediente-PR-ADM-014/</code></a></b>, con todo y sus nombres.</li>
             <li>Pide el inventario como tabla, sin ninguna corrección todavía.</li>
             <li>Compara el inventario con la lista de documentos relacionados del procedimiento. La diferencia es el primer hallazgo, y aparece antes de auditar nada.</li>
           </ol>
@@ -1010,13 +1119,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">19</div>
+      <div class="rhs">18</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 20 · Ejercicio 11 · El auditor ===== -->
-<section class="paper" data-label="20 Ejercicio 11 · El auditor">
+<!-- ===== 19 · Ejercicio 11 · El auditor ===== -->
+<section class="paper" data-label="19 Ejercicio 11 · El auditor">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> PROCEDIMIENTOS Y ANEXOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -1038,7 +1147,7 @@
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Abre <b><code>09_reglas_de_nomenclatura.md</code></b> y pégala textual. Nunca de memoria.</li>
+            <li>Abre <b><a class="mat" href="materiales/09_reglas_de_nomenclatura.md" target="_blank" rel="noopener"><code>09_reglas_de_nomenclatura.md</code></a></b> y pégala textual. Nunca de memoria.</li>
             <li>Pide la comparación archivo por archivo, con el nombre corregido propuesto.</li>
             <li>Revisa tú las excepciones legítimas antes de renombrar nada.</li>
           </ol>
@@ -1047,27 +1156,27 @@
       <div class="col">
         <div class="prompt-card denser">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
-          <p>Esta es la regla de nomenclatura que aplica: [pega <code>09_reglas_de_nomenclatura.md</code>, secciones de estructura y reglas 1 a 7].</p>
+          <p>Esta es la regla de nomenclatura que aplica: [pega <a class="mat" href="materiales/09_reglas_de_nomenclatura.md" target="_blank" rel="noopener"><code>09_reglas_de_nomenclatura.md</code></a>, secciones de estructura y reglas 1 a 7].</p>
           <p>Ejemplos válidos: los que trae la propia regla.</p>
           <p>Compara <span class="kw">cada archivo del inventario</span> contra esa regla y devuélveme una tabla: nombre actual · ¿cumple? · qué parte falla exactamente · nombre corregido propuesto.</p>
           <p>Ordena por gravedad: primero los que rompen el código, después los de formato, al final los cosméticos. <span class="kw">No renombres nada</span>, solo propón.</p>
         </div>
         <div class="result">
           <b>RESULTADO ESPERADO</b>
-          En este expediente hay <span style="color:var(--green);">tres</span> nombres que incumplen: uno sin ninguna estructura, uno con la V de versión en mayúscula y uno con el correlativo en dos dígitos en vez de tres. Si tu tabla trae menos de tres, el pedido se quedó corto.
+          En este expediente hay <span style="color:var(--brand);">tres</span> nombres que incumplen: uno sin ninguna estructura, uno con la V de versión en mayúscula y uno con el correlativo en dos dígitos en vez de tres. Si tu tabla trae menos de tres, el pedido se quedó corto.
         </div>
         <div class="caveat"><b>Límite</b>La propuesta es un borrador, no una autorización. Renombrar documentos controlados rompe enlaces y referencias cruzadas: el cambio se aplica por el procedimiento de control documental que ya existe, con su aprobación, nunca directamente sobre el repositorio.</div>
       </div>
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">20</div>
+      <div class="rhs">19</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 21 · Ejercicio 12 · El cruce ===== -->
-<section class="paper" data-label="21 Ejercicio 12 · El cruce">
+<!-- ===== 20 · Ejercicio 12 · El cruce ===== -->
+<section class="paper" data-label="20 Ejercicio 12 · El cruce">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> PROCEDIMIENTOS Y ANEXOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -1096,7 +1205,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card dense">
+        <div class="prompt-card denser">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
           <p>Con el procedimiento y sus anexos cargados, hazme el cruce en las dos direcciones:</p>
           <p><span class="kw">A · De la referencia al documento:</span> lista cada mención a un anexo, formato o documento externo dentro del texto, con la sección donde aparece, e indica si ese documento está entre los que te di. Si no está: [NO ENCONTRADO].</p>
@@ -1105,19 +1214,19 @@
         </div>
         <div class="result">
           <b>RESULTADO ESPERADO</b>
-          Dos listas. En este expediente: el <b>Anexo E</b> se referencia dos veces y no existe; el <b>Anexo F</b> existe y nadie lo menciona; el Anexo B aparece con dos nombres distintos; y el procedimiento cita el ANEXO-C v2 cuando el archivo es v1. Cuatro hallazgos, ninguno visible a ojo.
+          Cuatro hallazgos que a ojo no se ven: el <b>Anexo E</b> se referencia y no existe; el <b>Anexo F</b> existe y nadie lo menciona; el Anexo B aparece con dos nombres; y se cita el ANEXO-C v2 cuando el archivo es v1.
         </div>
       </div>
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">21</div>
+      <div class="rhs">20</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 22 · Ejercicio 13 · Captura ágil ===== -->
-<section class="paper" data-label="22 Ejercicio 13 · Captura ágil">
+<!-- ===== 21 · Ejercicio 13 · Captura ágil ===== -->
+<section class="paper" data-label="21 Ejercicio 13 · Captura ágil">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> PROCEDIMIENTOS Y ANEXOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -1139,8 +1248,8 @@
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li><b>Antes:</b> pide el cuestionario a partir de <code>PR-ADM-014_Gestion_de_Cotizaciones_v2.md</code>.</li>
-            <li><b>Después:</b> usa <b><code>07_notas_comite_operaciones.md</code></b> como si fueran las notas de esa reunión — el comité ya decidió subir el umbral de aprobación a 5.000.</li>
+            <li><b>Antes:</b> pide el cuestionario a partir de <a class="mat" href="materiales/expediente-PR-ADM-014/PR-ADM-014_Gestion_de_Cotizaciones_v2.md" target="_blank" rel="noopener"><code>PR-ADM-014_Gestion_de_Cotizaciones_v2.md</code></a>.</li>
+            <li><b>Después:</b> usa <b><a class="mat" href="materiales/07_notas_comite_operaciones.md" target="_blank" rel="noopener"><code>07_notas_comite_operaciones.md</code></a></b> como si fueran las notas de esa reunión — el comité ya decidió subir el umbral de aprobación a 5.000.</li>
             <li>Devuelve el borrador el mismo día, con las dudas marcadas en vez de resueltas por tu cuenta.</li>
           </ol>
         </div>
@@ -1148,8 +1257,8 @@
       <div class="col">
         <div class="prompt-card denser">
           <span class="label">PROMPT DEL PARTICIPANTE</span>
-          <p><span class="kw">ANTES ·</span> Este es el procedimiento vigente: [pega <code>PR-ADM-014_Gestion_de_Cotizaciones_v2.md</code>]. Genera [12] preguntas para el dueño del proceso que sirvan para detectar qué cambió en la práctica: pasos que ya no se hacen, pasos nuevos no documentados, responsables que cambiaron, sistemas que se reemplazaron, controles que se dejaron de aplicar. Ordénalas de mayor a menor impacto.</p>
-          <p><span class="kw">DESPUÉS ·</span> Estas son las notas de la reunión: [pega <code>07_notas_comite_operaciones.md</code>]. Redacta el borrador de la versión nueva respetando la estructura y la redacción formal del documento vigente. Cambia <span class="kw">solo</span> lo que las notas indican. Todo lo que las notas no cubren, déjalo idéntico. Lo que quedó ambiguo, márcalo [CONFIRMAR CON DUEÑO] en vez de resolverlo tú.</p>
+          <p><span class="kw">ANTES ·</span> Este es el procedimiento vigente: [pega <a class="mat" href="materiales/expediente-PR-ADM-014/PR-ADM-014_Gestion_de_Cotizaciones_v2.md" target="_blank" rel="noopener"><code>PR-ADM-014_Gestion_de_Cotizaciones_v2.md</code></a>]. Genera [12] preguntas para el dueño del proceso que sirvan para detectar qué cambió en la práctica: pasos que ya no se hacen, pasos nuevos no documentados, responsables que cambiaron, sistemas que se reemplazaron, controles que se dejaron de aplicar. Ordénalas de mayor a menor impacto.</p>
+          <p><span class="kw">DESPUÉS ·</span> Estas son las notas de la reunión: [pega <a class="mat" href="materiales/07_notas_comite_operaciones.md" target="_blank" rel="noopener"><code>07_notas_comite_operaciones.md</code></a>]. Redacta el borrador de la versión nueva respetando la estructura y la redacción formal del documento vigente. Cambia <span class="kw">solo</span> lo que las notas indican. Todo lo que las notas no cubren, déjalo idéntico. Lo que quedó ambiguo, márcalo [CONFIRMAR CON DUEÑO] en vez de resolverlo tú.</p>
         </div>
         <div class="result">
           <b>RESULTADO ESPERADO</b>
@@ -1159,13 +1268,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">22</div>
+      <div class="rhs">21</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 23 · Ejercicio 14 · Control de cambios ===== -->
-<section class="paper" data-label="23 Ejercicio 14 · Control de cambios">
+<!-- ===== 22 · Ejercicio 14 · Control de cambios ===== -->
+<section class="paper" data-label="22 Ejercicio 14 · Control de cambios">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> PROCEDIMIENTOS Y ANEXOS</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -1187,7 +1296,7 @@
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Carga las dos versiones: <code>PR-ADM-014_Gestion_de_Cotizaciones_v2.md</code> del expediente y <b><code>10_PR-ADM-014_v3_BORRADOR.md</code></b>.</li>
+            <li>Carga las dos versiones: <a class="mat" href="materiales/expediente-PR-ADM-014/PR-ADM-014_Gestion_de_Cotizaciones_v2.md" target="_blank" rel="noopener"><code>PR-ADM-014_Gestion_de_Cotizaciones_v2.md</code></a> del expediente y <b><a class="mat" href="materiales/10_PR-ADM-014_v3_BORRADOR.md" target="_blank" rel="noopener"><code>10_PR-ADM-014_v3_BORRADOR.md</code></a></b>.</li>
             <li>Pide la comparación exhaustiva antes de la tabla; la tabla sale de la comparación, no al revés.</li>
             <li>Verifica que ningún cambio quede sin justificación: el que no la tiene, o se revierte o se explica.</li>
           </ol>
@@ -1203,19 +1312,19 @@
         </div>
         <div class="result">
           <b>RESULTADO ESPERADO</b>
-          Entre v2 y v3 hay cinco cambios: el umbral sube de 3.000 a 5.000, la aprobación pasa de Jefatura de Administración a Coordinación Comercial, el vencimiento pasa de 15 a 20 días, el sistema comercial se reemplaza por el CRM y — el importante — <b>desaparece la doble verificación del punto 4.4</b>. Ese último elimina un control y no puede pasar sin aprobación explícita.
+          Cinco cambios entre v2 y v3: el umbral sube a 5.000, la aprobación pasa a Coordinación Comercial, el vencimiento a 20 días, el sistema se reemplaza por el CRM y — el que importa — <b>desaparece la doble verificación del 4.4</b>: ese elimina un control.
         </div>
       </div>
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">23</div>
+      <div class="rhs">22</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 24 · Bloque 4 ===== -->
-<section class="section-div" data-label="24 Bloque 4">
+<!-- ===== 23 · Bloque 4 ===== -->
+<section class="section-div" data-label="23 Bloque 4">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 4 DE 4</span><span>40 MIN <span class='sep'></span> 4 EJERCICIOS</span></div>
     <div class="layout">
@@ -1229,13 +1338,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">24</div>
+      <div class="rhs">23</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 25 · Ejercicio 15 · Solo con la fuente ===== -->
-<section class="paper" data-label="25 Ejercicio 15 · Solo con la fuente">
+<!-- ===== 24 · Ejercicio 15 · Solo con la fuente ===== -->
+<section class="paper" data-label="24 Ejercicio 15 · Solo con la fuente">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> LO QUE NO SE DELEGA</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -1257,7 +1366,7 @@
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Sube <b><code>expediente-PR-ADM-014/</code></b> y <b><code>03_politica_garantia.md</code></b> a un cuaderno de NotebookLM, o cárgalos en tu clon con la restricción explícita.</li>
+            <li>Sube <b><a class="mat" href="index.html#expediente" target="_blank" rel="noopener"><code>expediente-PR-ADM-014/</code></a></b> y <b><a class="mat" href="materiales/03_politica_garantia.md" target="_blank" rel="noopener"><code>03_politica_garantia.md</code></a></b> a un cuaderno de NotebookLM, o cárgalos en tu clon con la restricción explícita.</li>
             <li>Pregunta cosas que hoy te obligarían a abrir tres archivos: qué descuento máximo puede dar un asistente, qué plazo de crédito aplica a un cliente nuevo, qué pasa si quien aprueba no está.</li>
             <li>Verifica dos citas abriendo el documento. Si una no está donde dice, el resto también se revisa.</li>
           </ol>
@@ -1280,13 +1389,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">25</div>
+      <div class="rhs">24</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 26 · Ejercicio 16 · Tu protocolo ===== -->
-<section class="paper" data-label="26 Ejercicio 16 · Tu protocolo">
+<!-- ===== 25 · Ejercicio 16 · Tu protocolo ===== -->
+<section class="paper" data-label="25 Ejercicio 16 · Tu protocolo">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> LO QUE NO SE DELEGA</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -1329,13 +1438,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">26</div>
+      <div class="rhs">25</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 27 · Ejercicio 17 · Cuándo no aplica ===== -->
-<section class="paper" data-label="27 Ejercicio 17 · Cuándo no aplica">
+<!-- ===== 26 · Ejercicio 17 · Cuándo no aplica ===== -->
+<section class="paper" data-label="26 Ejercicio 17 · Cuándo no aplica">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> LO QUE NO SE DELEGA</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -1378,13 +1487,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">27</div>
+      <div class="rhs">26</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 28 · Ejercicio 18 · El siguiente lunes ===== -->
-<section class="paper" data-label="28 Ejercicio 18 · El siguiente lunes">
+<!-- ===== 27 · Ejercicio 18 · El siguiente lunes ===== -->
+<section class="paper" data-label="27 Ejercicio 18 · El siguiente lunes">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> LO QUE NO SE DELEGA</span><span>10 MINUTOS</span></div>
     <div class="ex-header">
@@ -1429,17 +1538,17 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">28</div>
+      <div class="rhs">27</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 29 · Gobernanza ===== -->
-<section data-label="29 Gobernanza">
+<!-- ===== 28 · Gobernanza ===== -->
+<section data-label="28 Gobernanza">
   <div class="frame">
-    <div class="top-rail"><span>ANTES DE CERRAR</span><span>29 / 30</span></div>
+    <div class="top-rail"><span>ANTES DE CERRAR</span><span>28 / 29</span></div>
     <div style="margin-top:44px;">
-      <h1 class="display" style="font-size:88px;color:var(--bone);">Tres reglas que<br/><span style="color:var(--green-br);">no dependen de la herramienta</span>.</h1>
+      <h1 class="display" style="font-size:88px;color:var(--bone);">Tres reglas que<br/><span style="color:var(--brand-br);">no dependen de la herramienta</span>.</h1>
       <p style="font-size:24px;color:var(--bone-2);line-height:1.5;max-width:1400px;margin-top:24px;">Todo lo que se hizo hoy toca documentos y datos de la empresa. Estas son prácticas de trabajo, no asesoría legal: la política aplicable en cada país la definen Legal y TI, y conviene consultarla antes de institucionalizar cualquiera de estos flujos.</p>
     </div>
     <div class="gov-grid">
@@ -1449,15 +1558,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">29</div>
+      <div class="rhs">28</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 30 · Cierre ===== -->
-<section class="closing" data-label="30 Cierre">
+<!-- ===== 29 · Cierre ===== -->
+<section class="closing" data-label="29 Cierre">
   <div class="frame">
-    <div class="top-rail"><span>CIERRE DEL PROGRAMA</span><span>30 / 30</span></div>
+    <div class="top-rail"><span>CIERRE DEL PROGRAMA</span><span>29 / 29</span></div>
     <div class="layout"><h1>SIN FUENTE,<br/><span class="acc">NO HAY DATO</span>.</h1></div>
     <div class="next">
       <div><span class="lbl">ESTA SEMANA</span><p>El flujo del ejercicio 18, corriendo sobre un caso real. Uno solo, bien hecho, vale más que cinco a medias.</p></div>
@@ -1466,7 +1575,7 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">30</div>
+      <div class="rhs">29</div>
     </div>
   </div>
 </section>

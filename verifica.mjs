@@ -115,6 +115,16 @@ for (const file of DECKS) {
     if (html.includes(resto)) fail(`${file}: quedó "${resto}" del deck original`);
   }
 
+  // --- ningún color apunta a un token que no existe ---
+  // Al cambiar la paleta quedaron 9 var(--green) sin definir: el texto salía sin acento
+  // y nada avisaba. Esto lo detecta.
+  const definidos = new Set([...html.matchAll(/(--[a-z0-9-]+)\s*:/g)].map(m => m[1]));
+  const usados = [...new Set([...html.matchAll(/var\((--[a-z0-9-]+)\)/g)].map(m => m[1]))];
+  const huerfanos = usados.filter(t => !definidos.has(t));
+  huerfanos.length
+    ? fail(`${file}: usa tokens que no existen — ${huerfanos.join(', ')}`)
+    : ok(`${file}: los ${usados.length} tokens de color usados están definidos`);
+
   // --- el motor y las fuentes están declarados ---
   if (!html.includes('<script src="deck-stage.js">')) fail(`${file}: no carga deck-stage.js`);
   if (!/family=Antonio/.test(html)) fail(`${file}: no carga la tipografía Antonio de la marca`);

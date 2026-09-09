@@ -1,12 +1,49 @@
 # -*- coding: utf-8 -*-
 """Render del deck. La estructura de datos manda; la numeracion de slides,
 los contadores del top-rail y los footers se derivan — nunca se escriben a mano."""
+import os
+import re
+from urllib.parse import quote
 from style import CSS
+
+_RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_MATS = os.path.join(_RAIZ, 'materiales')
+
+
+def _indice_materiales():
+    """nombre de archivo -> ruta relativa desde la raiz del sitio."""
+    idx = {}
+    for base, _dirs, files in os.walk(_MATS):
+        for f in files:
+            if f.startswith('.'):
+                continue
+            rel = os.path.relpath(os.path.join(base, f), _RAIZ)
+            idx[f] = '/'.join(quote(p) for p in rel.split(os.sep))
+    # la carpeta del expediente no tiene indice propio: se manda al hub
+    idx['expediente-PR-ADM-014/'] = 'index.html#expediente'
+    idx['materiales/'] = 'index.html#materiales'
+    return idx
+
+
+MATERIALES = _indice_materiales()
+
+
+def _enlazar(html):
+    """Convierte <code>archivo</code> en un enlace al archivo, cuando existe.
+    Los <code> que no son materiales (nombres de columna, marcadores) se dejan."""
+    def sub(m):
+        nombre = m.group(1)
+        ruta = MATERIALES.get(nombre)
+        if not ruta:
+            return m.group(0)
+        return (f'<a class="mat" href="{ruta}" target="_blank" rel="noopener">'
+                f'<code>{nombre}</code></a>')
+    return re.sub(r'<code>([^<]+)</code>', sub, html)
 
 FOOT_L = 'R I Z O . M A'
 FOOT_R = 'C A S A B A T'
 FONTS = ("https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700"
-         "&family=Roboto:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap")
+         "&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap")
 
 
 def _footer(n, right=FOOT_R):
@@ -38,6 +75,7 @@ class Deck:
             out.append(f'<!-- ===== {i:02d} · {label} ===== -->\n'
                        f'<section{cls_attr} data-label="{i:02d} {label}">\n'
                        f'  <div class="frame">\n{body}\n{_footer(i)}\n  </div>\n</section>\n')
+        cuerpo = _enlazar('\n'.join(out))
         return (
             '<!doctype html>\n<html lang="es">\n<head>\n<meta charset="utf-8" />\n'
             f'<title>{self.title}</title>\n'
@@ -48,7 +86,7 @@ class Deck:
             '<script src="deck-stage.js"></script>\n'
             f'<style>{CSS}</style>\n</head>\n<body>\n\n'
             '<deck-stage width="1920" height="1080">\n\n'
-            + '\n'.join(out) +
+            + cuerpo +
             '\n</deck-stage>\n\n</body>\n</html>\n'
         )
 
@@ -57,7 +95,9 @@ class Deck:
 
 def cover(eyebrow, h1_html, sub, fecha):
     def b(i, total):
-        return (f'{_rail("", fecha)}\n'
+        return (f'{_rail(fecha, "")}\n'
+                f'    <img class="marca" src="assets/logo-casabat.jpg" '
+                f'alt="La Casa de las Baterías" width="1080" height="1080" />\n'
                 f'    <div style="margin:auto 0;">\n'
                 f'      <div class="eyebrow">{eyebrow}</div>\n'
                 f'      <h1>{h1_html}</h1>\n'
@@ -141,7 +181,7 @@ def exercise(num, rail_l, minutos, titulo, herramienta, concepto, pasos, prompt_
     import re as _re
     _plano = _re.sub(r'<[^>]+>', '', prompt_html)
     _peso = len(_plano) + (330 if caveat else 0)
-    _dens = ' denser' if _peso > 700 else (' dense' if _peso > 560 else '')
+    _dens = ' denser' if _peso > 620 else (' dense' if _peso > 470 else '')
 
     def b(i, total):
         ps = '\n'.join(f'            <li>{p}</li>' for p in pasos)
@@ -220,4 +260,109 @@ def filelist(rail_l, h1_html, intro, grupos):
                 f'    <h1 class="display" style="margin-top:44px;font-size:88px;">{h1_html}</h1>\n'
                 f'    <p style="font-size:24px;line-height:1.45;color:var(--graphite-2);max-width:1500px;margin:20px 0 0;">{intro}</p>\n'
                 f'    <div class="agenda-grid" style="margin-top:28px;">\n' + '\n'.join(cols) + '\n    </div>')
+    return b
+
+
+def theory(rail_l, h1_html, ideas, demo):
+    """Slide de teoria minima con acceso a una demo externa.
+    ideas: [(titulo, texto)]   ·   demo: dict(url, kicker, pasos[list], observa)"""
+    def b(i, total):
+        lis = '\n'.join(
+            f'          <li><b>{t}</b> {d}</li>' for t, d in ideas)
+        pasos = '\n'.join(f'            <li>{p}</li>' for p in demo['pasos'])
+        return (f'{_rail(rail_l, f"{i:02d} / {total:02d}")}\n'
+                f'    <h1 class="display" style="margin-top:30px;font-size:80px;max-width:1500px;">{h1_html}</h1>\n'
+                f'    <div class="teoria">\n'
+                f'      <div>\n'
+                f'        <span class="label acc">LA TEORÍA MÍNIMA</span>\n'
+                f'        <ol class="ideas">\n{lis}\n        </ol>\n'
+                f'      </div>\n'
+                f'      <div class="demo">\n'
+                f'        <span class="label">{demo["kicker"]}</span>\n'
+                f'        <a class="url" href="{demo["url"]}" target="_blank" rel="noopener">{demo["url"]}</a>\n'
+                f'        <ol class="steps">\n{pasos}\n        </ol>\n'
+                f'        <p class="observa"><b>Qué observar</b>{demo["observa"]}</p>\n'
+                f'      </div>\n'
+                f'    </div>')
+    return b
+
+
+def cards(rail_l, h1_html, intro, items, cols=3):
+    """Rejilla de tarjetas — para catalogos (tecnicas, opciones).
+    items: [(titulo, cuando, ejemplo)]"""
+    def b(i, total):
+        cs = '\n'.join(
+            f'      <div class="tc">\n'
+            f'        <h3>{t}</h3>\n'
+            f'        <p class="cuando">{c}</p>\n'
+            f'        <p class="ej">{e}</p>\n'
+            f'      </div>' for t, c, e in items)
+        pin = f'    <p class="intro-cards">{intro}</p>\n' if intro else ''
+        return (f'{_rail(rail_l, f"{i:02d} / {total:02d}")}\n'
+                f'    <h1 class="display" style="margin-top:24px;font-size:76px;">{h1_html}</h1>\n'
+                f'{pin}'
+                f'    <div class="cards-grid" style="grid-template-columns:repeat({cols},1fr);">\n{cs}\n    </div>')
+    return b
+
+
+def recipe(rail_l, h1_html, intro, pasos, bloque_label, bloque_html, nota=None):
+    """Slide de receta: pasos a la izquierda, bloque copiable a la derecha."""
+    def b(i, total):
+        ps = '\n'.join(f'          <li>{p}</li>' for p in pasos)
+        nt = f'\n        <div class="caveat"><b>Ojo</b>{nota}</div>' if nota else ''
+        return (f'{_rail(rail_l, f"{i:02d} / {total:02d}")}\n'
+                f'    <h1 class="display" style="margin-top:24px;font-size:72px;">{h1_html}</h1>\n'
+                f'    <p class="intro-cards">{intro}</p>\n'
+                f'    <div class="ex-body" style="margin-top:24px;">\n'
+                f'      <div class="col">\n'
+                f'        <div class="steps-block">\n'
+                f'          <span class="label">PASO A PASO</span>\n'
+                f'          <ol class="steps">\n{ps}\n          </ol>\n'
+                f'        </div>{nt}\n'
+                f'      </div>\n'
+                f'      <div class="col">\n'
+                f'        <div class="prompt-card denser">\n'
+                f'          <span class="label">{bloque_label}</span>\n'
+                f'{bloque_html}\n'
+                f'        </div>\n'
+                f'      </div>\n'
+                f'    </div>')
+    return b
+
+
+def divider_anexo(h1_html, rotulo, herramientas, objetivo, entregable):
+    """Divider de la seccion de anexos: no es un bloque de la sesion, asi que
+    no declara minutos — de lo contrario descuadraria la agenda."""
+    def b(i, total):
+        return (f'{_rail("MATERIAL DE CONSULTA", rotulo)}\n'
+                f'    <div class="layout">\n'
+                f'      <div class="block-no" style="font-size:300px;letter-spacing:-0.02em;">A</div>\n'
+                f'      <div><h1>{h1_html}</h1></div>\n'
+                f'      <div class="meta">\n'
+                f'        <div><b>Herramientas</b>{herramientas}</div>\n'
+                f'        <div><b>Cuándo se usa</b>{objetivo}</div>\n'
+                f'        <div><b>Contiene</b>{entregable}</div>\n'
+                f'      </div>\n'
+                f'    </div>')
+    return b
+
+
+def contrast(rail_l, h1_html, intro, izq, der, cierre=None):
+    """Dos columnas contrapuestas — para separar lo que una herramienta hace
+    de lo que solo parece que hace. izq/der: (rotulo, titular, [puntos])"""
+    def col(cl, datos):
+        rot, tit, puntos = datos
+        lis = '\n'.join(f'          <li>{p}</li>' for p in puntos)
+        return (f'      <div class="cc {cl}">\n'
+                f'        <span class="label">{rot}</span>\n'
+                f'        <h3>{tit}</h3>\n'
+                f'        <ul>\n{lis}\n        </ul>\n'
+                f'      </div>')
+    def b(i, total):
+        fin = (f'    <p class="cc-cierre">{cierre}</p>\n' if cierre else '')
+        return (f'{_rail(rail_l, f"{i:02d} / {total:02d}")}\n'
+                f'    <h1 class="display" style="margin-top:26px;font-size:78px;max-width:1560px;">{h1_html}</h1>\n'
+                f'    <p class="intro-cards">{intro}</p>\n'
+                f'    <div class="contraste">\n{col("si", izq)}\n{col("no", der)}\n    </div>\n'
+                f'{fin}')
     return b

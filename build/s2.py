@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Sesion 2 — "Datos y documentos". Los dos frentes especificos del diagnostico:
 analisis de datos sin licencia (R1, R2) y automatizacion documental (R2)."""
-from deck import (Deck, cover, statement, stats, agenda, howto, divider,
-                  exercise, governance, closing, filelist)
+from deck import (Deck, cover, agenda, howto, divider,
+                  exercise, governance, closing, filelist, contrast)
 
 RAIL1 = 'BLOQUE 01 <span class="sep"></span> CONVERSA CON TUS DATOS'
 RAIL2 = 'BLOQUE 02 <span class="sep"></span> TABLEROS Y REPORTES'
@@ -19,23 +19,24 @@ d.add('Portada', 'cover', cover(
     'Sesión 2 de 2 · Análisis sin licencia y control documental · 180 minutos · 18 ejercicios sobre tus archivos.',
     'Sesión 2 · 2026'))
 
-d.add('Dónde quedamos', None, statement(
-    'ANTES DE ARRANCAR',
-    'Diez días después.<br/><span style="color:var(--green-br);">¿Qué se atascó?</span>',
-    '<p style="font-size:30px;line-height:1.45;color:var(--bone-2);max-width:1400px;margin-top:36px;">'
-    'Quince minutos de apertura, no de cortesía: cada quien dice cuál de sus dos compromisos usó y cuál no. '
-    'Lo que <b style="color:var(--bone);">no</b> se usó importa más que lo que sí — ahí está el obstáculo real, '
-    'y esta sesión se ajusta a eso. Después entramos a los dos frentes que la encuesta marcó con nombre propio: '
-    '<b style="color:var(--bone);">los datos que hoy no puedes analizar</b> y '
-    '<b style="color:var(--bone);">los procedimientos que revisas a mano</b>.</p>', 84))
-
-d.add('Los dos frentes', 'paper', stats(
-    'LO QUE PIDIÓ LA ENCUESTA, TEXTUALMENTE',
-    'Dos necesidades con nombre propio.',
-    [('ANÁLISIS', '2/3', 'Piden resolver más rápido el análisis de datos: "organización de cuadros, analíticas".'),
-     ('LA BARRERA', 'MINITAB', 'Una de las respuestas nombra la falta de licencia como el obstáculo — no la falta de habilidad.'),
-     ('SE QUIEREN LLEVAR', 'UN TABLERO', '"Ejemplo de dashboard o gráficos" fue una de las tres respuestas a qué llevarse.'),
-     ('EL CASO MÁS CONCRETO', '20 DÍAS', 'Actualizar procedimientos con control de nomenclatura y cruce de anexos, contra reloj.')]))
+d.add('Calcular no es predecir', 'paper', contrast(
+    'ANTES DE ABRIR NINGÚN ARCHIVO',
+    'Con datos, la IA hace<br/>dos cosas <span style="color:var(--brand);">muy distintas</span>.',
+    'La diferencia entre un análisis que se sostiene y uno que se cae está en cuál de las dos hizo. '
+    'Es el criterio técnico de toda esta sesión y se reconoce a simple vista.',
+    ('CUANDO EJECUTA CÓDIGO', 'Calcula.',
+     ['Subes el archivo y escribe código que lo procesa. El número sale de una <b>operación real</b> sobre tus filas.',
+      'Es <b>determinista</b>: la misma pregunta sobre el mismo archivo da el mismo resultado.',
+      'Es <b>auditable</b>: puedes pedirle el código o la fórmula y reproducirla en Excel o en Sheets.',
+      'Aquí entran conteos, sumas, promedios, Pareto, tendencias, dispersión y detección de atípicos.']),
+    ('CUANDO SOLO REDACTA', 'Predice.',
+     ['Sin ejecutar nada, completa la cifra <b>más probable</b> según el texto — el mecanismo del primer día.',
+      'Es <b>plausible y puede estar mal</b>: el error no se ve, porque el número suena razonable.',
+      'No es reproducible: preguntado dos veces, puede responder distinto.',
+      'Aquí entran los totales «de memoria», los porcentajes redondeados y las causas presentadas como hechos.']),
+    cierre='La regla operativa de la sesión: <b>exige siempre el procedimiento</b> —la fórmula o el código— '
+           'y <b>comprueba una fila a mano</b> contra el archivo. Si no puede mostrarte cómo llegó al número, '
+           'lo predijo.'))
 
 d.add('Agenda', 'paper', agenda(
     '4 BLOQUES <span class="sep"></span> 18 EJERCICIOS <span class="sep"></span> 180 MIN',
@@ -57,7 +58,7 @@ d.add('Agenda', 'paper', agenda(
 
 d.add('Cómo se ejecuta cada ejercicio', 'paper', howto(
     'ANTES DE EMPEZAR',
-    'Hoy se trabaja<br/>con <span style="color:var(--green);">archivos de verdad</span>.',
+    'Hoy se trabaja<br/>con <span style="color:var(--brand);">archivos de verdad</span>.',
     [('Los archivos están en la carpeta',
       'Cada ejercicio dice cuál abrir. Son casos de práctica con el contexto de Casa de las Baterías, '
       'y traen los mismos defectos que traen los archivos reales. Si trajiste el tuyo, mejor: úsalo.'),
@@ -70,7 +71,7 @@ d.add('Cómo se ejecuta cada ejercicio', 'paper', howto(
 
 d.add('Los materiales', 'paper', filelist(
     'LA CARPETA DEL TALLER',
-    'Los archivos de hoy<br/><span style="color:var(--green);">ya tienen los defectos</span>.',
+    'Los archivos de hoy<br/><span style="color:var(--brand);">ya tienen los defectos</span>.',
     'Material de práctica con el contexto real de Casa de las Baterías y datos ficticios. El archivo de '
     'ventas trae suciedad y patrones puestos a propósito; el expediente trae desviaciones de nomenclatura '
     'y referencias rotas. Si no encuentras nada, no es que el archivo esté limpio: revisa el pedido.',
@@ -153,12 +154,11 @@ d.add('Ejercicio 3 · Lo de Minitab', 'paper', exercise(
     '<span class="kw">d)</span> Devoluciones sobre unidades por <code>pais</code>: ¿hay alguno que se '
     'separe del resto más allá de la variación normal?</p>\n'
     '          <p>Entrega cada uno con: el número, el gráfico y <span class="kw">una frase</span> de qué significa.</p>',
-    'Los cuatro análisis con su gráfico y su procedimiento a la vista. En este archivo: tres líneas '
-    'concentran el 84 % del ingreso, el servicio a domicilio cae de 107 a 29 unidades en seis meses, '
-    'hay un ingreso de 34.500 contra una mediana de 950, y un país devuelve quince veces más que el resto.',
-    caveat='Sirve para explorar y decidir, no para certificar. Si el análisis alimenta una decisión '
-           'auditable de calidad, hace falta una herramienta validada y reproducible: eso es una decisión '
-           'de licenciamiento que el taller no resuelve. Comprueba siempre un número a mano.'))
+    'Los cuatro análisis con su procedimiento a la vista. En este archivo: tres líneas concentran el '
+    '84 % del ingreso, domicilio cae de 107 a 29 unidades, un ingreso de 34.500 contra mediana de 950, '
+    'y un país devuelve quince veces más.',
+    caveat='Sirve para explorar y decidir, no para certificar: un análisis auditable exige herramienta '
+           'validada, y eso es una decisión de licenciamiento. Comprueba siempre un número a mano.'))
 
 d.add('Ejercicio 4 · Causa y acción', 'paper', exercise(
     4, RAIL1, 10, 'De cinco hallazgos a cinco decisiones.',
@@ -171,15 +171,15 @@ d.add('Ejercicio 4 · Causa y acción', 'paper', exercise(
      '<b><code>07_notas_comite_operaciones.md</code></b>: ahí hay una explicación que el dato no contiene.'],
     '          <p>Con base en el análisis anterior, dame <span class="kw">cinco hallazgos</span> en tabla '
     'de cuatro columnas:</p>\n'
-    '          <p><span class="kw">1. HALLAZGO ·</span> qué muestra el dato, con la cifra.<br/>'
-    '<span class="kw">2. EVIDENCIA ·</span> de qué filas o columnas sale.<br/>'
-    '<span class="kw">3. CAUSA PROBABLE ·</span> tu hipótesis, marcada claramente como hipótesis.<br/>'
-    '<span class="kw">4. ACCIÓN ·</span> qué haría alguien de [tu área] esta semana con esto.</p>\n'
+    '          <p><span class="kw">1. HALLAZGO ·</span> qué muestra el dato, con la cifra. '
+    '<span class="kw">2. EVIDENCIA ·</span> de qué filas sale. '
+    '<span class="kw">3. CAUSA PROBABLE ·</span> tu hipótesis, marcada como tal. '
+    '<span class="kw">4. ACCIÓN ·</span> qué haría alguien de tu área esta semana.</p>\n'
     '          <p>Separa explícitamente lo que <span class="kw">el dato demuestra</span> de lo que '
     '<span class="kw">el dato sugiere</span>. Si un hallazgo no tiene acción posible, no lo incluyas.</p>',
-    'Cinco filas que se pegan tal cual en un correo o en un comité. La causa que proponga para Guatemala '
-    'será una hipótesis razonable y probablemente equivocada: el comité ya dijo que allá registran los '
-    'cambios por garantía como devolución. El dato solo no podía saberlo, y ese es el punto.'))
+    'Cinco filas que se pegan tal cual en un comité. La causa que proponga para Guatemala será razonable '
+    'y probablemente equivocada: el comité ya dijo que allá registran los cambios por garantía como '
+    'devolución. El dato solo no podía saberlo.'))
 
 d.add('Ejercicio 5 · El límite', 'paper', exercise(
     5, RAIL1, 10, 'Lo que estos datos no dicen.',
@@ -331,7 +331,7 @@ d.add('Ejercicio 11 · El auditor', 'paper', exercise(
     'una tabla: nombre actual · ¿cumple? · qué parte falla exactamente · nombre corregido propuesto.</p>\n'
     '          <p>Ordena por gravedad: primero los que rompen el código, después los de formato, '
     'al final los cosméticos. <span class="kw">No renombres nada</span>, solo propón.</p>',
-    'En este expediente hay <span style="color:var(--green);">tres</span> nombres que incumplen: uno sin '
+    'En este expediente hay <span style="color:var(--brand);">tres</span> nombres que incumplen: uno sin '
     'ninguna estructura, uno con la V de versión en mayúscula y uno con el correlativo en dos dígitos '
     'en vez de tres. Si tu tabla trae menos de tres, el pedido se quedó corto.',
     caveat='La propuesta es un borrador, no una autorización. Renombrar documentos controlados rompe enlaces '
@@ -354,9 +354,9 @@ d.add('Ejercicio 12 · El cruce', 'paper', exercise(
     'indica desde qué parte del procedimiento se le menciona. Si nadie lo menciona: [HUÉRFANO].</p>\n'
     '          <p>Marca también las referencias a <span class="kw">versiones distintas</span> del mismo '
     'documento y las menciones al mismo anexo con nombres diferentes.</p>',
-    'Dos listas. En este expediente: el <b>Anexo E</b> se referencia dos veces y no existe; el '
-    '<b>Anexo F</b> existe y nadie lo menciona; el Anexo B aparece con dos nombres distintos; y el '
-    'procedimiento cita el ANEXO-C v2 cuando el archivo es v1. Cuatro hallazgos, ninguno visible a ojo.'))
+    'Cuatro hallazgos que a ojo no se ven: el <b>Anexo E</b> se referencia y no existe; el <b>Anexo F</b> '
+    'existe y nadie lo menciona; el Anexo B aparece con dos nombres; y se cita el ANEXO-C v2 cuando el '
+    'archivo es v1.'))
 
 d.add('Ejercicio 13 · Captura ágil', 'paper', exercise(
     13, RAIL3, 10, 'Capturar el requerimiento sin tres reuniones.',
@@ -398,10 +398,9 @@ d.add('Ejercicio 14 · Control de cambios', 'paper', exercise(
     '<span class="kw">cambian un responsable</span> y cambios que afectan a otros documentos que referencian '
     'a este.</p>\n'
     '          <p>Al final, redacta el resumen de cambios en el formato de la tabla de control del documento.</p>',
-    'Entre v2 y v3 hay cinco cambios: el umbral sube de 3.000 a 5.000, la aprobación pasa de Jefatura de '
-    'Administración a Coordinación Comercial, el vencimiento pasa de 15 a 20 días, el sistema comercial '
-    'se reemplaza por el CRM y — el importante — <b>desaparece la doble verificación del punto 4.4</b>. '
-    'Ese último elimina un control y no puede pasar sin aprobación explícita.'))
+    'Cinco cambios entre v2 y v3: el umbral sube a 5.000, la aprobación pasa a Coordinación Comercial, '
+    'el vencimiento a 20 días, el sistema se reemplaza por el CRM y — el que importa — '
+    '<b>desaparece la doble verificación del 4.4</b>: ese elimina un control.'))
 
 # ---------------- bloque 4 ----------------
 d.add('Bloque 4', 'section-div', divider(
@@ -491,7 +490,7 @@ d.add('Ejercicio 18 · El siguiente lunes', 'paper', exercise(
 # ---------------- cierre ----------------
 d.add('Gobernanza', None, governance(
     'ANTES DE CERRAR',
-    'Tres reglas que<br/><span style="color:var(--green-br);">no dependen de la herramienta</span>.',
+    'Tres reglas que<br/><span style="color:var(--brand-br);">no dependen de la herramienta</span>.',
     'Todo lo que se hizo hoy toca documentos y datos de la empresa. Estas son prácticas de trabajo, no '
     'asesoría legal: la política aplicable en cada país la definen Legal y TI, y conviene consultarla antes '
     'de institucionalizar cualquiera de estos flujos.',

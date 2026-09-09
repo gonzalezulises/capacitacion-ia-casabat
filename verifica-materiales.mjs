@@ -12,6 +12,7 @@ const oks = [], fails = [];
 const ok = (m) => oks.push(m);
 const fail = (m) => fails.push(m);
 const leer = (p) => readFileSync(p, 'utf8');
+const DECKS = ['sesion-1.html', 'sesion-2.html'];
 const sinTilde = (s) => s.normalize('NFKD').replace(/[̀-ͯ]/g, '');
 
 // ---------- 1. El archivo de datos ----------
@@ -143,10 +144,10 @@ const notas = leer(join(M, '07_notas_comite_operaciones.md'));
   : fail('notas del comité: no hay compromisos huérfanos que encontrar');
 
 // ---------- 5. Los correos citados por número corresponden ----------
-// Los ejercicios dicen "el correo 4 de la bandeja": si alguien reordena el CSV, el
+// Los ejercicios dicen "el correo 4 de la pendientes": si alguien reordena el CSV, el
 // taller se rompe en vivo y nadie lo nota hasta ese momento.
-const bandeja = leer(join(M, '05_bandeja_entrada.csv')).trim().split('\n').slice(1);
-bandeja.length === 20 ? ok('bandeja: 20 correos') : fail(`bandeja: ${bandeja.length} correos, se esperaban 20`);
+const pendientes = leer(join(M, '05_correos_pendientes.csv')).trim().split('\n').slice(1);
+pendientes.length === 20 ? ok('pendientes: 20 correos') : fail(`pendientes: ${pendientes.length} correos, se esperaban 20`);
 const esperados = [
   [1, /cotizaci[oó]n 8842/i, 'la cotización 8842 (EJ 1 de la sesión 1)'],
   [4, /garant[ií]a.*moto|moto.*8 meses/i, 'la garantía de moto de 8 meses (EJ 11)'],
@@ -154,10 +155,10 @@ const esperados = [
   [14, /instalaci[oó]n.*ventana|ventana/i, 'la instalación fuera de ventana (EJ 6)'],
 ];
 for (const [n, re, que] of esperados) {
-  const fila = bandeja[n - 1] || '';
+  const fila = pendientes[n - 1] || '';
   re.test(fila)
-    ? ok(`bandeja: el correo ${n} sigue siendo ${que}`)
-    : fail(`bandeja: el correo ${n} ya no es ${que} — dice "${fila.slice(0, 60)}…"`);
+    ? ok(`correos pendientes: el ${n} sigue siendo ${que}`)
+    : fail(`correos pendientes: el ${n} ya no es ${que} — dice "${fila.slice(0, 60)}…"`);
 }
 
 // ---------- 6. Todo archivo citado en los decks existe ----------
@@ -175,7 +176,38 @@ citados.size === 0
     ? fail(`los decks citan material que no existe: ${rotos.join(', ')}`)
     : ok(`decks: los ${citados.size} materiales citados existen en materiales/`);
 
-// ---------- 7. Todo material citado es alcanzable desde el hub ----------
+// ---------- 7. Cada nombre de archivo del deck es un enlace que resuelve ----------
+// Si el nombre queda como texto muerto, el participante tiene que adivinar la ruta.
+let enlacesDeck = 0;
+const enlacesRotos = [];
+for (const deck of DECKS) {
+  const html = leer(deck);
+  const codigos = [...html.matchAll(/<code>([^<]+)<\/code>/g)].map(m => m[1]);
+  const conEnlace = [...html.matchAll(/class="mat" href="([^"]+)"/g)].map(m => m[1]);
+  enlacesDeck += conEnlace.length;
+  for (const h of conEnlace) {
+    const ruta = decodeURIComponent(h.split('#')[0]);
+    if (!existsSync(ruta)) enlacesRotos.push(`${deck} → ${h}`);
+  }
+  // un <code> que nombra un archivo existente y NO quedó enlazado es un descuido
+  const sueltos = codigos.filter(c => /\.(md|csv)$/.test(c))
+    .filter(c => !html.includes(`href="materiales/${encodeURIComponent(c)}"`) &&
+                 !html.includes(`href="materiales/expediente-PR-ADM-014/${encodeURIComponent(c)}"`));
+  if (sueltos.length) fail(`${deck}: nombres de archivo sin enlace — ${[...new Set(sueltos)].join(', ')}`);
+}
+enlacesRotos.length
+  ? fail(`enlaces del deck que no resuelven: ${enlacesRotos.join(' · ')}`)
+  : ok(`decks: ${enlacesDeck} nombres de archivo son enlaces y todos resuelven`);
+
+// las anclas del hub existen
+const hubHtml = leer('index.html');
+for (const ancla of ['materiales', 'expediente']) {
+  hubHtml.includes(`id="${ancla}"`)
+    ? ok(`hub: ancla #${ancla} presente`)
+    : fail(`hub: falta el ancla #${ancla}, a la que apuntan los decks`);
+}
+
+// ---------- 8. Todo material citado es alcanzable desde el hub ----------
 // Servir el archivo no basta: si el hub no lo enlaza, el participante no llega.
 const hub = leer('index.html');
 const enlazados = new Set([...hub.matchAll(/href="materiales\/([^"]+)"/g)]

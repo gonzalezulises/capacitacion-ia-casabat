@@ -1,16 +1,18 @@
 # IA aplicada a Administración y Gerencia Comercial · Casa de las Baterías
 
 Programa de **dos sesiones de 180 minutos** para las áreas de Administración y Gerencia Comercial
-de Casa de las Baterías (Panamá, Costa Rica, El Salvador, Guatemala). 60 slides, 36 ejercicios con
-prompts listos para copiar y **los archivos de trabajo incluidos**.
+de Casa de las Baterías (Panamá, Costa Rica, El Salvador, Guatemala). 65 slides, 36 ejercicios con
+prompts listos para copiar, **los archivos de trabajo incluidos** y dos anexos de consulta.
 
 - **Cliente:** Casa de las Baterías
 - **Formato:** presencial o remoto, con facilitador · 2 × 180 min
 - **Patrón base:** [`capacitacion-gemini-payjoy`](../capacitacion-gemini-payjoy) — mismo `deck-stage.js`
   (idéntico byte a byte), identidad y contenidos propios
-- **Identidad:** los tokens del taller anterior del mismo cliente
-  ([`mercadeocasabat`](../mercadeocasabat)`/src/styles/global.css`) — Antonio + Roboto + IBM Plex Mono,
-  verde `#289448` / `#2FAE57`
+- **Identidad:** la del cliente, tomada de
+  [`casabat-comparador-cliente`](../casabat-comparador-cliente)`/app/globals.css` y de su logotipo —
+  azul `#1C5C92`, azul oscuro `#14456E`, rojo `#C0392B`, canvas `#F4F7FB`; Inter como sans (igual que
+  el comparador), Antonio para titulares e IBM Plex Mono para los prompts. El logotipo está en
+  `assets/`.
 
 ## Principio de diseño: ningún ejercicio depende de que el participante traiga algo
 
@@ -34,8 +36,13 @@ materiales/
   08_reporte_mensual_mayo.md        el reporte del mes anterior
   09_reglas_de_nomenclatura.md      la regla contra la que se audita
   10_PR-ADM-014_v3_BORRADOR.md      la versión nueva del procedimiento
+  11_tecnicas_de_prompting.md       catálogo de 12 técnicas (anexo A)
+  12_gema_arquitecto_de_prompts.md  Gems y la gema constructora (anexo B)
   expediente-PR-ADM-014/            procedimiento vigente + 5 anexos
 ```
+
+Cada nombre de archivo que aparece en un slide es un **enlace al archivo**: el participante no tiene
+que buscarlo. Lo comprueba `verifica-materiales.mjs`.
 
 **Los defectos son intencionales.** El archivo de ventas trae la misma categoría escrita de cinco
 formas, fechas en dos formatos, duplicados, celdas vacías y una cantidad negativa; y también los
@@ -74,8 +81,9 @@ esos se indica el equivalente.
 
 ```
 index.html          hub del programa (una página, sin deck-stage)
-sesion-1.html       Que no se note · 30 slides · 18 ejercicios · 180 min
-sesion-2.html       Datos y documentos · 30 slides · 18 ejercicios · 180 min
+sesion-1.html       El valor del prompt · 36 slides · 18 ejercicios + 6 de anexo · 180 min
+sesion-2.html       Datos y documentos · 29 slides · 18 ejercicios · 180 min
+assets/             el logotipo de la marca
 materiales/         los archivos de trabajo
 build/              generador de los decks (ver más abajo)
 deck-stage.js       motor del deck (no modificar: el verificador comprueba su sha1)
@@ -84,8 +92,14 @@ verifica-materiales.mjs  compuerta de los materiales
 verifica-layout.js  compuerta de layout (se pega en la consola del navegador)
 ```
 
-**Sesión 1 · Que no se note** — B1 El pedido bien hecho (50) · B2 Que no suene a IA (50) ·
-B3 El trabajo de cada día (40) · B4 Confianza y control (40).
+**Sesión 1 · El valor del prompt** — B1 El pedido bien hecho (50) · B2 Que no suene a IA (50) ·
+B3 El trabajo de cada día (40) · B4 Confianza y control (40). Más dos anexos que no se recorren en
+sesión: **A** el catálogo de 12 técnicas de prompting, **B** las Gems de Gemini y la gema
+*Arquitecto de prompts*, con sus instrucciones completas.
+
+La sesión 1 abre con la teoría mínima —qué hace un modelo cuando predice— y el
+[Transformer Explainer](https://poloclub.github.io/transformer-explainer/) para verlo funcionar. La
+sesión 2 abre separando **calcular** de **predecir**: el criterio técnico que sostiene todo lo demás.
 
 **Sesión 2 · Datos y documentos** — B1 Conversa con tus datos (50) · B2 Tableros y reportes (40) ·
 B3 Procedimientos y anexos (50) · B4 Lo que no se delega (40).
@@ -97,18 +111,20 @@ node verifica.mjs              # estructura del deck: 18 comprobaciones
 node verifica-materiales.mjs   # materiales y trazabilidad: 26 comprobaciones
 ```
 
-`verifica.mjs` comprueba que los footers numeren 01..30 sin saltos, que los contadores del top-rail
+`verifica.mjs` comprueba que los footers numeren sin saltos, que los contadores del top-rail
 apunten al total real y a su propia posición, que los minutos de la agenda sumen 180 y coincidan con
 los dividers y con la suma de sus ejercicios, que cada ejercicio tenga concepto, pasos, prompt y
-resultado, que no queden restos del deck original, y que toda interrogación lleve su signo de apertura.
+resultado, que ningún `var(--token)` apunte a un token inexistente, que no queden restos del deck
+original, y que toda interrogación lleve su signo de apertura.
 
 `verifica-materiales.mjs` comprueba que los defectos y patrones plantados sigan en los archivos, que
 el expediente conserve sus desviaciones, que el borrador v3 mantenga sus cinco cambios frente al
 vigente y —lo más importante— **que todo archivo citado en un deck exista de verdad**.
 
 El layout **no se puede verificar fuera del navegador**: abre cada deck y pega `verifica-layout.js`
-en la consola. Comprueba que ningún elemento se salga del canvas de 1920×1080, por abajo o por la
-derecha. Es lo que atrapa un prompt que creció dos líneas de más.
+en la consola. Comprueba que ningún elemento **invada la banda del footer** ni se salga por la
+derecha. Medir contra el borde del slide no basta: el footer es absoluto y el contenido lo tapa
+antes de desbordar. Es lo que atrapa un prompt que creció dos líneas de más.
 
 ## Desarrollo
 
@@ -135,8 +151,10 @@ al agregar o quitar un slide no hay que renumerar nada a mano. **Si editas el HT
 siguiente `build.py` lo pisa** — o lo llevas también a `build/`, o dejas de usar el generador. Tras
 cualquier cambio, correr las tres compuertas.
 
-La densidad del bloque de prompt se elige sola según cuánto texto lleva (`dense` sobre ~560
-caracteres, `denser` sobre ~700, contando el aviso de límite si lo hay).
+La densidad del bloque de prompt se elige sola según cuánto texto lleva (`dense` sobre ~470
+caracteres, `denser` sobre ~620, contando el aviso de límite si lo hay). Los enlaces a los materiales
+también se generan solos: `deck.py` indexa `materiales/` y convierte cada `<code>archivo</code>` en
+un enlace, así que basta nombrar el archivo en el contenido.
 
 ## Navegación del deck
 
