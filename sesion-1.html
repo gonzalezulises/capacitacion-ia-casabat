@@ -1,0 +1,1497 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Sesión 1 · Que no se note · IA aplicada a Administración y Gerencia Comercial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Roboto:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="deck-stage.js"></script>
+<style>
+  :root{
+    /* Tokens de Casa de las Baterias — tomados de mercadeocasabat/src/styles/global.css */
+    --ink:#0A1322;        /* --color-bg (dark) */
+    --ink-2:#0E1A30;      /* --color-bg2 (dark) */
+    --bone:#EAEEF5;       /* --color-ink (dark) */
+    --bone-2:#A6B2C7;     /* --color-ink-dim (dark) */
+    --paper:#F4F7F5;      /* --color-surface (light) */
+    --graphite:#141715;   /* --color-ink (light) */
+    --graphite-2:#2A2E2B;
+    --muted-d:#8494AC;    /* --color-ink-mute (dark) */
+    --muted-l:#6D7570;    /* --color-ink-mute (light) */
+    --rule-d:#1A2F50;     /* --color-surface2 (dark) */
+    --rule-l:#D3DBD6;
+    --green:#289448;      /* --color-green (light) — acento sobre papel */
+    --green-br:#2FAE57;   /* --color-green (dark) — acento sobre tinta */
+    --cyan:#1FACC0;       /* --color-cyan */
+    --red:#C32421;        /* --color-red-acc */
+    --gold:#A97F14;       /* --color-gold */
+
+    --pad-x: 96px;
+    --pad-top: 80px;
+
+    --display: 'Antonio', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    --sans: 'Roboto', system-ui, -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', 'Menlo', monospace;
+  }
+
+  html,body{margin:0;background:#000;font-family:var(--sans);}
+
+  deck-stage > section{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:var(--sans);
+    overflow:hidden;
+  }
+  section.paper{background:var(--paper);color:var(--graphite);}
+
+  .frame{
+    width:100%;height:100%;
+    padding:var(--pad-top) var(--pad-x) 120px;
+    box-sizing:border-box;
+    display:flex;flex-direction:column;
+    position:relative;
+  }
+
+  /* === Footer === */
+  .footer{
+    position:absolute;
+    left:var(--pad-x);right:var(--pad-x);bottom:36px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:24px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--muted-d);
+  }
+  section.paper .footer{color:var(--muted-l);}
+  .footer .lhs{display:flex;gap:36px;align-items:center;white-space:nowrap;}
+  .footer .lhs span, .footer .rhs{white-space:nowrap;}
+  .footer .dot{width:5px;height:5px;background:var(--green-br);border-radius:50%;flex-shrink:0;}
+  section.paper .footer .dot{background:var(--green);}
+  .footer .rhs{letter-spacing:0.3em;font-variant-numeric:tabular-nums;}
+
+  /* === Top rail === */
+  .top-rail{
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:24px;font-weight:500;
+    letter-spacing:0.25em;text-transform:uppercase;
+    color:var(--muted-d);gap:24px;
+  }
+  .top-rail > span{white-space:nowrap;}
+  section.paper .top-rail{color:var(--muted-l);}
+  .top-rail .sep{width:24px;height:1px;background:currentColor;display:inline-block;margin:0 14px;vertical-align:middle;opacity:.6;}
+
+  h1.display, h2.display{
+    font-family:var(--display);
+    font-weight:600;line-height:1.0;
+    letter-spacing:-0.01em;margin:0;
+  }
+
+  .label{
+    font-size:24px;letter-spacing:0.28em;text-transform:uppercase;
+    font-weight:500;color:var(--muted-d);
+  }
+  section.paper .label{color:var(--muted-l);}
+  .label.acc{color:var(--green);}
+  section:not(.paper) .label.acc{color:var(--green-br);}
+
+  /* ===== Portada ===== */
+  .cover .frame{justify-content:space-between;}
+  .cover h1{
+    font-family:var(--display);
+    font-size:250px;line-height:0.95;letter-spacing:-0.01em;
+    font-weight:700;color:var(--bone);margin:0;
+  }
+  .cover h1 .acc{color:var(--green-br);}
+  .cover .eyebrow{
+    font-size:24px;letter-spacing:0.4em;text-transform:uppercase;
+    color:var(--green-br);margin-bottom:64px;font-weight:500;
+  }
+  .cover .sub{
+    font-family:var(--sans);font-size:34px;line-height:1.3;font-weight:300;
+    color:var(--bone-2);max-width:1300px;margin-top:60px;
+  }
+
+  /* ===== Agenda ===== */
+  .agenda-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 64px;margin-top:36px;}
+  .ag-block{padding:20px 0 0;border-top:1px solid var(--rule-d);}
+  section.paper .ag-block{border-top-color:var(--rule-l);}
+  .ag-block .bnum{
+    font-family:var(--mono);font-size:22px;color:var(--green-br);
+    letter-spacing:0.18em;text-transform:uppercase;font-weight:500;margin-bottom:14px;
+  }
+  section.paper .ag-block .bnum{color:var(--green);}
+  .ag-block h3{
+    font-family:var(--display);font-size:40px;line-height:1.05;
+    font-weight:600;margin:0 0 14px;letter-spacing:0;
+  }
+  .ag-block ul{margin:0;padding:0;list-style:none;}
+  .ag-block li{
+    font-size:23px;padding:7px 0;
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule-d);color:var(--bone-2);
+  }
+  section.paper .ag-block li{border-bottom-color:var(--rule-l);color:var(--graphite-2);}
+  .ag-block li:last-child{border-bottom:none;}
+  .ag-block li span{color:var(--muted-d);font-variant-numeric:tabular-nums;letter-spacing:0.15em;font-size:22px;white-space:nowrap;flex-shrink:0;margin-left:16px;}
+  section.paper .ag-block li span{color:var(--muted-l);}
+
+  /* Lista de materiales: archivo a la izquierda, para qué sirve a la derecha */
+  ul.files{margin:0;padding:0;list-style:none;}
+  ul.files li{
+    display:block;padding:10px 0;border-bottom:1px solid var(--rule-d);
+    color:var(--bone-2);font-size:22px;
+  }
+  section.paper ul.files li{border-bottom-color:var(--rule-l);color:var(--graphite-2);}
+  ul.files li:last-child{border-bottom:none;}
+  ul.files li code{
+    font-family:var(--mono);font-size:19px;background:none;padding:0;
+    color:var(--green);display:block;margin-bottom:3px;
+    overflow-wrap:anywhere;
+  }
+  section:not(.paper) ul.files li code{color:var(--green-br);}
+  ul.files li span{display:block;line-height:1.3;font-size:21px;}
+
+  /* ===== Divider de bloque ===== */
+  .section-div .frame{padding-top:96px;padding-bottom:96px;}
+  .section-div .block-no{
+    font-family:var(--display);font-size:560px;line-height:0.78;
+    letter-spacing:-0.03em;color:var(--green-br);font-weight:700;margin:0;
+  }
+  .section-div h1{
+    font-family:var(--display);font-size:112px;line-height:1.02;
+    letter-spacing:-0.01em;font-weight:600;color:var(--bone);margin:0;max-width:1500px;
+  }
+  .section-div .layout{display:grid;grid-template-columns:520px 1fr;gap:64px;align-items:end;margin:auto 0;}
+  .section-div .meta{
+    margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;
+    border-top:1px solid var(--rule-d);padding-top:28px;grid-column:1 / -1;
+  }
+  .section-div .meta div{font-size:23px;color:var(--bone-2);line-height:1.45;}
+  .section-div .meta div b{
+    display:block;color:var(--muted-d);font-weight:500;font-size:22px;
+    letter-spacing:0.25em;text-transform:uppercase;margin-bottom:12px;
+  }
+
+  /* ===== Ejercicios ===== */
+  .ex-header{display:grid;grid-template-columns:170px 1fr;gap:40px;margin:36px 0 28px;align-items:end;}
+  .ex-num-label{font-size:22px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted-l);margin-bottom:10px;font-weight:500;}
+  .ex-num{font-family:var(--display);font-size:150px;line-height:0.8;letter-spacing:-0.02em;color:var(--green);font-weight:700;}
+  section:not(.paper) .ex-num{color:var(--green-br);}
+  .ex-title{
+    font-family:var(--display);font-size:58px;line-height:1.08;
+    letter-spacing:0;font-weight:600;color:var(--graphite);margin:0;
+  }
+  section:not(.paper) .ex-title{color:var(--bone);}
+  .ex-tool{margin-top:12px;font-size:23px;color:var(--muted-l);font-weight:400;}
+  section:not(.paper) .ex-tool{color:var(--bone-2);}
+  .ex-tool b{color:var(--green);text-transform:uppercase;letter-spacing:0.18em;font-size:22px;margin-right:14px;font-weight:600;}
+  section:not(.paper) .ex-tool b{color:var(--green-br);}
+
+  .ex-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .col{display:flex;flex-direction:column;gap:24px;}
+
+  .concept-block .label{margin-bottom:16px;display:block;}
+  .concept{font-family:var(--display);font-size:33px;line-height:1.16;color:var(--graphite);font-weight:600;}
+  section:not(.paper) .concept{color:var(--bone);}
+  .concept b{color:var(--green);font-weight:600;}
+  section:not(.paper) .concept b{color:var(--green-br);}
+
+  .steps-block .label{margin-bottom:18px;display:block;}
+  ol.steps{margin:0;padding:0;list-style:none;counter-reset:step;}
+  ol.steps li{
+    counter-increment:step;padding:0 0 14px 52px;position:relative;
+    font-size:23px;line-height:1.4;color:var(--graphite-2);
+  }
+  section:not(.paper) ol.steps li{color:var(--bone-2);}
+  ol.steps li::before{
+    content:counter(step,decimal-leading-zero);
+    position:absolute;left:0;top:0;
+    font-family:var(--mono);font-weight:500;font-size:22px;
+    color:var(--green);letter-spacing:0.06em;
+  }
+  section:not(.paper) ol.steps li::before{color:var(--green-br);}
+  ol.steps li:last-child{padding-bottom:0;}
+  ol.steps li b{color:var(--graphite);font-weight:700;}
+  section:not(.paper) ol.steps li b{color:var(--bone);}
+
+  /* Tarjeta de prompt */
+  .prompt-card{
+    background:var(--ink);color:var(--bone);border-radius:0;
+    padding:28px 32px;font-family:var(--mono);font-size:22px;line-height:1.45;
+    position:relative;border-left:4px solid var(--green-br);
+  }
+  /* Densidad segun cuanto texto lleva el prompt: el slide nunca debe desbordar. */
+  .prompt-card.dense{font-size:20px;line-height:1.36;padding:24px 28px;}
+  .prompt-card.dense .label{margin-bottom:18px;}
+  .prompt-card.denser{font-size:18px;line-height:1.32;padding:20px 24px;}
+  .prompt-card.denser .label{margin-bottom:14px;font-size:20px;}
+  .prompt-card.dense p{margin-bottom:9px;}
+  .prompt-card.denser p{margin-bottom:8px;}
+  section:not(.paper) .prompt-card{background:var(--paper);color:var(--graphite);border-left:4px solid var(--green);}
+  .prompt-card .label{
+    color:var(--green-br);margin-bottom:22px;display:block;
+    font-family:var(--sans);font-size:22px;letter-spacing:0.28em;
+  }
+  section:not(.paper) .prompt-card .label{color:var(--green);}
+  .prompt-card p{margin:0 0 10px;}
+  .prompt-card p:last-child{margin-bottom:0;}
+  .prompt-card .kw{color:var(--green-br);font-weight:500;}
+  section:not(.paper) .prompt-card .kw{color:var(--green);}
+
+  /* Resultado esperado */
+  .result{padding:16px 0 0;border-top:1px solid var(--rule-l);font-size:22px;line-height:1.38;color:var(--graphite-2);}
+  section:not(.paper) .result{color:var(--bone-2);border-top-color:var(--rule-d);}
+  .result b{
+    color:var(--green);display:block;font-size:22px;text-transform:uppercase;
+    letter-spacing:0.28em;margin-bottom:14px;font-weight:500;font-family:var(--sans);
+  }
+  section:not(.paper) .result b{color:var(--green-br);}
+
+  /* Aviso de limite — honestidad sobre lo que la IA no hace */
+  .caveat{
+    margin-top:14px;border-left:4px solid var(--gold);padding:12px 18px;
+    font-size:19px;line-height:1.38;color:var(--graphite-2);background:rgba(169,127,20,0.07);
+  }
+  section:not(.paper) .caveat{color:var(--bone-2);background:rgba(232,184,66,0.10);}
+  .caveat b{color:var(--gold);text-transform:uppercase;letter-spacing:0.2em;font-size:17px;font-weight:600;display:block;margin-bottom:6px;}
+  section:not(.paper) .caveat b{color:#E8B842;}
+
+  /* ===== Tres pasos / tarjetas ===== */
+  .howto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:64px;}
+  .howto-card{border-top:1px solid var(--rule-l);padding-top:32px;}
+  section:not(.paper) .howto-card{border-top-color:var(--rule-d);}
+  .howto-card .n{font-family:var(--display);font-size:104px;color:var(--green);line-height:0.88;font-weight:700;margin-bottom:32px;letter-spacing:-0.02em;}
+  section:not(.paper) .howto-card .n{color:var(--green-br);}
+  .howto-card h3{font-family:var(--display);font-size:40px;font-weight:600;margin:0 0 18px;line-height:1.12;}
+  .howto-card p{font-size:23px;line-height:1.45;color:var(--graphite-2);margin:0;}
+  section:not(.paper) .howto-card p{color:var(--bone-2);}
+
+  /* ===== Diagnostico / cifras ===== */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;margin-top:64px;}
+  .stat .label{display:block;margin-bottom:16px;}
+  .stat b{
+    font-family:var(--display);font-size:136px;line-height:0.95;color:var(--green-br);
+    font-weight:700;letter-spacing:-0.02em;margin-bottom:24px;
+    display:flex;align-items:flex-end;min-height:130px;
+  }
+  /* Valores que son palabras y no cifras: caben en su columna sin invadir la vecina. */
+  .stat b.word{font-size:72px;line-height:1.06;letter-spacing:-0.01em;}
+  section.paper .stat b{color:var(--green);}
+  .stat p{font-size:22px;line-height:1.4;color:var(--bone-2);margin:0;}
+  section.paper .stat p{color:var(--graphite-2);}
+
+  /* ===== Gobernanza ===== */
+  .gov-grid{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+  .gov-item{border-top:2px solid var(--green-br);padding-top:28px;}
+  section.paper .gov-item{border-top-color:var(--green);}
+  .gov-item h3{font-family:var(--display);font-size:36px;font-weight:600;margin:0 0 18px;line-height:1.16;}
+  .gov-item p{font-size:22px;color:var(--bone-2);line-height:1.5;margin:0;}
+  section.paper .gov-item p{color:var(--graphite-2);}
+
+  /* ===== Cierre ===== */
+  .closing h1{
+    font-family:var(--display);font-size:190px;line-height:0.98;letter-spacing:-0.01em;
+    font-weight:700;margin:0;color:var(--bone);
+  }
+  .closing h1 .acc{color:var(--green-br);}
+  .closing .layout{margin:auto 0;}
+  .closing .next{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;border-top:1px solid var(--rule-d);padding-top:36px;}
+  .closing .next p{font-size:23px;line-height:1.5;color:var(--bone-2);margin:0;}
+  .closing .next .lbl{color:var(--green-br);font-size:22px;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:14px;font-weight:500;display:block;}
+
+  code{font-family:var(--mono);font-size:0.94em;background:rgba(40,148,72,0.12);padding:1px 8px;border-radius:2px;color:var(--green);}
+  section:not(.paper) code{background:rgba(47,174,87,0.16);color:var(--green-br);}
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+<!-- ===== 01 · Portada ===== -->
+<section class="cover" data-label="01 Portada">
+  <div class="frame">
+    <div class="top-rail"><span></span><span>Sesión 1 · 2026</span></div>
+    <div style="margin:auto 0;">
+      <div class="eyebrow">CASA DE LAS BATERÍAS · ADMINISTRACIÓN Y GERENCIA COMERCIAL</div>
+      <h1>QUE NO<br/><span class="acc">SE NOTE</span>.</h1>
+      <p class="sub">Sesión 1 de 2 · Prompting aplicado y voz propia · 180 minutos · 18 ejercicios sobre tus casos reales.</p>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">01</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 · El punto de partida ===== -->
+<section data-label="02 El punto de partida">
+  <div class="frame">
+    <div class="top-rail"><span>POR QUÉ ARRANCAMOS AQUÍ</span><span>02 / 30</span></div>
+    <div style="margin:auto 0;">
+      <h1 class="display" style="font-size:84px;max-width:1560px;">Ya usas IA todos los días.<br/>Hoy no venimos a<br/><span style="color:var(--green-br);">explicarte qué es</span>.</h1>
+      <p style="font-size:30px;line-height:1.45;color:var(--bone-2);max-width:1400px;margin-top:36px;">La encuesta previa lo dejó claro: nadie en este grupo está empezando. Todos usan ChatGPT o Gemini de forma habitual o frecuente. Por eso esta sesión no tiene módulo de fundamentos: empieza donde de verdad se traba el trabajo — en <b style="color:var(--bone);">cómo le pides las cosas</b> y en <b style="color:var(--bone);">cómo logras que el resultado sea tuyo y no de la máquina</b>.</p>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">02</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03 · El diagnóstico ===== -->
+<section class="paper" data-label="03 El diagnóstico">
+  <div class="frame">
+    <div class="top-rail"><span>LO QUE DIJO LA ENCUESTA PREVIA</span><span>03 / 30</span></div>
+    <h1 class="display" style="margin-top:48px;font-size:88px;max-width:1560px;">Tres respuestas, un solo tema debajo.</h1>
+    <div class="stats-grid">
+      <div class="stat"><span class="label">RESPONDIENTES</span><b>3</b><p>Panamá y Guatemala. La encuesta sigue abierta en Costa Rica y El Salvador.</p></div>
+      <div class="stat"><span class="label">NIVEL DE USO</span><b>0</b><p>Personas en nivel principiante. Todos usan IA de forma habitual o frecuente.</p></div>
+      <div class="stat"><span class="label">CONVERGENCIA</span><b>3/3</b><p>Las tres dificultades apuntan al prompting, por caminos distintos: mecánica, estructura y voz.</p></div>
+      <div class="stat"><span class="label">PIDEN LLEVARSE</span><b>2/3</b><p>Algo tangible y reutilizable: prompts, palabras clave, ejemplos — no conceptos.</p></div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">03</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 04 · Agenda ===== -->
+<section class="paper" data-label="04 Agenda">
+  <div class="frame">
+    <div class="top-rail"><span>AGENDA DE LA SESIÓN</span><span>4 BLOQUES <span class="sep"></span> 18 EJERCICIOS <span class="sep"></span> 180 MIN</span></div>
+    <h1 class="display" style="margin-top:52px;font-size:96px;">Lo que vamos a recorrer.</h1>
+    <div class="agenda-grid">
+      <div class="ag-block">
+        <div class="bnum">01 · BLOQUE 1 · 50 MIN</div>
+        <h3>El pedido bien hecho</h3>
+        <ul>
+          <li>El mismo pedido, dos veces <span>10 MIN</span></li>
+          <li>Las 8 piezas sobre tu caso <span>10 MIN</span></li>
+          <li>El filtro del director <span>10 MIN</span></li>
+          <li>Corregir sin reescribir <span>10 MIN</span></li>
+          <li>Tu biblioteca de pedidos <span>10 MIN</span></li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">02 · BLOQUE 2 · 50 MIN</div>
+        <h3>Que no suene a IA</h3>
+        <ul>
+          <li>Dale tus propios ejemplos <span>10 MIN</span></li>
+          <li>Tu ficha de voz en 8 reglas <span>10 MIN</span></li>
+          <li>Los tics que te delatan <span>10 MIN</span></li>
+          <li>Tu clon: Gem, Proyecto o GPT <span>10 MIN</span></li>
+          <li>La prueba del compañero <span>10 MIN</span></li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">03 · BLOQUE 3 · 40 MIN</div>
+        <h3>El trabajo de cada día</h3>
+        <ul>
+          <li>El correo difícil <span>10 MIN</span></li>
+          <li>Triage de la bandeja <span>10 MIN</span></li>
+          <li>De notas a acuerdos <span>10 MIN</span></li>
+          <li>Capacitación exprés <span>10 MIN</span></li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">04 · BLOQUE 4 · 40 MIN</div>
+        <h3>Confianza y control</h3>
+        <ul>
+          <li>El semáforo de lo que subes <span>10 MIN</span></li>
+          <li>La marca [VERIFICAR] <span>10 MIN</span></li>
+          <li>¿Se dice que lo hiciste con IA? <span>10 MIN</span></li>
+          <li>Tu plan de 10 días <span>10 MIN</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">04</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 · Cómo se ejecuta cada ejercicio ===== -->
+<section class="paper" data-label="05 Cómo se ejecuta cada ejercicio">
+  <div class="frame">
+    <div class="top-rail"><span>ANTES DE EMPEZAR</span><span>05 / 30</span></div>
+    <h1 class="display" style="margin-top:52px;font-size:88px;max-width:1560px;">Cada ejercicio se ejecuta<br/>en <span style="color:var(--green);">tres pasos</span>.</h1>
+    <div class="howto-grid">
+      <div class="howto-card"><div class="n">01</div><h3>Abre el material que indica el slide</h3><p>Ningún ejercicio depende de que hayas traído algo: los archivos están en la carpeta <code>materiales/</code> y cada slide dice cuál usar. Si trajiste tu caso real, mejor — úsalo en lugar del archivo.</p></div>
+      <div class="howto-card"><div class="n">02</div><h3>Copia el prompt y ejecútalo</h3><p>Cada ejercicio trae el pedido completo en el bloque verde. Funciona igual en ChatGPT y en Gemini: lo que se enseña es la estructura del pedido, no los botones de una herramienta.</p></div>
+      <div class="howto-card"><div class="n">03</div><h3>Compara con el resultado esperado</h3><p>Abajo a la derecha dice qué deberías obtener. Si lo tuyo está lejos, no empieces de cero: corrige una sola parte del pedido y vuelve a lanzarlo.</p></div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">05</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 06 · Los materiales ===== -->
+<section class="paper" data-label="06 Los materiales">
+  <div class="frame">
+    <div class="top-rail"><span>LA CARPETA DEL TALLER</span><span>06 / 30</span></div>
+    <h1 class="display" style="margin-top:44px;font-size:88px;">Todo lo que necesitas<br/><span style="color:var(--green);">ya está aquí</span>.</h1>
+    <p style="font-size:24px;line-height:1.45;color:var(--graphite-2);max-width:1500px;margin:20px 0 0;">Los archivos son material de práctica: casos ficticios con el contexto real de Casa de las Baterías. Ninguno contiene datos reales de clientes ni documentos vigentes de la empresa.</p>
+    <div class="agenda-grid" style="margin-top:28px;">
+      <div class="ag-block">
+        <div class="bnum">DE REFERENCIA · SE USAN VARIAS VECES</div>
+        <ul class="files">
+          <li><code>00_contexto_marca_casabat.md</code><span>Quiénes somos, tono, qué no se promete</span></li>
+          <li><code>01_plantilla_prompt_8_piezas.md</code><span>La plantilla del EJ 2, reutilizable</span></li>
+          <li><code>02_filtro_del_director.md</code><span>Las 8 preguntas del EJ 3</span></li>
+          <li><code>06_correos_de_referencia.md</code><span>Tres correos para el EJ 6</span></li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">CASOS DE LA SESIÓN</div>
+        <ul class="files">
+          <li><code>03_politica_garantia.md</code><span>El correo difícil · EJ 11</span></li>
+          <li><code>05_bandeja_entrada.csv</code><span>Veinte correos para el EJ 12</span></li>
+          <li><code>07_notas_comite_operaciones.md</code><span>Notas crudas para el EJ 13</span></li>
+          <li><code>expediente-PR-ADM-014/</code><span>El procedimiento del EJ 14</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">06</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07 · Bloque 1 ===== -->
+<section class="section-div" data-label="07 Bloque 1">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 1 DE 4</span><span>50 MIN <span class='sep'></span> 5 EJERCICIOS</span></div>
+    <div class="layout">
+      <div class="block-no">01</div>
+      <div><h1>El pedido<br/>bien hecho.</h1></div>
+      <div class="meta">
+        <div><b>Herramientas</b>ChatGPT o Gemini, indistinto.</div>
+        <div><b>Objetivo</b>Pasar del pedido suelto a la instrucción completa, y aprender a corregirla.</div>
+        <div><b>Te llevas</b>Tu plantilla de 8 piezas rellenada y 3 pedidos guardados.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">07</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 08 · Ejercicio 1 · Dos veces el mismo pedido ===== -->
+<section class="paper" data-label="08 Ejercicio 1 · Dos veces el mismo pedido">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> EL PEDIDO BIEN HECHO</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">01</div>
+      </div>
+      <div>
+        <h2 class="ex-title">El mismo pedido, dos veces.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>ChatGPT o Gemini · el que ya usas</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">La IA no responde genérico por ser mala: responde genérico porque <b>le diste un pedido genérico</b>. La diferencia se ve en 4 minutos.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Lanza el <b>pedido A</b> tal como lo escribirías hoy, de corrido.</li>
+            <li>Sin borrar nada, lanza el <b>pedido B</b> en un chat nuevo.</li>
+            <li>Pon las dos respuestas lado a lado y marca <b>qué tuviste que corregir</b> en cada una.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">EL CASO (real del archivo):</span> el correo 1 de <code>05_bandeja_entrada.csv</code> — un cliente pregunta si la cotización 8842, de hace una semana, sigue vigente. Según el procedimiento, vence a los 15 días.</p>
+          <p><span class="kw">A ·</span> Escríbeme un correo al cliente sobre la cotización 8842.</p>
+          <p><span class="kw">B ·</span> Actúa como asistente de Administración de Casa de las Baterías en Panamá. Escribe un correo al contacto de un cliente de flota que pregunta si su cotización 8842, emitida hace 7 días, sigue vigente.</p>
+          <p>Contexto: sí sigue vigente, vence a los 15 días de emitida. Quiero que responda antes de que venza y que sepa que puede cerrarla por WhatsApp.</p>
+          <p>Tono cercano y directo, español centroamericano neutro, de tú. Máximo 8 líneas. No inventes montos, fechas exactas ni condiciones: si te faltan, pídemelos.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Dos correos claramente distintos. El A hay que reescribirlo casi entero; el B se manda con uno o dos ajustes. Esa distancia es todo lo que enseña esta sesión.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">08</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 09 · Ejercicio 2 · Las 8 piezas ===== -->
+<section class="paper" data-label="09 Ejercicio 2 · Las 8 piezas">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> EL PEDIDO BIEN HECHO</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">02</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Las 8 piezas, sobre tu caso.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>ChatGPT o Gemini · plantilla reutilizable</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">El activo no es un prompt mágico: es <b>tu contexto escrito una vez</b>. Las partes 1, 2, 5 y 6 casi no cambian — por eso después van dentro de tu clon.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Abre <b><code>01_plantilla_prompt_8_piezas.md</code></b>: es la misma que ya usa Mercadeo.</li>
+            <li>Aplícala al caso 11 de la bandeja — un cliente de flota pide pasar de 30 a 60 días de crédito.</li>
+            <li>Rellena solo <b>[3] objetivo</b>, <b>[4] insumos</b> y <b>[7] formato</b>; el resto queda fijo. Guárdala: la reusas el resto del día.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">[1] CONTEXTO ·</span> Casa de las Baterías, Administración, Panamá. Un cliente de flota con contrato pide ampliar su crédito de 30 a 60 días.</p>
+          <p><span class="kw">[2] ROL ·</span> Asistente de Administración con experiencia en cartera. Español centroamericano neutro, de tú.</p>
+          <p><span class="kw">[3] OBJETIVO ·</span> Un correo de respuesta. Sale bien si el cliente entiende qué necesitamos de él para evaluarlo, sin que suene a negativa.</p>
+          <p><span class="kw">[4] INSUMOS ·</span> Te pego el Anexo D de condiciones de crédito (<code>expediente-PR-ADM-014/</code>). Es tu única fuente. No inventes cifras.</p>
+          <p><span class="kw">[5] RESTRICCIONES ·</span> No prometas la ampliación: la aprueba Finanzas. No cites plazos que no estén en el anexo.</p>
+          <p><span class="kw">[6] CRITERIOS ·</span> Cumple el objetivo, no inventa datos, separa lo que está aprobado de lo que hay que gestionar.</p>
+          <p><span class="kw">[7] FORMATO ·</span> Correo de máximo 8 líneas, con asunto.</p>
+          <p><span class="kw">[8] VERIFICACIÓN ·</span> Antes de responder, di qué supuestos hiciste y qué te falta. Marca [VERIFICAR] todo dato que hayas asumido.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Un resultado que ya no necesita cinco idas y vueltas. Y, sobre todo, una plantilla que sirve para la próxima vez — que es lo que pediste llevarte.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">09</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 · Ejercicio 3 · El filtro del director ===== -->
+<section class="paper" data-label="10 Ejercicio 3 · El filtro del director">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> EL PEDIDO BIEN HECHO</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">03</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Que se corrija antes de dártelo.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>ChatGPT o Gemini · sobre la salida del ejercicio 2</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Revisar tú cada salida es el cuello de botella. <b>El modelo puede aplicarse tu propio criterio</b> si se lo escribes como lista de verificación.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Toma la respuesta del ejercicio anterior, la que casi te sirve.</li>
+            <li>Abre <b><code>02_filtro_del_director.md</code></b> y copia su versión corta.</li>
+            <li>Pídele que <b>se autoevalúe y entregue la versión corregida</b>. Cuenta cuántas de esas correcciones ibas a hacer tú a mano.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Antes de darme la versión final, evalúa tu propia respuesta con estas preguntas y responde cada una con sí o no y una línea de justificación:</p>
+          <p><span class="kw">1.</span> ¿Cumple el objetivo que pedí?<br/><span class="kw">2.</span> ¿Suena a una persona de Casa de las Baterías o suena a IA?<br/><span class="kw">3.</span> ¿Promete algo que no puedo sostener?<br/><span class="kw">4.</span> ¿Usa precios, plazos o coberturas que yo no te di?<br/><span class="kw">5.</span> ¿Propone una acción concreta?<br/><span class="kw">6.</span> ¿Inventaste algún dato?<br/><span class="kw">7.</span> ¿Algo de esto necesita revisión de otra área?<br/><span class="kw">8.</span> ¿Se usa tal cual o hay que rehacerlo?</p>
+          <p>Después entrégame <span class="kw">solo la versión corregida</span>.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          La segunda versión suele ser la que ibas a producir tú después de dos rondas de edición. El filtro se guarda una vez y se reusa siempre.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">10</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11 · Ejercicio 4 · Corregir sin reescribir ===== -->
+<section class="paper" data-label="11 Ejercicio 4 · Corregir sin reescribir">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> EL PEDIDO BIEN HECHO</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">04</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Corregir sin volver a explicar todo.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>ChatGPT o Gemini · sobre cualquier salida anterior</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">El desgaste no está en pedir: está en <b>volver a explicarlo entero</b> cada vez que algo sale mal. La corrección quirúrgica nombra qué cambia y blinda el resto.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Identifica <b>una sola cosa</b> que está mal: el tono, la extensión, un párrafo.</li>
+            <li>Pide el cambio nombrando explícitamente <b>qué se queda intacto</b>.</li>
+            <li>Repite hasta tres veces. Si a la tercera no llega, el problema está en el pedido original, no en la corrección.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Mantén el texto anterior exactamente igual, <span class="kw">salvo</span> [lo que cambia: el segundo párrafo / el saludo / la despedida].</p>
+          <p>Cámbialo así: [instrucción concreta].</p>
+          <p>No toques el resto: ni el orden, ni la extensión, ni las palabras que ya funcionan. Devuélveme el texto completo con ese único cambio aplicado y, debajo, <span class="kw">una línea</span> diciendo qué modificaste.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          El texto vuelve con el cambio pedido y nada más movido. Se acaba el "me arregló una cosa y me dañó otras dos".
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">11</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12 · Ejercicio 5 · Tu biblioteca ===== -->
+<section class="paper" data-label="12 Ejercicio 5 · Tu biblioteca">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> EL PEDIDO BIEN HECHO</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">05</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Los tres pedidos que repites cada semana.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Tu bloc de notas, Docs o Keep · lo que ya usas</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Un pedido que vive en tu historial <b>se pierde el lunes</b>. Lo que se guarda con nombre y se vuelve a abrir es lo único que cambia tu semana.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Escribe las <b>tres tareas</b> que hiciste con IA más de una vez este mes. Si no te viene ninguna, usa tres de la bandeja: responder una consulta de garantía, redactar un recordatorio de pago, contestar una solicitud de crédito.</li>
+            <li>Para cada una, guarda el pedido que mejor funcionó, con las 8 piezas ya rellenadas.</li>
+            <li>Ponles nombre en imperativo y déjalas donde las encuentres en 10 segundos.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">Formato de cada ficha:</span></p>
+          <p>NOMBRE · [Redactar recordatorio de pago] — cuándo se usa: [cada lunes, cartera vencida]</p>
+          <p>PEDIDO · [las 8 piezas, ya rellenadas]</p>
+          <p>QUÉ CAMBIO CADA VEZ · [cliente, monto, fecha]</p>
+          <p>ÚLTIMA REVISIÓN · [fecha]</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Tres fichas guardadas. Es el entregable mínimo de esta sesión: si mañana te quedas solo con esto, ya recuperaste el tiempo del taller.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">12</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13 · Bloque 2 ===== -->
+<section class="section-div" data-label="13 Bloque 2">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 2 DE 4</span><span>50 MIN <span class='sep'></span> 5 EJERCICIOS</span></div>
+    <div class="layout">
+      <div class="block-no">02</div>
+      <div><h1>Que no<br/>suene a IA.</h1></div>
+      <div class="meta">
+        <div><b>Herramientas</b>ChatGPT o Gemini · más tu propio archivo de textos.</div>
+        <div><b>Objetivo</b>Que el resultado pase como tuyo, sin que tengas que reescribirlo.</div>
+        <div><b>Te llevas</b>Tu ficha de voz y un clon que la aplica solo.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">13</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14 · Ejercicio 6 · Dale tus ejemplos ===== -->
+<section class="paper" data-label="14 Ejercicio 6 · Dale tus ejemplos">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE NO SUENE A IA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">06</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Enséñale a escribir como tú.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>ChatGPT o Gemini · con tres textos tuyos reales</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Describir tu estilo con adjetivos no funciona. <b>Mostrarle tres textos tuyos, sí.</b> El modelo copia patrones mucho mejor de lo que sigue descripciones.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Abre <b><code>06_correos_de_referencia.md</code></b>: tres correos de una jefatura administrativa. Si trajiste tres correos tuyos, usa los tuyos — funcionan mejor.</li>
+            <li>Pégalos completos y pídele que extraiga el patrón <b>antes</b> de escribir nada.</li>
+            <li>Recién entonces pídele el texto nuevo: la respuesta al caso 14 de la bandeja, el reclamo por la instalación fuera de la ventana acordada.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card dense">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Te voy a pegar tres correos escritos por la misma persona. <span class="kw">No los edites ni los comentes.</span></p>
+          <p>[TEXTO 1] · [TEXTO 2] · [TEXTO 3]</p>
+          <p>Primero dime, en una lista corta, <span class="kw">qué patrón</span> ves en cómo escribo: largo de frase, cómo abro, cómo cierro, qué palabras repito, qué nunca uso, cuánto rodeo doy antes de ir al punto.</p>
+          <p>Después, y solo después, escribe la respuesta al cliente que reclama que la instalación a domicilio llegó tres horas tarde, siguiendo ese mismo patrón. Si tienes que elegir entre sonar correcto y sonar como yo, <span class="kw">suena como yo</span>.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Un texto que reconoces como propio. Es la respuesta directa a "quiero que no se note que es IA": no se nota cuando el patrón es el tuyo.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">14</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 15 · Ejercicio 7 · Tu ficha de voz ===== -->
+<section class="paper" data-label="15 Ejercicio 7 · Tu ficha de voz">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE NO SUENE A IA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">07</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Tu voz, en ocho reglas.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>ChatGPT o Gemini · a partir del ejercicio 6</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">El patrón que acaba de extraer es un activo. <b>Escrito como ocho reglas</b>, lo pegas en cualquier herramienta y funciona igual en las dos.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Pídele que convierta el patrón en <b>ocho reglas en imperativo</b>, verificables.</li>
+            <li>Borra las que no te representen y agrega las tuyas a mano — esto no se delega entero.</li>
+            <li>Guárdala. En el ejercicio 9 la metes dentro de tu clon.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Convierte el patrón que identificaste en <span class="kw">ocho reglas de escritura</span>, en imperativo y comprobables. Nada de "sé claro" ni "usa un tono cercano": tienen que ser reglas que alguien pueda auditar.</p>
+          <p>Ejemplo del nivel que busco: "Abre con el hecho, nunca con un saludo de dos líneas". "Ninguna frase pasa de 25 palabras". "Cierra con una pregunta concreta o con la acción que espero".</p>
+          <p>Agrega una novena regla que diga <span class="kw">qué nunca hago</span>.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Una ficha de nueve líneas que puedes pegar en cualquier chat. Es transferible: sirve igual en ChatGPT que en Gemini, porque no depende de la herramienta.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">15</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 16 · Ejercicio 8 · Los tics ===== -->
+<section class="paper" data-label="16 Ejercicio 8 · Los tics">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE NO SUENE A IA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">08</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Los tics que la delatan.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>ChatGPT o Gemini · sobre un texto ya generado</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Lo que hace que un texto "se note" no es el contenido: es un <b>puñado de muletillas</b> que casi ningún humano usa y casi todo modelo repite.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Toma un texto que hayas generado hoy y pídele la <b>lista de sus propios tics</b>.</li>
+            <li>Añade los que tú detectas y arma tu lista negra.</li>
+            <li>Vuelve a pedir el texto <b>prohibiendo esa lista explícitamente</b>.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Lee este texto que generaste y dime qué partes <span class="kw">delatan que lo escribió una IA</span>: muletillas, frases de relleno, estructuras demasiado simétricas, entusiasmo de más.</p>
+          <p>Después reescríbelo con estas prohibiciones: nada de "en el mundo actual", "es importante destacar", "no dudes en", "en resumen", "sin duda"; ninguna lista de tres elementos que suene armada para rellenar; ningún cierre motivacional.</p>
+          <p>Si una frase no aporta información, <span class="kw">bórrala</span> en vez de suavizarla.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          El mismo contenido, entre un 20 y un 30 % más corto, sin las costuras. Guarda la lista negra: se pega una vez al clon y deja de aparecer.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">16</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 17 · Ejercicio 9 · Tu clon ===== -->
+<section class="paper" data-label="17 Ejercicio 9 · Tu clon">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE NO SUENE A IA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">09</div>
+      </div>
+      <div>
+        <h2 class="ex-title">El clon que ya sabe quién eres.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Gem (Gemini) · Proyecto o GPT personalizado (ChatGPT)</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Repetir tu contexto en cada chat es el impuesto invisible. <b>Un clon guarda las partes fijas</b> y tú solo escribes lo que cambia.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Crea un <b>Gem</b> en Gemini o un <b>Proyecto / GPT personalizado</b> en ChatGPT. Es equivalente.</li>
+            <li>Pega dentro: <b><code>00_contexto_marca_casabat.md</code></b>, tu ficha de voz del EJ 7, tu lista negra del EJ 8 y la versión corta de <b><code>02_filtro_del_director.md</code></b>.</li>
+            <li>Pruébalo con un pedido de una línea. Si aún tienes que explicarle quién eres, algo faltó adentro.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">INSTRUCCIONES DEL CLON (pegar en la configuración):</span></p>
+          <p>Eres mi asistente de escritura en Casa de las Baterías. Yo soy [cargo] de [área] en [país].</p>
+          <p>Este es el contexto de la empresa: [pega <code>00_contexto_marca_casabat.md</code>].</p>
+          <p>Escribes siempre siguiendo estas reglas de voz: [pega tu ficha del EJ 7].</p>
+          <p>Nunca uses: [pega tu lista negra del EJ 8].</p>
+          <p>Nunca inventes precios, plazos ni cobertura: márcalos [VERIFICAR].</p>
+          <p>Antes de entregar, revísate con el filtro de 8 preguntas y corrígete.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Un asistente al que le escribes "recordatorio de pago para [cliente]" y devuelve algo casi listo. A partir de aquí, el resto de la sesión se hace dentro de él.
+        </div>
+        <div class="caveat"><b>Límite</b>El clon hereda lo que le metes. Si pegas dentro un texto terminado como ejemplo, tenderá a repetirlo casi igual: pega <b>reglas</b>, no salidas.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">17</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 18 · Ejercicio 10 · La prueba del compañero ===== -->
+<section class="paper" data-label="18 Ejercicio 10 · La prueba del compañero">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE NO SUENE A IA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">10</div>
+      </div>
+      <div>
+        <h2 class="ex-title">La prueba del compañero.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Tu clon + la persona sentada al lado</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">"Que no se note" no es una sensación: es un criterio que <b>otra persona</b> puede aplicar. Si no lo defines, no sabes cuándo parar de corregir.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Produce con tu clon un texto real que vayas a mandar esta semana.</li>
+            <li>Dáselo a la persona de al lado <b>sin decirle cómo lo hiciste</b>.</li>
+            <li>Pregúntale dos cosas: ¿lo firmarías tú? y ¿qué parte te suena rara? Anota la respuesta.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">Criterio de aceptación (anótalo tú, no lo pidas a la IA):</span></p>
+          <p>1. ¿Un compañero lo mandaría tal cual con su nombre?</p>
+          <p>2. ¿Hay alguna frase que tú nunca dirías?</p>
+          <p>3. ¿Cuánto tuviste que editar? Si pasa del 20 %, el problema está en el clon: vuelve al EJ 7.</p>
+          <p>4. ¿Se sostiene sin ningún dato inventado?</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Un umbral propio en vez de una sensación. Y una respuesta honesta a la pregunta de fondo: si el texto pasa la prueba del compañero, ya no importa cómo se produjo.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">18</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 19 · Bloque 3 ===== -->
+<section class="section-div" data-label="19 Bloque 3">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 3 DE 4</span><span>40 MIN <span class='sep'></span> 4 EJERCICIOS</span></div>
+    <div class="layout">
+      <div class="block-no">03</div>
+      <div><h1>El trabajo<br/>de cada día.</h1></div>
+      <div class="meta">
+        <div><b>Herramientas</b>Tu clon del bloque 2 · correo, notas y documentos reales.</div>
+        <div><b>Objetivo</b>Aplicar lo anterior a las cuatro tareas que más tiempo consumen.</div>
+        <div><b>Te llevas</b>Cuatro pedidos guardados sobre tus tareas reales.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">19</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 20 · Ejercicio 11 · El correo difícil ===== -->
+<section class="paper" data-label="20 Ejercicio 11 · El correo difícil">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> EL TRABAJO DE CADA DÍA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">11</div>
+      </div>
+      <div>
+        <h2 class="ex-title">El correo que te da pereza escribir.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Tu clon · caso real de esta semana</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Redactar y mejorar correos es hoy el uso número uno del grupo. El salto no está en escribirlo más rápido: está en <b>no perder el cliente ni prometer lo que no puedes</b>.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>El caso es el correo 4 de <b><code>05_bandeja_entrada.csv</code></b>: una batería de moto de 8 meses.</li>
+            <li>Pega <b><code>03_politica_garantia.md</code></b> completo. Sin la política, la IA inventa una respuesta amable que no puedes sostener — compruébalo pidiéndoselo primero sin ella.</li>
+            <li>Pide tres versiones con distinto grado de firmeza y elige tú.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card dense">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Caso: un cliente reclama la garantía de una batería de moto comprada hace 8 meses que ya no arranca. Insiste en que le corresponde reemplazo completo.</p>
+          <p>Esta es la política que aplica: [pega <code>03_politica_garantia.md</code>]. Es tu única fuente sobre plazos y condiciones.</p>
+          <p>No puedo ofrecer nada que no esté ahí, ni insinuar excepciones.</p>
+          <p>Escribe <span class="kw">tres versiones</span> de la respuesta: una conciliadora, una neutra y una firme. Todas dicen lo mismo de fondo y ninguna promete nada fuera de lo anterior.</p>
+          <p>Ninguna versión inventa plazos ni montos. Lo que no te di, lo marcas con [VERIFICAR].</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Tres borradores con el mismo fondo y distinta temperatura. La política dice 6 meses sin prorrateo para moto: la respuesta correcta explica la causa y ofrece una alternativa, nunca cierra con un "no aplica". Eliges por criterio comercial, no por cansancio de redactar.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">20</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 21 · Ejercicio 12 · Triage de bandeja ===== -->
+<section class="paper" data-label="21 Ejercicio 12 · Triage de bandeja">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> EL TRABAJO DE CADA DÍA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">12</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Veinte correos, cuatro decisiones.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Tu clon · con el texto de tu bandeja, sin datos sensibles</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">La bandeja no se resuelve leyendo más rápido: se resuelve <b>clasificando antes de responder</b>. La IA es buena clasificando; tú eres bueno decidiendo.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Abre <b><code>05_bandeja_entrada.csv</code></b>: 20 asuntos con su primera línea, ya sin datos de personas. Así se prepara tu bandeja real antes de subirla.</li>
+            <li>Pide la clasificación en cuatro cubos y el borrador solo del cubo A.</li>
+            <li>Responde tú los del cubo C. Ese no se delega.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Te paso 20 asuntos con su primera línea. Clasifícalos en cuatro grupos:</p>
+          <p><span class="kw">A ·</span> Responde en una línea (confirmar, agradecer, acusar recibo).<br/><span class="kw">B ·</span> Necesita un dato que hay que buscar.<br/><span class="kw">C ·</span> Decide una persona, no un correo.<br/><span class="kw">D ·</span> No requiere respuesta.</p>
+          <p>Devuélvelo como tabla: asunto, grupo, y por qué. Después redacta <span class="kw">solo</span> los borradores del grupo A, en mi voz.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Una tabla que convierte una bandeja en cuatro decisiones, y los borradores de la mitad trivial listos. El grupo C queda visible: es el que de verdad te estaba costando la mañana.
+        </div>
+        <div class="caveat"><b>Límite</b>No pegues datos de clientes identificables, montos de contratos ni cédulas. Para clasificar, el asunto y una línea bastan — el resto es riesgo sin beneficio.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">21</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 22 · Ejercicio 13 · De notas a acuerdos ===== -->
+<section class="paper" data-label="22 Ejercicio 13 · De notas a acuerdos">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> EL TRABAJO DE CADA DÍA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">13</div>
+      </div>
+      <div>
+        <h2 class="ex-title">De notas sueltas a acuerdos con dueño.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Tu clon · tus notas de la última reunión</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Una minuta que solo narra lo que se dijo no sirve. La que sirve <b>tiene dueño, fecha y una decisión</b> por línea — y eso se le puede exigir al formato.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Abre <b><code>07_notas_comite_operaciones.md</code></b>: notas crudas de un comité, desordenadas.</li>
+            <li>Exige el formato de salida por adelantado; sin eso devuelve un resumen narrativo.</li>
+            <li>Cuenta los compromisos que quedaron sin dueño o sin fecha: hay varios, y ese es el hallazgo real.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Estas son las notas crudas de un comité de operaciones: [pega <code>07_notas_comite_operaciones.md</code>].</p>
+          <p>Devuélveme <span class="kw">dos bloques y nada más</span>.</p>
+          <p><span class="kw">1. DECISIONES ·</span> tabla con: qué se decidió, quién lo dijo, qué queda bloqueado si no se cumple.</p>
+          <p><span class="kw">2. COMPROMISOS ·</span> tabla con: acción, dueño, fecha límite, cómo sabremos que se cumplió.</p>
+          <p>Si un compromiso no tiene dueño o no tiene fecha en mis notas, <span class="kw">no lo inventes</span>: ponlo igual y marca la casilla como [FALTA].</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Dos tablas que se pegan en el correo de seguimiento. En estas notas hay al menos tres compromisos sin dueño o sin fecha: la homologación del criterio de devoluciones, la actualización del procedimiento y el análisis del servicio a domicilio.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">22</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 23 · Ejercicio 14 · Capacitación exprés ===== -->
+<section class="paper" data-label="23 Ejercicio 14 · Capacitación exprés">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> EL TRABAJO DE CADA DÍA</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">14</div>
+      </div>
+      <div>
+        <h2 class="ex-title">El material de capacitación, en una tarde.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Tu clon · sobre un procedimiento o producto real</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Producir material formativo desde cero es de lo más lento del área. Con la fuente correcta, la IA arma <b>el guion y la evaluación</b>; tú aportas el criterio de qué es importante.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>La fuente es <b><code>expediente-PR-ADM-014/</code></b>, el procedimiento de cotizaciones.</li>
+            <li>Dásela completa. Sin fuente produce contenido plausible y equivocado — vale la pena verlo una vez.</li>
+            <li>Revisa tú las preguntas de evaluación: ahí se cuela el error que nadie detecta.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Fuente única: [pega <code>PR-ADM-014_Gestion_de_Cotizaciones_v2.md</code>]. No uses conocimiento externo; si algo no está en la fuente, dilo.</p>
+          <p>Arma un módulo de capacitación de 20 minutos para asistentes comerciales nuevos con:</p>
+          <p><span class="kw">1.</span> Objetivo en una frase: qué sabrá hacer al terminar.<br/><span class="kw">2.</span> Guion de [5] puntos, cada uno con un ejemplo del día a día.<br/><span class="kw">3.</span> Los [3] errores más comunes y cómo se ven.<br/><span class="kw">4.</span> [5] preguntas de evaluación con su respuesta y la línea de la fuente que la sustenta.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Un módulo listo para revisar, no para publicar. La cuarta parte es la clave: cada respuesta apunta a la fuente, así que verificarlo te toma minutos en vez de una tarde.
+        </div>
+        <div class="caveat"><b>Límite</b>Todo material que se publique al equipo pasa por quien es dueño del procedimiento. La IA acelera la redacción; no valida el contenido técnico ni sustituye la aprobación del área.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">23</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 24 · Bloque 4 ===== -->
+<section class="section-div" data-label="24 Bloque 4">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 4 DE 4</span><span>40 MIN <span class='sep'></span> 4 EJERCICIOS</span></div>
+    <div class="layout">
+      <div class="block-no">04</div>
+      <div><h1>Confianza<br/>y control.</h1></div>
+      <div class="meta">
+        <div><b>Herramientas</b>Tu clon · tu criterio · una conversación de sala.</div>
+        <div><b>Objetivo</b>Saber qué se sube, qué se verifica y qué se dice — antes de que sea un problema.</div>
+        <div><b>Te llevas</b>Tu semáforo de datos y un compromiso a 10 días.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">24</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 25 · Ejercicio 15 · El semáforo ===== -->
+<section class="paper" data-label="25 Ejercicio 15 · El semáforo">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> CONFIANZA Y CONTROL</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">15</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Qué sí y qué nunca le pegas.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Ejercicio en papel · después se pega al clon</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">La regla no puede ser "usa el sentido común": cuando hay prisa, el sentido común pierde. <b>Una lista de tres colores</b>, escrita antes, sí aguanta.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Escribe tu propia lista en tres columnas, con ejemplos de tu semana, no genéricos.</li>
+            <li>Contrasta las dudas con la sala: lo que a ti te parece verde a otro le parece rojo.</li>
+            <li>Pega la columna roja dentro de tu clon como prohibición explícita.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">VERDE ·</span> Va sin pensarlo: texto que tú escribiste, documentos públicos de la empresa, datos que ya son de dominio público, ejemplos con nombres cambiados.</p>
+          <p><span class="kw">ÁMBAR ·</span> Solo con datos anonimizados o con visto bueno: cuadros internos sin identificar personas, procedimientos no publicados, información de proveedores.</p>
+          <p><span class="kw">ROJO ·</span> No entra nunca: datos personales de clientes o del equipo, contratos vigentes, credenciales, información financiera no publicada, cualquier cosa bajo acuerdo de confidencialidad.</p>
+          <p>Ante la duda, un caso ámbar se trata como rojo hasta que alguien lo autorice.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Tu lista, con ejemplos reales de tu área. Es lo que hace que la regla funcione un martes a las 5 de la tarde.
+        </div>
+        <div class="caveat"><b>Límite</b>Esta lista es un punto de partida operativo, no la política oficial de la empresa. Lo que aplica en materia de protección de datos y confidencialidad lo definen Legal y TI, y varía entre Panamá, Costa Rica, El Salvador y Guatemala.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">25</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 26 · Ejercicio 16 · La marca VERIFICAR ===== -->
+<section class="paper" data-label="26 Ejercicio 16 · La marca VERIFICAR">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> CONFIANZA Y CONTROL</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">16</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Obligarla a mostrar las costuras.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Tu clon · sobre cualquier salida con cifras</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">El error caro no es el que se ve: es el dato inventado que <b>suena perfectamente razonable</b>. La defensa es exigir que marque lo que asumió.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Toma cualquier salida tuya que contenga cifras, fechas o condiciones.</li>
+            <li>Pide la auditoría del propio texto, separando lo que le diste de lo que rellenó.</li>
+            <li>Verifica tú, en la fuente, solo lo marcado. Ese es todo el trabajo que queda.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Revisa el texto que acabas de darme y sepáralo en tres listas:</p>
+          <p><span class="kw">DATO DADO ·</span> lo que salió de lo que yo te pegué. Cita la línea.<br/><span class="kw">DATO ASUMIDO ·</span> lo que completaste tú porque parecía razonable. Márcalo [VERIFICAR].<br/><span class="kw">DATO FALTANTE ·</span> lo que necesitarías para que esto quede completo.</p>
+          <p>No corrijas nada todavía. Solo muéstrame las tres listas.</p>
+          <p>Si algo de la primera lista no lo puedes citar textualmente, muévelo a la segunda.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          La lista corta de lo que hay que comprobar. Casi siempre es mucho más corta de lo que temías — y casi nunca vacía, que es exactamente el punto.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">26</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 27 · Ejercicio 17 · Decirlo o no decirlo ===== -->
+<section class="paper" data-label="27 Ejercicio 17 · Decirlo o no decirlo">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> CONFIANZA Y CONTROL</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">17</div>
+      </div>
+      <div>
+        <h2 class="ex-title">¿Se dice que lo hiciste con IA?</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Conversación de sala · sin herramienta</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">En la encuesta apareció una vez: <b>"que no se note que es IA"</b>. Eso puede ser un estándar de calidad o puede ser una norma no escrita. No es lo mismo, y conviene saber cuál es.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Cada quien responde para sí: ¿te incomodaría que un colega supiera que ese correo lo redactaste con IA?</li>
+            <li>Compartan las respuestas en la sala. Busquen si hay un patrón o son posiciones individuales.</li>
+            <li>Cierren con <b>una sola línea</b> de acuerdo práctico para el área.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">Las tres preguntas de la sala:</span></p>
+          <p>1. ¿Hay alguna situación en la que <span class="kw">sí</span> conviene decir que se usó IA? (por ejemplo, un informe que otra persona va a auditar)</p>
+          <p>2. ¿Hay alguna en la que declarar el uso <span class="kw">reste</span> valor al trabajo?</p>
+          <p>3. ¿La incomodidad viene de la herramienta, o de no poder responder por el contenido si alguien lo cuestiona?</p>
+          <p>Acuerdo del área, en una línea: [escríbanlo].</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Una línea de acuerdo que evita la ambigüedad. La respuesta más frecuente en estos talleres es la tercera: lo que incomoda no es la herramienta, es firmar algo que no podrías defender.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">27</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 28 · Ejercicio 18 · Plan de 10 días ===== -->
+<section class="paper" data-label="28 Ejercicio 18 · Plan de 10 días">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> CONFIANZA Y CONTROL</span><span>10 MINUTOS</span></div>
+    <div class="ex-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">EJERCICIO</div>
+        <div class="ex-num">18</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Qué haces distinto el lunes.</h2>
+        <div class="ex-tool"><b>HERRAMIENTA</b>Tu ficha, escrita a mano · foto al terminar</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">CONCEPTO CLAVE</span>
+          <div class="concept">Lo que no se aplica en los primeros días después de una formación, <b>no se aplica nunca</b>. Por eso esto no es un cierre simbólico: es el ejercicio con más efecto de la sesión.</div>
+        </div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Elige <b>dos</b> de los pedidos que guardaste hoy. Solo dos.</li>
+            <li>Escribe cuándo los vas a usar, sobre qué tarea concreta, y qué señal te dirá que funcionó.</li>
+            <li>Tómale foto y ponla donde la veas. Lo revisamos al abrir la sesión 2.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">PEDIDO 1 ·</span> [nombre] — lo uso el [día] para [tarea real]. Sabré que sirvió si [señal concreta: me tomó la mitad del tiempo / no tuve que reescribirlo].</p>
+          <p><span class="kw">PEDIDO 2 ·</span> [nombre] — lo uso el [día] para [tarea real]. Sabré que sirvió si [señal].</p>
+          <p><span class="kw">OPCIONAL PARA LA SESIÓN 2 ·</span> si puedes, trae un cuadro o un export tuyo. No es requisito: la sesión 2 trae sus propios archivos.</p>
+        </div>
+        <div class="result">
+          <b>RESULTADO ESPERADO</b>
+          Dos compromisos con fecha y una señal de éxito. Lo único que se revisa al abrir la sesión 2 es esto: cuál usaste y cuál no.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">28</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 29 · Gobernanza ===== -->
+<section data-label="29 Gobernanza">
+  <div class="frame">
+    <div class="top-rail"><span>ANTES DE CERRAR</span><span>29 / 30</span></div>
+    <div style="margin-top:44px;">
+      <h1 class="display" style="font-size:88px;color:var(--bone);">Lo que aplica<br/><span style="color:var(--green-br);">en los cuatro países</span>.</h1>
+      <p style="font-size:24px;color:var(--bone-2);line-height:1.5;max-width:1400px;margin-top:24px;">Casa de las Baterías opera en Panamá, El Salvador, Costa Rica y Guatemala, y lo que se puede hacer con información de clientes no es idéntico en los cuatro. Estas son prácticas de trabajo, no asesoría legal: la política que manda la definen Legal y TI.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov-item"><h3>Cuenta de trabajo,<br/>no personal</h3><p>Todo lo laboral se hace desde la cuenta corporativa. Un chat en una cuenta personal queda fuera del alcance de la empresa y no se puede auditar ni recuperar.</p></div>
+      <div class="gov-item"><h3>El semáforo,<br/>antes de pegar</h3><p>La lista roja del ejercicio 15 no es una recomendación: datos personales, contratos y credenciales no entran en ninguna herramienta de IA sin autorización expresa.</p></div>
+      <div class="gov-item"><h3>Quien firma,<br/>responde</h3><p>La IA no responde por el contenido. Si un dato marcado [VERIFICAR] llegó al cliente sin comprobar, la responsabilidad es de quien lo mandó. Ese es el único límite que no se negocia.</p></div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">29</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 30 · Cierre ===== -->
+<section class="closing" data-label="30 Cierre">
+  <div class="frame">
+    <div class="top-rail"><span>CIERRE DE LA SESIÓN 1</span><span>30 / 30</span></div>
+    <div class="layout"><h1>LA IA NO<br/>FIRMA.<br/><span class="acc">TÚ SÍ.</span></h1></div>
+    <div class="next">
+      <div><span class="lbl">HOY MISMO</span><p>Guarda tus tres pedidos y tu ficha de voz donde los encuentres. Si cierras el navegador sin guardarlos, mañana empiezas de cero.</p></div>
+      <div><span class="lbl">ESTOS 10 DÍAS</span><p>Los dos compromisos del ejercicio 18. Se revisan al abrir la sesión 2 — no para evaluarte, para ajustar el contenido a lo que de verdad se atascó.</p></div>
+      <div><span class="lbl">PARA LA SESIÓN 2</span><p>No hace falta preparar nada: los archivos están en la misma carpeta. Si tienes un cuadro propio y quieres trabajarlo, tráelo — el ejercicio funciona igual.</p></div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">30</div>
+    </div>
+  </div>
+</section>
+
+</deck-stage>
+
+</body>
+</html>
