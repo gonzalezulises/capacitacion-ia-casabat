@@ -81,6 +81,7 @@ esos se indica el equivalente.
 
 ```
 index.html          hub del programa (una página, sin deck-stage)
+practica.html       guía de práctica · 16 ejercicios en 4 niveles, 2 tramos
 sesion-1.html       El valor del prompt · 36 slides · 18 ejercicios + 6 de anexo · 180 min
 sesion-2.html       Datos y documentos · 29 slides · 18 ejercicios · 180 min
 assets/             el logotipo de la marca
@@ -107,8 +108,9 @@ B3 Procedimientos y anexos (50) · B4 Lo que no se delega (40).
 ## Verificación
 
 ```bash
-node verifica.mjs              # estructura del deck: 18 comprobaciones
-node verifica-materiales.mjs   # materiales y trazabilidad: 26 comprobaciones
+node verifica.mjs              # estructura del deck
+node verifica-materiales.mjs   # materiales, enlaces y trazabilidad
+node verifica-practica.mjs     # las respuestas de la guía, contra los archivos
 ```
 
 `verifica.mjs` comprueba que los footers numeren sin saltos, que los contadores del top-rail
@@ -121,10 +123,33 @@ original, y que toda interrogación lleve su signo de apertura.
 el expediente conserve sus desviaciones, que el borrador v3 mantenga sus cinco cambios frente al
 vigente y —lo más importante— **que todo archivo citado en un deck exista de verdad**.
 
+`verifica-practica.mjs` es el que sostiene la guía de práctica: **recalcula cada cifra publicada
+desde los materiales** y la compara con lo que dice `practica.html`. Si alguien edita el CSV o la
+política y la respuesta no se actualiza, la guía enseñaría algo falso que suena razonable — y esta
+compuerta es lo único que lo detecta. También comprueba que el borrador v3 siga sin fecha de vigencia
+(es lo que lo hace borrador y hace correcta la respuesta del ejercicio 10).
+
 El layout **no se puede verificar fuera del navegador**: abre cada deck y pega `verifica-layout.js`
 en la consola. Comprueba que ningún elemento **invada la banda del footer** ni se salga por la
 derecha. Medir contra el borde del slide no basta: el footer es absoluto y el contenido lo tapa
 antes de desbordar. Es lo que atrapa un prompt que creció dos líneas de más.
+
+## La guía de práctica
+
+Dieciséis ejercicios en cuatro niveles, ninguno repetido de los decks, todos sobre los mismos
+archivos. La progresión no es de longitud sino de competencia:
+
+| Nivel | Qué se practica |
+| --- | --- |
+| **N1** Un pedido, un resultado | Una tarea, un insumo, criterio evidente |
+| **N2** Con fuente y restricciones | El resultado tiene que poder defenderse: de dónde sale cada afirmación |
+| **N3** Varios pasos, insumos que se contradicen | El CSV y el acta del comité no cuadran: el mérito es no concluir de más |
+| **N4** Dejarlo montado | Convertirlo en algo que corre sin ti, probado contra datos que no habías visto |
+
+Dos tramos: **A** (ocho ejercicios de prompting, para los diez días entre sesión y sesión) y **B**
+(ocho de datos y documentos, tras el programa). Cada ejercicio trae criterio de aceptación y, cuando
+la respuesta es objetiva, la respuesta exacta oculta en un desplegable. Se genera con
+`build/practica.py`.
 
 ## Desarrollo
 
@@ -143,7 +168,8 @@ Los decks se generan desde `build/`: el contenido de cada sesión vive en `build
 `build/s2.py`, el estilo en `build/style.py` y los tipos de slide en `build/deck.py`.
 
 ```bash
-cd build && python3 build.py    # reescribe sesion-1.html y sesion-2.html
+cd build && python3 build.py       # reescribe sesion-1.html y sesion-2.html
+cd build && python3 practica.py    # reescribe practica.html
 ```
 
 La numeración de slides, los contadores del top-rail y los footers se derivan del orden de la lista:
