@@ -98,7 +98,7 @@ sesión: **A** el catálogo de 12 técnicas de prompting, **B** las Gems de Gemi
 *Arquitecto de prompts*, con sus instrucciones completas.
 
 La sesión 1 abre con la teoría mínima —qué hace un modelo cuando predice— y el
-[Transformer Explainer](https://poloclub.github.io/transformer-explainer/) para verlo funcionar. La
+[Transformer Explainer en español](https://transformer.rizo.ma/) para verlo funcionar. La
 sesión 2 abre separando **calcular** de **predecir**: el criterio técnico que sostiene todo lo demás.
 
 **Sesión 2 · Datos y documentos** — B1 Conversa con tus datos (50) · B2 Tableros y reportes (40) ·

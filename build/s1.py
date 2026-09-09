@@ -42,12 +42,13 @@ d.add('La teoría mínima', 'paper', theory(
       'Un plazo de garantía que no le diste lo va a predecir igual, porque su trabajo es continuar el texto. '
       'Cambiar el contexto cambia la predicción: eso es exactamente lo que haces con un prompt.')],
     {'kicker': 'VELO FUNCIONAR · 5 MINUTOS',
-     'url': 'https://poloclub.github.io/transformer-explainer/',
+     'url': 'https://transformer.rizo.ma/',
      'pasos': [
-        'Ábrelo: es un modelo real corriendo en tu navegador, no hay que instalar nada.',
-        'Escribe un arranque de tu trabajo — <b>"El plazo de garantía de la batería de moto es"</b> — y dale a Generate.',
+        'Ábrelo: es un modelo real corriendo en tu navegador, en español y sin instalar nada.',
+        'Borra el ejemplo y escribe un arranque de tu trabajo — <b>"El plazo de garantía de la batería '
+        'de moto es"</b> — y dale a <b>Generar</b>.',
         'Mira las palabras candidatas y su porcentaje: eso es todo lo que está pasando por dentro.',
-        'Mueve la <b>Temperature</b>: alta, más arriesgada; baja, más predecible. Es la misma perilla que hay detrás de ChatGPT y Gemini.',
+        'Mueve la <b>Temperatura</b>: alta, más arriesgada; baja, más predecible. Es la misma perilla que hay detrás de ChatGPT y Gemini.',
      ],
      'observa': 'Que la frase se completa sola y suena convincente aunque nadie le haya dado el dato real. '
                 'Ese es el mecanismo que produce las respuestas útiles y también las inventadas.'}))
