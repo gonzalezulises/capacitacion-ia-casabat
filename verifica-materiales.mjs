@@ -32,7 +32,7 @@ const num = (s) => { const n = parseFloat(String(s).replace(/,/g, '').trim()); r
 const norm = (s) => sinTilde(String(s)).trim().toLowerCase().replace(/\s+/g, ' ');
 const mes = (f) => f.includes('/') ? `${f.slice(6, 10)}-${f.slice(3, 5)}` : f.slice(0, 7);
 
-// defectos de calidad que el EJ 1 debe encontrar
+// defectos de calidad que el contrato de datos de la sesión 2 debe encontrar
 const variantes = new Set(filas.map(f => f.linea_producto).filter(l => /ater/i.test(l) && /auto/i.test(l)));
 variantes.size >= 4
   ? ok(`datos: la misma categoría escrita de ${variantes.size} formas distintas`)
@@ -54,7 +54,7 @@ const claves = filas.map(f => Object.values(f).join('|'));
 const dup = claves.length - new Set(claves).size;
 dup >= 2 ? ok(`datos: ${dup} filas duplicadas exactas`) : fail(`datos: ${dup} duplicados — el ejercicio los pide`);
 
-// patrones de negocio que los EJ 3 y 4 deben encontrar
+// patrones de negocio que el análisis reproducible debe encontrar
 const ing = {};
 for (const f of filas) ing[norm(f.linea_producto)] = (ing[norm(f.linea_producto)] || 0) + num(f.ingreso_usd);
 const tot = Object.values(ing).reduce((a, b) => a + b, 0);
@@ -149,10 +149,10 @@ const notas = leer(join(M, '07_notas_comite_operaciones.md'));
 const pendientes = leer(join(M, '05_correos_pendientes.csv')).trim().split('\n').slice(1);
 pendientes.length === 20 ? ok('pendientes: 20 correos') : fail(`pendientes: ${pendientes.length} correos, se esperaban 20`);
 const esperados = [
-  [1, /cotizaci[oó]n 8842/i, 'la cotización 8842 (EJ 1 de la sesión 1)'],
-  [4, /garant[ií]a.*moto|moto.*8 meses/i, 'la garantía de moto de 8 meses (EJ 11)'],
-  [11, /cr[eé]dito a 60 d[ií]as/i, 'el crédito a 60 días (EJ 2)'],
-  [14, /instalaci[oó]n.*ventana|ventana/i, 'la instalación fuera de ventana (EJ 6)'],
+  [1, /cotizaci[oó]n 8842/i, 'la cotización 8842 (S1 · EJ 2)'],
+  [4, /garant[ií]a.*moto|moto.*8 meses/i, 'la garantía de moto de 8 meses (S1 · EJ 4)'],
+  [11, /cr[eé]dito a 60 d[ií]as/i, 'el crédito a 60 días (S1 · EJ 3)'],
+  [14, /instalaci[oó]n.*ventana|ventana/i, 'la instalación fuera de ventana (práctica)'],
 ];
 for (const [n, re, que] of esperados) {
   const fila = pendientes[n - 1] || '';

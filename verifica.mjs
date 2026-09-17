@@ -14,7 +14,7 @@ const fail = (m) => fails.push(m);
 
 const DECKS = ['sesion-1.html', 'sesion-2.html'];
 const MIN_POR_SESION = 180;
-const EJ_POR_SESION = 18;
+const EJ_POR_SESION = 6;
 
 // texto visible: sin <style>, <script> ni etiquetas
 function visible(html) {
@@ -75,10 +75,12 @@ for (const file of DECKS) {
 
   // --- minutos: la agenda debe sumar 180 y coincidir con los dividers ---
   const agendaMin = [...html.matchAll(/BLOQUE \d · (\d+) MIN/g)].map(m => Number(m[1]));
-  const suma = agendaMin.reduce((a, b) => a + b, 0);
+  const pausa = Number((html.match(/PAUSA · (\d+) MIN/) || [, 0])[1]);
+  const suma = agendaMin.reduce((a, b) => a + b, 0) + pausa;
   if (agendaMin.length !== 4) fail(`${file}: la agenda declara ${agendaMin.length} bloques, no 4`);
   else if (suma !== MIN_POR_SESION) fail(`${file}: la agenda suma ${suma} min, no ${MIN_POR_SESION}`);
-  else ok(`${file}: agenda de 4 bloques suma ${suma} min`);
+  else if (pausa !== 15) fail(`${file}: la pausa declarada es de ${pausa} min, no 15`);
+  else ok(`${file}: 4 bloques + pausa de ${pausa} min suman ${suma} min`);
 
   const divMin = [...html.matchAll(/<span>(\d+) MIN <span class='sep'><\/span>/g)].map(m => Number(m[1]));
   if (JSON.stringify(divMin) !== JSON.stringify(agendaMin)) {
