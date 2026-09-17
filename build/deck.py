@@ -93,14 +93,15 @@ class Deck:
 
 # ---------- constructores de slide ----------
 
-def cover(eyebrow, h1_html, sub, fecha):
+def cover(eyebrow, h1_html, sub, fecha, size=250):
     def b(i, total):
+        style = '' if size == 250 else f' style="font-size:{size}px;"'
         return (f'{_rail(fecha, "")}\n'
                 f'    <img class="marca" src="assets/logo-casabat.jpg" '
                 f'alt="La Casa de las Baterías" width="1080" height="1080" />\n'
                 f'    <div style="margin:auto 0;">\n'
                 f'      <div class="eyebrow">{eyebrow}</div>\n'
-                f'      <h1>{h1_html}</h1>\n'
+                f'      <h1{style}>{h1_html}</h1>\n'
                 f'      <p class="sub">{sub}</p>\n'
                 f'    </div>')
     return b
