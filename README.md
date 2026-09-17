@@ -6,30 +6,28 @@ Programa 2026 de dos sesiones presenciales con ritmo flexible para Administraci�
 - Formato: presencial o remoto con facilitador
 - Carga en vivo: 16 laboratorios por sesión y 4 por bloque
 - Práctica: 16 ejercicios en 4 niveles
-- Materiales para participantes: 17 DOCX y 2 XLSX
+- Materiales para participantes: 22 DOCX y 3 XLSX
 - Datos: todos los casos y cifras son ficticios
 
 ## Diseño curricular
 
 ### Sesión 1 De una necesidad a capacidad instalada
 
-| Bloque | Min | Laboratorios |
-| --- | ---: | ---: |
-| Elegir el entorno | 40 | 3 |
-| Investigar y convertir | 40 | 3 |
-| Pausa | 15 | — |
-| Crear una Gem útil | 45 | 3 |
-| Llevarla a operación | 40 | 3 |
+| Bloque | Laboratorios |
+| --- | ---: |
+| Elegir el entorno | 4 |
+| Investigar y convertir | 4 |
+| Crear una Gem útil | 4 |
+| Llevarla a operación | 4 |
 
 ### Sesión 2 Cerrar el mes con evidencia
 
-| Bloque | Min | Laboratorios |
-| --- | ---: | ---: |
-| El Excel antes de la reunión | 45 | 3 |
-| Documentos que cambian decisiones | 40 | 3 |
-| Pausa | 15 | — |
-| Antes de publicar el expediente | 40 | 3 |
-| Cerrar junio y dejarlo funcionando | 40 | 3 |
+| Bloque | Laboratorios |
+| --- | ---: |
+| Investigar el dato | 4 |
+| Explicar sin inventar causas | 4 |
+| Resolver con datos y documentos | 4 |
+| Convertir análisis en decisión | 4 |
 
 ## Materiales
 
@@ -50,6 +48,8 @@ materiales/
   10_PR-ADM-014_v3_BORRADOR.docx
   11_tecnicas_de_prompting.docx
   12_contexto_persistente_y_flujos.docx
+  13_notas_recorrido_sucursales.docx
+  14_inventario_demanda_sucursales.xlsx
   expediente-PR-ADM-014/
     Anexo B - Tabla de descuentos.docx
     PR-ADM-014-ANEXO-A_formato_de_cotizacion_v2.docx
@@ -111,7 +111,7 @@ Las compuertas verifican:
 
 - 32 laboratorios, 4 por bloque y ritmo administrado por el facilitador;
 - situación, rol, entrada, decisión, entregable y criterio en cada laboratorio;
-- 17 DOCX y 2 XLSX sin formatos retirados;
+- 22 DOCX y 3 XLSX sin formatos retirados;
 - conservación de filas, tipos y defectos didácticos;
 - tres nombres conformes y tres no conformes en el expediente;
 - enlaces publicados y respuestas objetivas de la práctica.

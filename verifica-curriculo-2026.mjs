@@ -105,6 +105,48 @@ for (const concepto of ['REPRODUCIBLE', 'OCR', 'INYECCIÓN DE PROMPTS', 'APROBAC
     : fail(`sesión 2: falta ${concepto.toLowerCase()}`);
 }
 
+const laboratoriosS2 = s2
+  .split(/(?=<section\b)/)
+  .filter(section => section.includes('<div class="ex-num">'));
+
+for (const [patron, capacidad] of [
+  [/Fill with Gemini|Rellenar con Gemini/i, 'limpieza semántica con Fill with Gemini'],
+  [/tabla dinámica/i, 'tablas dinámicas'],
+  [/segmentador|slicer/i, 'segmentadores'],
+  [/sensibilidad|escenario/i, 'escenarios y sensibilidad'],
+  [/optimiza|optimización/i, 'optimización con restricciones'],
+  [/Sheets Canvas|Canvas de Sheets/i, 'Sheets Canvas'],
+]) {
+  laboratoriosS2.some(section => patron.test(section))
+    ? ok(`sesión 2: practica ${capacidad}`)
+    : fail(`sesión 2: no incluye un laboratorio de ${capacidad}`);
+}
+
+const artefactosS2 = ['bitácora', 'tabla dinámica', 'árbol de hipótesis', 'sensibilidad',
+  'matriz de decisión', 'tabla estructurada', 'plan de asignación', 'dashboard', 'brief'];
+for (const artefacto of artefactosS2) {
+  new RegExp(artefacto, 'i').test(s2)
+    ? ok(`sesión 2: produce ${artefacto}`)
+    : fail(`sesión 2: no produce ${artefacto}`);
+}
+
+const cadenaFinalS2 = laboratoriosS2.slice(12, 16).join('\n');
+const cadenaS2 = ['SHEETS', 'DASHBOARD', 'SLIDES', 'DECISIÓN'];
+let cursorS2 = 0;
+const cadenaS2Completa = cadenaS2.every(paso => {
+  const posicion = cadenaFinalS2.toUpperCase().indexOf(paso, cursorS2);
+  if (posicion < 0) return false;
+  cursorS2 = posicion + paso.length;
+  return true;
+});
+cadenaS2Completa
+  ? ok('sesión 2: bloque 4 encadena Sheets → dashboard → Slides → decisión')
+  : fail('sesión 2: bloque 4 no encadena Sheets → dashboard → Slides → decisión en ese orden');
+
+existsSync('materiales/14_inventario_demanda_sucursales.xlsx')
+  ? ok('sesión 2: anexo de inventario y demanda presente')
+  : fail('sesión 2: falta materiales/14_inventario_demanda_sucursales.xlsx');
+
 const publicables = [
   ...decks.map(read),
   read('practica.html'),
