@@ -123,14 +123,14 @@ d.add('Laboratorio 2', 'paper', exercise_case(
 d.add('Laboratorio 3', 'paper', exercise_case(
     3, RAIL1, 15, 'Cinco solicitudes entran; no todas van al chat.',
     'Responsable de Mejora', 'cinco tarjetas de situación CasaBat', 'Gemini + decisión humana',
-    'Un equipo pide resumir un expediente, investigar un mercado, crear un prototipo, repetir orientación de garantía y resolver una consulta puntual. Usar el mismo entorno para todo aumenta costo y error.',
+    'El equipo debe resumir un expediente, investigar un mercado, crear un prototipo, repetir una orientación y resolver una consulta puntual. Usar el mismo entorno para todo aumenta el error.',
     'Qué trabajo corresponde a chat, NotebookLM, Deep Research, Canvas o una Gem.',
     ['Asigna una herramienta a cada tarjeta sin repetirla.',
      'Explica fuente, persistencia, tipo de salida y riesgo dominante.',
-     'Intercambia una tarjeta con otro equipo y defiende o corrige la elección.'],
+     'Intercambia una tarjeta y defiende o corrige la elección.'],
     prompt('Clasifica cinco trabajos CasaBat: consulta puntual, expediente con seis fuentes, oportunidad comercial externa, prototipo de atención y orientación repetitiva.',
            'Devuelve herramienta, razón, entrada mínima, entregable, límite y señal de que se eligió mal.',
-           'No decidas por novedad: decide por fuente, repetición, necesidad de edición y exposición al riesgo.'),
+           'Decide por fuente, repetición, edición y riesgo; no por novedad.'),
     'Una matriz de enrutamiento de trabajo y una elección corregida por contraste.',
     'Cada herramienta aparece una vez y la justificación describe una capacidad, no una preferencia.'))
 
@@ -143,14 +143,14 @@ d.add('Bloque 2', 'section-div', divider(
 d.add('Laboratorio 4', 'paper', exercise_case(
     4, RAIL2, 15, '¿Existe una oportunidad en las flotas comerciales?',
     'Gerente Comercial', '<code>00_contexto_marca_casabat.docx</code> · web pública', 'Gemini Deep Research',
-    'CasaBat evalúa un piloto de <b>salud preventiva de baterías para flotas comerciales en Panamá</b>. Antes de diseñar la oferta necesita señales de demanda, comprador, alternativas y barreras.',
-    'Si la evidencia pública justifica entrevistar clientes y qué hipótesis sigue sin probarse.',
+    'CasaBat evalúa un piloto de <b>salud preventiva de baterías para flotas en Panamá</b>. Antes de diseñarlo necesita señales de demanda, comprador, alternativas y barreras.',
+    'Si la evidencia justifica entrevistar clientes y qué hipótesis sigue abierta.',
     ['Activa Deep Research y revisa el plan antes de iniciarlo.',
      'Exige señales recientes, fuentes primarias y separación entre Panamá y otros mercados.',
-     'Mientras investiga, define tres criterios para aceptar o rechazar la recomendación.'],
+     'Define tres criterios para aceptar o rechazar la recomendación.'],
     prompt('Investiga la viabilidad de un piloto CasaBat de diagnóstico preventivo de baterías para flotas comerciales en Panamá.',
-           'El plan debe cubrir comprador, problema, frecuencia, alternativas, señales locales, barreras y fuentes primarias. Separa evidencia, inferencia e información no encontrada.',
-           'Entrega una recomendación para realizar o no diez entrevistas; no estimes tamaño de mercado sin una base verificable.'),
+           'Cubre comprador, problema, alternativas, señales locales, barreras y fuentes primarias. Separa evidencia, inferencia y vacíos.',
+           'Recomienda realizar o no diez entrevistas; no estimes mercado sin base verificable.'),
     'Plan editado, informe con fuentes y recomendación GO / NO GO para entrevistas.',
     'La conclusión está vinculada a evidencia fechada y declara al menos dos incertidumbres críticas.'))
 
@@ -170,14 +170,14 @@ d.add('Laboratorio 5', 'paper', exercise_case(
 d.add('Laboratorio 6', 'paper', exercise_case(
     6, RAIL2, 15, 'De informe a prototipo que Gerencia puede discutir.',
     'Diseñador de la Propuesta', 'hallazgos validados · <code>00_contexto_marca_casabat.docx</code>', 'Gemini Canvas',
-    'Gerencia no necesita otro resumen. Necesita ver cómo sería el piloto, cuestionar sus supuestos y cambiar una sección sin reconstruir todo el documento.',
-    'Qué propuesta mínima permite decidir si se autorizan diez entrevistas exploratorias.',
+    'Gerencia necesita ver el piloto, cuestionar sus supuestos y cambiar una sección sin reconstruir el documento.',
+    'Qué propuesta mínima permite autorizar o rechazar diez entrevistas.',
     ['Abre Canvas y pide un prototipo de una página, no una presentación extensa.',
      'Incluye problema, cliente, hipótesis, evidencia, exclusiones y próximo experimento.',
      'Un compañero marca una sección; edítala en Canvas y conserva la versión anterior.'],
     prompt('En Canvas crea un prototipo ejecutivo de una página para el piloto de salud preventiva de baterías de flota.',
-           'Incluye: usuario, situación, promesa a validar, evidencia, incertidumbres, diez entrevistas, métrica y decisión solicitada. Usa tono CasaBat y no inventes precios.',
-           'Después del feedback, modifica solo la sección seleccionada y exporta a Google Docs o comparte el Canvas dentro del equipo.'),
+           'Incluye usuario, situación, promesa, evidencia, incertidumbres, entrevistas, métrica y decisión. No inventes precios.',
+           'Tras el feedback, modifica solo la sección seleccionada y exporta a Docs o comparte el Canvas.'),
     'Canvas editable con versión inicial, cambio localizado y decisión solicitada.',
     'El artefacto distingue hechos de hipótesis y puede revisarse sin leer el informe completo.'))
 
@@ -204,13 +204,13 @@ d.add('Laboratorio 7', 'paper', exercise_case(
 d.add('Laboratorio 8', 'paper', exercise_case(
     8, RAIL3, 20, 'Crea la Gem Orientador de Garantías CasaBat.',
     'Constructor de la Gem', '<code>03_politica_garantia.docx</code> · <code>06_correos_de_referencia.docx</code>', 'Gemini · Gem Manager',
-    'Personal de distintas sucursales necesita preparar una orientación consistente sin memorizar política, tono y condiciones de detención.',
+    'Las sucursales necesitan orientación consistente sin memorizar política, tono y condiciones de detención.',
     'Qué instrucciones y archivos necesita la Gem para ayudar sin conceder una garantía.',
     ['Abre Gem Manager y crea una Gem personalizada con nombre y descripción.',
-     'Carga solo la política y las referencias ficticias; redacta objetivo, flujo, salida y límites.',
+     'Carga la política y referencias ficticias; redacta objetivo, flujo, salida y límites.',
      'Guarda como v0.1 y ejecuta un caso normal antes de compartirla.'],
     prompt('Configura <span class="kw">Orientador de Garantías CasaBat v0.1</span>.',
-           'Debe pedir producto, fecha de compra, comprobante, síntoma y país; citar la política usada; separar orientación de decisión; marcar [VERIFICAR] y detenerse si falta un dato crítico.',
+           'Debe pedir producto, compra, comprobante, síntoma y país; citar política; separar orientación de decisión; marcar [VERIFICAR] y detenerse si falta un dato crítico.',
            'Nunca concede cobertura, inventa excepciones, promete reemplazo ni solicita datos personales innecesarios.'),
     'Una Gem creada en la interfaz, con dos fuentes, instrucciones versionadas y primera ejecución.',
     'Otra persona identifica propósito, entradas, salida, detención, fuente, dueño y versión sin explicación oral.'))
@@ -266,10 +266,10 @@ d.add('Laboratorio 11', 'paper', exercise_case(
 d.add('Laboratorio 12', 'paper', exercise_case(
     12, RAIL4, 15, 'Comité de siete días: ¿piloto o demostración?',
     'Dueño de Proceso, Sucursal y Aprobador', 'Gem v0.2 · registro de pruebas', 'Roleplay + Gemini',
-    'La Gem ya produce una buena demostración. Falta decidir si puede entrar en un piloto real, quién responde por ella y qué señal obligaría a detenerla.',
+    'La Gem ya funciona en demostración. Falta decidir si entra en piloto, quién responde y qué señal obliga a detenerla.',
     'Si la evidencia permite un piloto limitado y bajo qué condiciones operativas.',
     ['Prepara un pitch de 60 segundos con problema, evidencia y límite.',
-     'La sucursal cuestiona utilidad; el aprobador cuestiona riesgo y métrica.',
+     'La sucursal cuestiona utilidad; el aprobador, riesgo y métrica.',
      'Registra decisión, condiciones, dueño, fecha y señal de suspensión.'],
     prompt('Redacta una tarjeta de adopción de una página: usuario, tarea, versión, fuentes, límites, cuatro pruebas, riesgo restante, métrica, dueño y fecha de revisión.',
            'Propón solo uno de tres estados: DEMOSTRACIÓN, PILOTO DE 7 DÍAS o NO HABILITADA. Justifica con evidencia observada.',
