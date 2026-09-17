@@ -1,6 +1,6 @@
 # IA aplicada a Administración y Gerencia Comercial CasaBat
 
-Programa 2026 de dos sesiones de 180 minutos para Administración y Gerencia Comercial de Casa de las Baterías. Los 24 laboratorios se desarrollan dentro de tareas reconocibles: bandeja de correos, cotizaciones, crédito, garantías, ventas, devoluciones, expedientes y cierre mensual.
+Programa 2026 de dos sesiones de 180 minutos para Administración y Gerencia Comercial de Casa de las Baterías. Los 24 laboratorios recorren selección de herramienta, síntesis documental, investigación, prototipado, Gems, garantías, ventas, devoluciones, expedientes y cierre mensual.
 
 - Cliente: Casa de las Baterías
 - Formato: presencial o remoto con facilitador
@@ -11,15 +11,15 @@ Programa 2026 de dos sesiones de 180 minutos para Administración y Gerencia Com
 
 ## Diseño curricular
 
-### Sesión 1 De la bandeja a un sistema de trabajo
+### Sesión 1 De una necesidad a capacidad instalada
 
 | Bloque | Min | Laboratorios |
 | --- | ---: | ---: |
-| La bandeja del lunes | 40 | 3 |
-| Respuestas que pueden salir | 40 | 3 |
+| Elegir el entorno | 40 | 3 |
+| Investigar y convertir | 40 | 3 |
 | Pausa | 15 | — |
-| Trabajo que se repite | 45 | 3 |
-| Antes de presionar Enviar | 40 | 3 |
+| Crear una Gem útil | 45 | 3 |
+| Llevarla a operación | 40 | 3 |
 
 ### Sesión 2 Cerrar el mes con evidencia
 

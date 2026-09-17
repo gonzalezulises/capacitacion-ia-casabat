@@ -27,17 +27,31 @@ for (const file of decks) {
 }
 
 const s1 = read('sesion-1.html');
+const laboratoriosS1 = s1
+  .split(/(?=<section\b)/)
+  .filter(section => section.includes('<div class="ex-num">'));
+
+const laboratoriosDeCorreo = laboratoriosS1.filter(section => /correo/i.test(section)).length;
+laboratoriosDeCorreo <= 3
+  ? ok(`sesión 1: limita a ${laboratoriosDeCorreo} los laboratorios centrados en correo`)
+  : fail(`sesión 1: ${laboratoriosDeCorreo} de 12 laboratorios siguen centrados en correo; máximo 3`);
+
+for (const [patron, capacidad] of [
+  [/NotebookLM|Gemini Notebook/i, 'NotebookLM o Gemini Notebook'],
+  [/Deep Research/i, 'Deep Research'],
+  [/Canvas/i, 'Canvas'],
+  [/Gem Manager|crea(?:r)? (?:una|la) Gem/i, 'creación real de una Gem'],
+]) {
+  laboratoriosS1.some(section => patron.test(section))
+    ? ok(`sesión 1: practica ${capacidad}`)
+    : fail(`sesión 1: no incluye un laboratorio de ${capacidad}`);
+}
+
 for (const concepto of ['GENERAR', 'RECUPERAR', 'CALCULAR', 'ACTUAR']) {
   s1.includes(concepto)
     ? ok(`sesión 1: incluye el modo ${concepto.toLowerCase()}`)
     : fail(`sesión 1: falta el modo ${concepto.toLowerCase()}`);
 }
-for (const concepto of ['PROYECTO', 'GEM', 'PLUGIN']) {
-  s1.includes(concepto)
-    ? ok(`sesión 1: diferencia ${concepto.toLowerCase()}`)
-    : fail(`sesión 1: no diferencia ${concepto.toLowerCase()}`);
-}
-
 const s2 = read('sesion-2.html');
 for (const concepto of ['REPRODUCIBLE', 'OCR', 'INYECCIÓN DE PROMPTS', 'APROBACIÓN HUMANA', 'DETERMINISTA']) {
   s2.includes(concepto)
@@ -52,7 +66,6 @@ const publicables = [
 ].join('\n');
 
 for (const [patron, etiqueta] of [
-  [/NotebookLM/gi, 'nombre retirado NotebookLM'],
   [/GPT personalizado/gi, 'GPT personalizado como opción vigente'],
   [/razonamiento paso a paso/gi, 'petición de razonamiento interno paso a paso'],
   [/Lo que hacías en Minitab/gi, 'promesa de reemplazo de Minitab'],
