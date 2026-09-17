@@ -47,6 +47,19 @@ for (const [patron, capacidad] of [
     : fail(`sesión 1: no incluye un laboratorio de ${capacidad}`);
 }
 
+const laboratorio3 = laboratoriosS1[2] || '';
+const cadena03 = ['SLIDE DECK', 'INFOGRAFÍA', 'CANVAS'];
+let cursor03 = 0;
+const cadena03Completa = cadena03.every(paso => {
+  const posicion = laboratorio3.toUpperCase().indexOf(paso, cursor03);
+  if (posicion < 0) return false;
+  cursor03 = posicion + paso.length;
+  return true;
+});
+cadena03Completa
+  ? ok('sesión 1: laboratorio 3 encadena Slide Deck → infografía → Canvas')
+  : fail('sesión 1: laboratorio 3 no encadena Slide Deck → infografía → Canvas en ese orden');
+
 for (const concepto of ['GENERAR', 'RECUPERAR', 'CALCULAR', 'ACTUAR']) {
   s1.includes(concepto)
     ? ok(`sesión 1: incluye el modo ${concepto.toLowerCase()}`)

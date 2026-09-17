@@ -41,7 +41,7 @@ d.add('Agenda', 'paper', agenda(
     '4 BLOQUES <span class="sep"></span> 12 LABORATORIOS <span class="sep"></span> 180 MIN',
     'Una necesidad CasaBat.<br/>Cinco experiencias de IA.',
     [('01 · BLOQUE 1 · 40 MIN', 'Elegir el entorno',
-      [('Priorizar', '10 MIN'), ('NotebookLM', '15 MIN'), ('Elegir herramienta', '15 MIN')]),
+      [('Priorizar', '10 MIN'), ('NotebookLM', '10 MIN'), ('Cadena visual', '20 MIN')]),
      ('02 · BLOQUE 2 · 40 MIN', 'Investigar y convertir',
       [('Deep Research', '15 MIN'), ('Auditar fuentes', '10 MIN'), ('Canvas', '15 MIN'),
        ('Pausa antes del bloque 3', 'PAUSA · 15 MIN')]),
@@ -107,7 +107,7 @@ d.add('Laboratorio 1', 'paper', exercise_case(
     'Cada posición cita una señal del registro y separa dueño propuesto de dueño confirmado.'))
 
 d.add('Laboratorio 2', 'paper', exercise_case(
-    2, RAIL1, 15, 'Convierte seis documentos en una sala de evidencia.',
+    2, RAIL1, 10, 'Convierte seis documentos en una sala de evidencia.',
     'Analista de Procesos', '<code>expediente-PR-ADM-014/</code>', 'NotebookLM / Gemini Notebook',
     'Gerencia necesita entender el procedimiento de cotizaciones sin leer seis archivos durante la reunión. El expediente contiene referencias rotas, versiones contradictorias y un anexo huérfano.',
     'Qué puede afirmarse desde las fuentes, qué se contradice y qué debe escalarse.',
@@ -121,18 +121,18 @@ d.add('Laboratorio 2', 'paper', exercise_case(
     'Cada hallazgo abre la ubicación correcta de la fuente; las contradicciones siguen visibles.'))
 
 d.add('Laboratorio 3', 'paper', exercise_case(
-    3, RAIL1, 15, 'Cinco solicitudes entran; no todas van al chat.',
-    'Responsable de Mejora', 'cinco tarjetas de situación CasaBat', 'Gemini + decisión humana',
-    'El equipo debe resumir un expediente, investigar un mercado, crear un prototipo, repetir una orientación y resolver una consulta puntual. Usar el mismo entorno para todo aumenta el error.',
-    'Qué trabajo corresponde a chat, NotebookLM, Deep Research, Canvas o una Gem.',
-    ['Asigna una herramienta a cada tarjeta sin repetirla.',
-     'Explica fuente, persistencia, tipo de salida y riesgo dominante.',
-     'Intercambia una tarjeta y defiende o corrige la elección.'],
-    prompt('Clasifica cinco trabajos CasaBat: consulta puntual, expediente con seis fuentes, oportunidad comercial externa, prototipo de atención y orientación repetitiva.',
-           'Devuelve herramienta, razón, entrada mínima, entregable, límite y señal de que se eligió mal.',
-           'Decide por fuente, repetición, edición y riesgo; no por novedad.'),
-    'Una matriz de enrutamiento de trabajo y una elección corregida por contraste.',
-    'Cada herramienta aparece una vez y la justificación describe una capacidad, no una preferencia.'))
+    3, RAIL1, 20, 'Del expediente a una presentación defendible.',
+    'Secretaría del Comité de Cotizaciones', 'NotebookLM del laboratorio 2 · expediente PR-ADM-014', 'NotebookLM Studio + Gemini Canvas',
+    'El comité comienza en veinte minutos. Necesita una historia visual breve, pero cada regla y contradicción debe seguir conectada con el expediente.',
+    'Qué necesita decidir el comité, qué evidencia lo sostiene y qué conflicto no puede resolverse todavía.',
+    ['Genera en NotebookLM un Slide Deck ejecutivo de cinco láminas.',
+     'Genera después una infografía del mismo expediente y úsala para detectar omisiones.',
+     'Lleva ambos artefactos a Canvas, corrige la narrativa y ensaya un pitch de 90 segundos.'],
+    prompt('<span class="kw">1 · SLIDE DECK</span> · Decisión requerida, regla vigente, contradicciones, impacto y preguntas al dueño.',
+           '<span class="kw">2 · INFOGRAFÍA</span> · Resume documentos, relaciones y alertas; compara contra el deck y señala una omisión.',
+           '<span class="kw">3 · CANVAS</span> · Crea una presentación editable de cinco slides, incorpora la corrección y cierra con la decisión solicitada.'),
+    'Slide Deck, infografía, presentación Canvas y pitch de 90 segundos.',
+    'Las cinco slides preservan citas, muestran conflictos y no inventan una versión oficial.'))
 
 d.add('Bloque 2', 'section-div', divider(
     2, 4, 40, '3 LABORATORIOS', 'Investigar y<br/>convertir.',
