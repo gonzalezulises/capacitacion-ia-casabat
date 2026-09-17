@@ -18,9 +18,9 @@ for (const file of decks) {
   }
   const html = read(file);
   const ejercicios = (html.match(/<div class="ex-num">/g) || []).length;
-  ejercicios === 6
-    ? ok(`${file}: 6 laboratorios principales`)
-    : fail(`${file}: tiene ${ejercicios} ejercicios; se esperaban 6 laboratorios principales`);
+  ejercicios === 12
+    ? ok(`${file}: 12 laboratorios principales`)
+    : fail(`${file}: tiene ${ejercicios} ejercicios; se esperaban 12 laboratorios principales`);
   html.includes('PAUSA · 15 MIN')
     ? ok(`${file}: declara la pausa de 15 minutos`)
     : fail(`${file}: no declara PAUSA · 15 MIN en la agenda`);
@@ -49,7 +49,6 @@ const publicables = [
   ...decks.map(read),
   read('practica.html'),
   read('index.html'),
-  read('materiales/11_tecnicas_de_prompting.md'),
 ].join('\n');
 
 for (const [patron, etiqueta] of [
@@ -63,14 +62,14 @@ for (const [patron, etiqueta] of [
 }
 
 const hub = read('index.html');
-hub.includes('<b>12</b><span>laboratorios principales')
-  ? ok('hub: comunica 12 laboratorios principales')
-  : fail('hub: no comunica los 12 laboratorios principales');
+hub.includes('<b>24</b><span>laboratorios principales')
+  ? ok('hub: comunica 24 laboratorios principales')
+  : fail('hub: no comunica los 24 laboratorios principales');
 
 for (const material of [
-  'materiales/01_especificacion_de_tarea.md',
-  'materiales/02_pruebas_de_aceptacion.md',
-  'materiales/12_contexto_persistente_y_flujos.md',
+  'materiales/01_especificacion_de_tarea.docx',
+  'materiales/02_pruebas_de_aceptacion.docx',
+  'materiales/12_contexto_persistente_y_flujos.docx',
 ]) {
   existsSync(material) ? ok(`${material}: presente`) : fail(`${material}: falta`);
 }

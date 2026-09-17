@@ -224,6 +224,61 @@ def exercise(num, rail_l, minutos, titulo, herramienta, concepto, pasos, prompt_
     return b
 
 
+def exercise_case(num, rail_l, minutos, titulo, rol, entrada, herramienta, situacion,
+                  decision, pasos, prompt_html, entregable, criterio, caveat=None,
+                  prompt_label='PROMPT DEL PARTICIPANTE'):
+    """Laboratorio centrado en una situación de trabajo, no en la técnica."""
+    import re as _re
+    plano = _re.sub(r'<[^>]+>', '', prompt_html)
+    peso = len(plano) + len(entregable) + len(criterio) + (260 if caveat else 0)
+    dens = ' denser' if peso > 760 else (' dense' if peso > 580 else '')
+
+    def b(i, total):
+        ps = '\n'.join(f'            <li>{p}</li>' for p in pasos)
+        cav = ''
+        if caveat:
+            cav = f'\n        <div class="caveat"><b>Límite</b>{caveat}</div>'
+        return (f'{_rail(rail_l, f"{minutos} MINUTOS")}\n'
+                f'    <div class="ex-header case-header">\n'
+                f'      <div class="ex-num-block">\n'
+                f'        <div class="ex-num-label">LABORATORIO</div>\n'
+                f'        <div class="ex-num">{num:02d}</div>\n'
+                f'      </div>\n'
+                f'      <div>\n'
+                f'        <h2 class="ex-title">{titulo}</h2>\n'
+                f'        <div class="case-meta">\n'
+                f'          <span class="role"><b>ROL</b>{rol}</span>\n'
+                f'          <span class="input"><b>ENTRADA</b>{entrada}</span>\n'
+                f'          <span class="case-tool"><b>IA</b>{herramienta}</span>\n'
+                f'        </div>\n'
+                f'      </div>\n'
+                f'    </div>\n'
+                f'    <div class="ex-body case-body">\n'
+                f'      <div class="col">\n'
+                f'        <div class="concept-block">\n'
+                f'          <span class="label acc">SITUACIÓN CASABAT</span>\n'
+                f'          <div class="situation">{situacion}</div>\n'
+                f'        </div>\n'
+                f'        <div class="decision"><span class="label">DECISIÓN</span>{decision}</div>\n'
+                f'        <div class="steps-block">\n'
+                f'          <span class="label">PASO A PASO</span>\n'
+                f'          <ol class="steps">\n{ps}\n          </ol>\n'
+                f'        </div>\n'
+                f'      </div>\n'
+                f'      <div class="col">\n'
+                f'        <div class="prompt-card{dens}">\n'
+                f'          <span class="label">{prompt_label}</span>\n'
+                f'{prompt_html}\n'
+                f'        </div>\n'
+                f'        <div class="result">\n'
+                f'          <b>ENTREGABLE</b>\n          {entregable}\n'
+                f'          <div class="criterion"><span>CRITERIO</span>{criterio}</div>\n'
+                f'        </div>{cav}\n'
+                f'      </div>\n'
+                f'    </div>')
+    return b
+
+
 def governance(rail_l, h1_html, intro, items):
     def b(i, total):
         gs = '\n'.join(f'      <div class="gov-item"><h3>{t}</h3><p>{p}</p></div>' for t, p in items)

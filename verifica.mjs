@@ -14,7 +14,7 @@ const fail = (m) => fails.push(m);
 
 const DECKS = ['sesion-1.html', 'sesion-2.html'];
 const MIN_POR_SESION = 180;
-const EJ_POR_SESION = 6;
+const EJ_POR_SESION = 12;
 
 // texto visible: sin <style>, <script> ni etiquetas
 function visible(html) {
@@ -68,10 +68,22 @@ for (const file of DECKS) {
   for (const s of bloquesSeccion) {
     if (!s.includes('class="ex-num"')) continue;
     const t = (s.match(/<h2 class="ex-title">([^<]+)</) || [, '?'])[1];
-    for (const parte of ['prompt-card', 'class="result"', 'class="concept"', 'ol class="steps"']) {
+    for (const parte of ['prompt-card', 'class="result"', 'class="situation"', 'class="role"',
+                         'class="input"', 'class="decision"', 'class="criterion"', 'ol class="steps"']) {
       if (!s.includes(parte)) fail(`${file}: el ejercicio "${t}" no tiene ${parte}`);
     }
   }
+
+  const labsPorBloque = {};
+  for (const s of bloquesSeccion) {
+    if (!s.includes('class="ex-num"')) continue;
+    const b = s.match(/BLOQUE (\d{2}) <span class="sep">/);
+    if (b) labsPorBloque[Number(b[1])] = (labsPorBloque[Number(b[1])] || 0) + 1;
+  }
+  for (let b = 1; b <= 4; b++) {
+    if ((labsPorBloque[b] || 0) !== 3) fail(`${file}: bloque ${b} tiene ${labsPorBloque[b] || 0} laboratorios; se esperaban 3`);
+  }
+  if ([1, 2, 3, 4].every(b => labsPorBloque[b] === 3)) ok(`${file}: tres laboratorios en cada bloque`);
 
   // --- minutos: la agenda debe sumar 180 y coincidir con los dividers ---
   const agendaMin = [...html.matchAll(/BLOQUE \d · (\d+) MIN/g)].map(m => Number(m[1]));

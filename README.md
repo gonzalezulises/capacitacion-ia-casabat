@@ -1,61 +1,67 @@
-# IA aplicada a Administración y Gerencia Comercial · Casa de las Baterías
+# IA aplicada a Administración y Gerencia Comercial CasaBat
 
-Programa 2026 de dos sesiones de 180 minutos para Administración y Gerencia Comercial. Conserva los casos CasaBat y la práctica guiada, pero pasa del prompt aislado a sistemas de trabajo con fuentes, pruebas, versiones, seguridad y aprobación humana.
+Programa 2026 de dos sesiones de 180 minutos para Administración y Gerencia Comercial de Casa de las Baterías. Los 24 laboratorios se desarrollan dentro de tareas reconocibles: bandeja de correos, cotizaciones, crédito, garantías, ventas, devoluciones, expedientes y cierre mensual.
 
-- **Cliente:** Casa de las Baterías
-- **Formato:** presencial o remoto, con facilitador · 2 × 180 min
-- **Carga en vivo:** 6 laboratorios por sesión · 15 minutos de pausa incluidos
-- **Práctica:** 16 ejercicios en 4 niveles
-- **Datos:** todos los materiales incluidos son ficticios
-- **Identidad:** azul `#1C5C92`, azul oscuro `#14456E`, rojo `#C0392B`; Inter, Antonio e IBM Plex Mono
+- Cliente: Casa de las Baterías
+- Formato: presencial o remoto con facilitador
+- Carga en vivo: 12 laboratorios por sesión y 3 por bloque
+- Práctica: 16 ejercicios en 4 niveles
+- Materiales para participantes: 17 DOCX y 2 XLSX
+- Datos: todos los casos y cifras son ficticios
 
 ## Diseño curricular
 
-### Sesión 1 · Del pedido al sistema de trabajo
+### Sesión 1 De la bandeja a un sistema de trabajo
 
-| Bloque | Min | Resultado |
-| --- | ---: | --- |
-| Elegir antes de pedir | 40 | Mapa generar/recuperar/calcular/actuar y línea base |
-| Especificar y dar voz | 40 | Especificación en cinco partes y criterios de aceptación |
+| Bloque | Min | Laboratorios |
+| --- | ---: | ---: |
+| La bandeja del lunes | 40 | 3 |
+| Respuestas que pueden salir | 40 | 3 |
 | Pausa | 15 | — |
-| Contexto persistente | 45 | Decisión entre Proyecto, Gem o Plugin; versión y dueño |
-| Probar antes de confiar | 40 | Suite de cinco casos, métrica y revisión |
+| Trabajo que se repite | 45 | 3 |
+| Antes de presionar Enviar | 40 | 3 |
 
-### Sesión 2 · Datos, documentos y control
+### Sesión 2 Cerrar el mes con evidencia
 
-| Bloque | Min | Resultado |
-| --- | ---: | --- |
-| Datos reproducibles | 65 | Contrato, limpieza, método y reconciliación |
+| Bloque | Min | Laboratorios |
+| --- | ---: | ---: |
+| El Excel antes de la reunión | 45 | 3 |
+| Documentos que cambian decisiones | 40 | 3 |
 | Pausa | 15 | — |
-| Documentos que resisten | 35 | OCR, citas, vigencia y contradicciones |
-| Controles deterministas | 30 | Validador de nomenclatura y prueba de inyección |
-| Flujo con aprobación | 35 | Entrada, borrador, aprobación, salida y traspaso |
+| Antes de publicar el expediente | 40 | 3 |
+| Cerrar junio y dejarlo funcionando | 40 | 3 |
 
 ## Materiales
 
-Los casos usan contexto de CasaBat sin información real de clientes ni documentos vigentes. Los defectos son intencionales: el CSV trae variantes, vacíos, duplicados, fechas heterogéneas y un valor imposible; el expediente trae desviaciones de nomenclatura, referencias rotas, anexos huérfanos y versiones contradictorias.
+Los archivos Office son las fuentes canónicas para el curso. No se mantienen copias paralelas del contenido en Markdown o CSV.
 
 ```text
 materiales/
-  00_contexto_marca_casabat.md
-  01_especificacion_de_tarea.md
-  02_pruebas_de_aceptacion.md
-  03_politica_garantia.md
-  04_ventas_sucursales_2026.csv
-  05_correos_pendientes.csv
-  06_correos_de_referencia.md
-  07_notas_comite_operaciones.md
-  08_reporte_mensual_mayo.md
-  09_reglas_de_nomenclatura.md
-  10_PR-ADM-014_v3_BORRADOR.md
-  11_tecnicas_de_prompting.md
-  12_contexto_persistente_y_flujos.md
+  00_contexto_marca_casabat.docx
+  01_especificacion_de_tarea.docx
+  02_pruebas_de_aceptacion.docx
+  03_politica_garantia.docx
+  04_ventas_sucursales_2026.xlsx
+  05_correos_pendientes.xlsx
+  06_correos_de_referencia.docx
+  07_notas_comite_operaciones.docx
+  08_reporte_mensual_mayo.docx
+  09_reglas_de_nomenclatura.docx
+  10_PR-ADM-014_v3_BORRADOR.docx
+  11_tecnicas_de_prompting.docx
+  12_contexto_persistente_y_flujos.docx
   expediente-PR-ADM-014/
+    Anexo B - Tabla de descuentos.docx
+    PR-ADM-014-ANEXO-A_formato_de_cotizacion_v2.docx
+    PR-ADM-014-ANEXO-C_matriz_de_aprobacion_V1.docx
+    PR-ADM-014-ANEXO-F_registro_de_llamadas_v1.docx
+    PR-ADM-014_Gestion_de_Cotizaciones_v2.docx
+    PR-ADM-14-ANEXO-D_condiciones_de_credito_v1.docx
 ```
 
-Un archivo real solo debe usarse anonimizado y dentro del entorno, plan, configuración, retención y política aprobados por la empresa.
+Los defectos de los libros y del expediente son intencionales. Alimentan las respuestas objetivas de los ejercicios y están protegidos por verificadores.
 
-## Estructura
+## Estructura técnica
 
 ```text
 index.html                    hub del programa
@@ -65,30 +71,30 @@ practica.html                 guía de 16 ejercicios
 build/s1.py                   fuente de la sesión 1
 build/s2.py                   fuente de la sesión 2
 build/practica.py             fuente de la práctica
-build/deck.py                 render compartido
-materiales/                   archivos de trabajo
+build/deck.py                 componentes del deck
+build/office_reader.py        lectura OOXML para verificadores
+materiales/                   fuentes Office canónicas
 materiales.zip                descarga conjunta
-deck-stage.js                 motor del deck; no modificar
+deck-stage.js                 motor del deck
 verifica.mjs                  estructura, tiempos y enlaces
-verifica-curriculo-2026.mjs   conceptos y términos vigentes
-verifica-materiales.mjs       casos, patrones y trazabilidad
-verifica-practica.mjs         respuestas objetivas de la guía
-verifica-layout.js            comprobación visual en navegador
+verifica-curriculo-2026.mjs   conceptos y carga curricular
+verifica-materiales.mjs       formatos, defectos y trazabilidad
+verifica-practica.mjs         respuestas objetivas
+verifica-layout.js            desbordes visuales en navegador
 ```
 
-## Desarrollo
+## Generación
 
-Los HTML de sesión y práctica son generados. Edita las fuentes en `build/`, no los archivos generados.
+Los HTML de sesión y práctica son generados. Se editan las fuentes en `build/`.
 
 ```bash
-cd build && python3 build.py
-cd build && python3 practica.py
+python3 build/build.py
+python3 build/practica.py
 ```
 
-Si cambia cualquier material, regenera `materiales.zip`.
+Si cambia un material, se vuelve a crear el paquete:
 
 ```bash
-rm -f materiales.zip
 zip -qr materiales.zip materiales -x '*.DS_Store'
 ```
 
@@ -101,9 +107,16 @@ node verifica-materiales.mjs
 node verifica-practica.mjs
 ```
 
-`verifica.mjs` comprueba numeración, integridad de ejercicios, agenda de 180 minutos —incluida la pausa—, enlaces, puntuación y tokens visuales. La compuerta curricular evita reintroducir carga o términos retirados. Las otras dos recalculan patrones desde los archivos y verifican que toda respuesta y enlace siga siendo correcto.
+Las compuertas verifican:
 
-Para la comprobación visual, sirve el sitio localmente y ejecuta `verifica-layout.js` en cada deck:
+- 24 laboratorios, 3 por bloque y 180 minutos por sesión;
+- situación, rol, entrada, decisión, entregable y criterio en cada laboratorio;
+- 17 DOCX y 2 XLSX sin formatos retirados;
+- conservación de filas, tipos y defectos didácticos;
+- tres nombres conformes y tres no conformes en el expediente;
+- enlaces publicados y respuestas objetivas de la práctica.
+
+Para la comprobación visual, se sirve el sitio localmente y se ejecuta `verifica-layout.js` en cada deck.
 
 ```bash
 python3 -m http.server 8877
@@ -113,11 +126,11 @@ python3 -m http.server 8877
 
 | Tecla | Acción |
 | --- | --- |
-| `←` `→` · `PgUp` `PgDn` · `Espacio` | Anterior / siguiente |
-| `Home` `End` | Primer / último slide |
-| `R` | Reset |
+| `←` `→` · `PgUp` `PgDn` · `Espacio` | Anterior o siguiente |
+| `Home` `End` | Primer o último slide |
+| `R` | Reiniciar |
 
-Imprimir → Guardar como PDF exporta un slide por página.
+Imprimir y guardar como PDF exporta un slide por página.
 
 ## Licencia
 
