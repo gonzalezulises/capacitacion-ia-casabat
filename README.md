@@ -1,10 +1,10 @@
 # IA aplicada a Administración y Gerencia Comercial CasaBat
 
-Programa 2026 de dos sesiones de 180 minutos para Administración y Gerencia Comercial de Casa de las Baterías. Los 24 laboratorios recorren selección de herramienta, síntesis documental, investigación, prototipado, Gems, garantías, ventas, devoluciones, expedientes y cierre mensual.
+Programa 2026 de dos sesiones presenciales con ritmo flexible para Administración y Gerencia Comercial de Casa de las Baterías. Los 32 laboratorios recorren selección de herramienta, síntesis documental, investigación, prototipado, Gems, comunicación operativa, garantías, ventas, devoluciones, expedientes y cierre mensual.
 
 - Cliente: Casa de las Baterías
 - Formato: presencial o remoto con facilitador
-- Carga en vivo: 12 laboratorios por sesión y 3 por bloque
+- Carga en vivo: 16 laboratorios por sesión y 4 por bloque
 - Práctica: 16 ejercicios en 4 niveles
 - Materiales para participantes: 17 DOCX y 2 XLSX
 - Datos: todos los casos y cifras son ficticios
@@ -109,7 +109,7 @@ node verifica-practica.mjs
 
 Las compuertas verifican:
 
-- 24 laboratorios, 3 por bloque y 180 minutos por sesión;
+- 32 laboratorios, 4 por bloque y ritmo administrado por el facilitador;
 - situación, rol, entrada, decisión, entregable y criterio en cada laboratorio;
 - 17 DOCX y 2 XLSX sin formatos retirados;
 - conservación de filas, tipos y defectos didácticos;

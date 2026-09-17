@@ -134,11 +134,12 @@ def stats(rail_l, h1_html, items):
 
 
 def agenda(rail_r, h1_html, blocks):
-    """blocks: [(bnum, titulo, [(item, min)])]"""
+    """blocks: [(bnum, titulo, [(item, detalle)])]. El ritmo lo marca el facilitador."""
     def b(i, total):
         cols = []
         for bnum, tit, items in blocks:
-            lis = '\n'.join(f'          <li>{t} <span>{m}</span></li>' for t, m in items)
+            bnum = re.sub(r'\s*·\s*\d+\s+MIN\s*$', '', bnum)
+            lis = '\n'.join(f'          <li>{t}</li>' for t, _detalle in items)
             cols.append(f'      <div class="ag-block">\n'
                         f'        <div class="bnum">{bnum}</div>\n'
                         f'        <h3>{tit}</h3>\n'
@@ -164,7 +165,7 @@ def howto(rail_l, h1_html, cards):
 
 def divider(bloque_n, de, minutos, n_ej, h1_html, herramientas, objetivo, entregable):
     def b(i, total):
-        return (f'{_rail(f"BLOQUE {bloque_n} DE {de}", f"{minutos} MIN <span class=\'sep\'></span> {n_ej}")}\n'
+        return (f'{_rail(f"BLOQUE {bloque_n} DE {de}", n_ej)}\n'
                 f'    <div class="layout">\n'
                 f'      <div class="block-no">{bloque_n:02d}</div>\n'
                 f'      <div><h1>{h1_html}</h1></div>\n'
@@ -189,7 +190,7 @@ def exercise(num, rail_l, minutos, titulo, herramienta, concepto, pasos, prompt_
         cav = ''
         if caveat:
             cav = f'\n        <div class="caveat"><b>Límite</b>{caveat}</div>'
-        return (f'{_rail(rail_l, f"{minutos} MINUTOS")}\n'
+        return (f'{_rail(rail_l, "APLICACIÓN PRÁCTICA")}\n'
                 f'    <div class="ex-header">\n'
                 f'      <div class="ex-num-block">\n'
                 f'        <div class="ex-num-label">EJERCICIO</div>\n'
@@ -238,7 +239,7 @@ def exercise_case(num, rail_l, minutos, titulo, rol, entrada, herramienta, situa
         cav = ''
         if caveat:
             cav = f'\n        <div class="caveat"><b>Límite</b>{caveat}</div>'
-        return (f'{_rail(rail_l, f"{minutos} MINUTOS")}\n'
+        return (f'{_rail(rail_l, "APLICACIÓN PRÁCTICA")}\n'
                 f'    <div class="ex-header case-header">\n'
                 f'      <div class="ex-num-block">\n'
                 f'        <div class="ex-num-label">LABORATORIO</div>\n'

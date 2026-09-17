@@ -9,6 +9,7 @@ import { execFileSync } from 'node:child_process';
 
 const M = 'materiales';
 const EXP = join(M, 'expediente-PR-ADM-014');
+const AUDIT = join(M, 'expediente-auditoria-sucursales');
 const oks = [], fails = [];
 const ok = (m) => oks.push(m);
 const fail = (m) => fails.push(m);
@@ -19,11 +20,12 @@ const sinTilde = (s) => s.normalize('NFKD').replace(/[̀-ͯ]/g, '');
 
 // ---------- 0. Contrato Office ----------
 const todos = [...readdirSync(M).filter(f => !f.startsWith('.')),
-  ...readdirSync(EXP).filter(f => !f.startsWith('.')).map(f => `expediente-PR-ADM-014/${f}`)];
+  ...readdirSync(EXP).filter(f => !f.startsWith('.')).map(f => `expediente-PR-ADM-014/${f}`),
+  ...readdirSync(AUDIT).filter(f => !f.startsWith('.')).map(f => `expediente-auditoria-sucursales/${f}`)];
 const docx = todos.filter(f => f.endsWith('.docx'));
 const xlsx = todos.filter(f => f.endsWith('.xlsx'));
 const retirados = todos.filter(f => /\.(?:md|csv)$/i.test(f));
-docx.length === 17 ? ok('Office: 17 documentos Word') : fail(`Office: ${docx.length} DOCX; se esperaban 17`);
+docx.length === 22 ? ok('Office: 22 documentos Word') : fail(`Office: ${docx.length} DOCX; se esperaban 22`);
 xlsx.length === 2 ? ok('Office: 2 libros Excel') : fail(`Office: ${xlsx.length} XLSX; se esperaban 2`);
 retirados.length === 0 ? ok('Office: ningún MD o CSV para participantes')
   : fail(`Office: aún existen formatos retirados — ${retirados.join(' · ')}`);
@@ -32,7 +34,7 @@ if (existsSync('materiales.zip')) {
   const zip = execFileSync('unzip', ['-Z1', 'materiales.zip'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
   const zipOffice = zip.filter(f => /\.(?:docx|xlsx)$/i.test(f));
   const zipRetirados = zip.filter(f => /\.(?:md|csv)$/i.test(f));
-  zipOffice.length === 19 ? ok('ZIP: contiene los 19 archivos Office') : fail(`ZIP: contiene ${zipOffice.length} archivos Office; se esperaban 19`);
+  zipOffice.length === 24 ? ok('ZIP: contiene los 24 archivos Office') : fail(`ZIP: contiene ${zipOffice.length} archivos Office; se esperaban 24`);
   zipRetirados.length === 0 ? ok('ZIP: no contiene MD o CSV') : fail(`ZIP: conserva formatos retirados — ${zipRetirados.join(' · ')}`);
 }
 
@@ -186,7 +188,9 @@ for (const deck of ['sesion-1.html', 'sesion-2.html']) {
   for (const m of html.matchAll(/<code>([^<]+\.(?:docx|xlsx))<\/code>/g)) citados.add(m[1]);
   for (const m of html.matchAll(/<code>(expediente-PR-ADM-014\/?)<\/code>/g)) citados.add(m[1]);
 }
-const disponibles = new Set([...readdirSync(M), ...readdirSync(EXP), 'expediente-PR-ADM-014/', 'expediente-PR-ADM-014']);
+const disponibles = new Set([...readdirSync(M), ...readdirSync(EXP), ...readdirSync(AUDIT),
+  'expediente-PR-ADM-014/', 'expediente-PR-ADM-014',
+  'expediente-auditoria-sucursales/', 'expediente-auditoria-sucursales']);
 const rotos = [...citados].filter(c => !disponibles.has(c) && !disponibles.has(c.split('/').pop()));
 citados.size === 0
   ? fail('los decks no citan ningún material — los ejercicios siguen dependiendo de que el participante traiga archivos')
@@ -209,8 +213,7 @@ for (const deck of DECKS) {
   }
   // un <code> que nombra un archivo existente y NO quedó enlazado es un descuido
   const sueltos = codigos.filter(c => /\.(docx|xlsx)$/.test(c))
-    .filter(c => !html.includes(`href="materiales/${encodeURIComponent(c)}"`) &&
-                 !html.includes(`href="materiales/expediente-PR-ADM-014/${encodeURIComponent(c)}"`));
+    .filter(c => !html.includes(`<code>${c}</code></a>`));
   if (sueltos.length) fail(`${deck}: nombres de archivo sin enlace — ${[...new Set(sueltos)].join(', ')}`);
 }
 enlacesRotos.length

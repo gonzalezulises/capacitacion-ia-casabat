@@ -18,12 +18,12 @@ for (const file of decks) {
   }
   const html = read(file);
   const ejercicios = (html.match(/<div class="ex-num">/g) || []).length;
-  ejercicios === 12
-    ? ok(`${file}: 12 laboratorios principales`)
-    : fail(`${file}: tiene ${ejercicios} ejercicios; se esperaban 12 laboratorios principales`);
-  html.includes('PAUSA · 15 MIN')
-    ? ok(`${file}: declara la pausa de 15 minutos`)
-    : fail(`${file}: no declara PAUSA · 15 MIN en la agenda`);
+  ejercicios === 16
+    ? ok(`${file}: 16 laboratorios principales`)
+    : fail(`${file}: tiene ${ejercicios} ejercicios; se esperaban 16 laboratorios principales`);
+  !/\b\d+\s+MIN(?:UTOS)?\b/.test(html.replace(/<style[\s\S]*?<\/style>/gi, ''))
+    ? ok(`${file}: no impone tiempos fijos`)
+    : fail(`${file}: aún impone tiempos fijos`);
 }
 
 const s1 = read('sesion-1.html');
@@ -35,6 +35,16 @@ const laboratoriosDeCorreo = laboratoriosS1.filter(section => /correo/i.test(sec
 laboratoriosDeCorreo <= 3
   ? ok(`sesión 1: limita a ${laboratoriosDeCorreo} los laboratorios centrados en correo`)
   : fail(`sesión 1: ${laboratoriosDeCorreo} de 12 laboratorios siguen centrados en correo; máximo 3`);
+
+for (const [sesion, html] of [[1, s1], [2, read('sesion-2.html')]]) {
+  const laboratorios = html.split(/(?=<section\b)/).filter(section => section.includes('<div class="ex-num">'));
+  for (let bloque = 0; bloque < 4; bloque++) {
+    const cierre = laboratorios[bloque * 4 + 3] || '';
+    /APLICACIÓN INDIVIDUAL/i.test(cierre)
+      ? ok(`sesión ${sesion}: bloque ${bloque + 1} cierra con aplicación individual`)
+      : fail(`sesión ${sesion}: bloque ${bloque + 1} no cierra con aplicación individual`);
+  }
+}
 
 for (const [patron, capacidad] of [
   [/NotebookLM|Gemini Notebook/i, 'NotebookLM o Gemini Notebook'],
@@ -59,6 +69,29 @@ const cadena03Completa = cadena03.every(paso => {
 cadena03Completa
   ? ok('sesión 1: laboratorio 3 encadena Slide Deck → infografía → Canvas')
   : fail('sesión 1: laboratorio 3 no encadena Slide Deck → infografía → Canvas en ese orden');
+
+const bloque4 = laboratoriosS1.slice(12, 16).join('\n');
+const cadenaBloque4 = ['PTCF', 'GOOGLE DOCS', 'GOOGLE VIDS', 'ASK GEMINI'];
+let cursorBloque4 = 0;
+const cadenaBloque4Completa = cadenaBloque4.every(paso => {
+  const posicion = bloque4.toUpperCase().indexOf(paso, cursorBloque4);
+  if (posicion < 0) return false;
+  cursorBloque4 = posicion + paso.length;
+  return true;
+});
+cadenaBloque4Completa
+  ? ok('sesión 1: bloque 4 encadena PTCF/Docs → Vids → auditoría en Drive')
+  : fail('sesión 1: bloque 4 no encadena PTCF/Docs → Vids → auditoría en Drive en ese orden');
+
+for (const material of [
+  'materiales/13_notas_recorrido_sucursales.docx',
+  'materiales/expediente-auditoria-sucursales/AS-001_reporte_via_espana.docx',
+  'materiales/expediente-auditoria-sucursales/AS-002_reporte_tocumen.docx',
+  'materiales/expediente-auditoria-sucursales/AS-003_reporte_la_chorrera.docx',
+  'materiales/expediente-auditoria-sucursales/AS-004_reporte_san_miguelito.docx',
+]) {
+  existsSync(material) ? ok(`${material}: presente`) : fail(`${material}: falta`);
+}
 
 for (const concepto of ['GENERAR', 'RECUPERAR', 'CALCULAR', 'ACTUAR']) {
   s1.includes(concepto)
@@ -88,9 +121,9 @@ for (const [patron, etiqueta] of [
 }
 
 const hub = read('index.html');
-hub.includes('<b>24</b><span>laboratorios principales')
-  ? ok('hub: comunica 24 laboratorios principales')
-  : fail('hub: no comunica los 24 laboratorios principales');
+hub.includes('<b>32</b><span>laboratorios principales')
+  ? ok('hub: comunica 32 laboratorios principales')
+  : fail('hub: no comunica los 32 laboratorios principales');
 
 for (const material of [
   'materiales/01_especificacion_de_tarea.docx',

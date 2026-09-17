@@ -13,8 +13,7 @@ const ok = (m) => oks.push(m);
 const fail = (m) => fails.push(m);
 
 const DECKS = ['sesion-1.html', 'sesion-2.html'];
-const MIN_POR_SESION = 180;
-const EJ_POR_SESION = 12;
+const EJ_POR_SESION = 16;
 
 // texto visible: sin <style>, <script> ni etiquetas
 function visible(html) {
@@ -81,36 +80,15 @@ for (const file of DECKS) {
     if (b) labsPorBloque[Number(b[1])] = (labsPorBloque[Number(b[1])] || 0) + 1;
   }
   for (let b = 1; b <= 4; b++) {
-    if ((labsPorBloque[b] || 0) !== 3) fail(`${file}: bloque ${b} tiene ${labsPorBloque[b] || 0} laboratorios; se esperaban 3`);
+    if ((labsPorBloque[b] || 0) !== 4) fail(`${file}: bloque ${b} tiene ${labsPorBloque[b] || 0} laboratorios; se esperaban 4`);
   }
-  if ([1, 2, 3, 4].every(b => labsPorBloque[b] === 3)) ok(`${file}: tres laboratorios en cada bloque`);
+  if ([1, 2, 3, 4].every(b => labsPorBloque[b] === 4)) ok(`${file}: cuatro laboratorios en cada bloque`);
 
-  // --- minutos: la agenda debe sumar 180 y coincidir con los dividers ---
-  const agendaMin = [...html.matchAll(/BLOQUE \d · (\d+) MIN/g)].map(m => Number(m[1]));
-  const pausa = Number((html.match(/PAUSA · (\d+) MIN/) || [, 0])[1]);
-  const suma = agendaMin.reduce((a, b) => a + b, 0) + pausa;
-  if (agendaMin.length !== 4) fail(`${file}: la agenda declara ${agendaMin.length} bloques, no 4`);
-  else if (suma !== MIN_POR_SESION) fail(`${file}: la agenda suma ${suma} min, no ${MIN_POR_SESION}`);
-  else if (pausa !== 15) fail(`${file}: la pausa declarada es de ${pausa} min, no 15`);
-  else ok(`${file}: 4 bloques + pausa de ${pausa} min suman ${suma} min`);
-
-  const divMin = [...html.matchAll(/<span>(\d+) MIN <span class='sep'><\/span>/g)].map(m => Number(m[1]));
-  if (JSON.stringify(divMin) !== JSON.stringify(agendaMin)) {
-    fail(`${file}: dividers ${divMin.join(',')} no coinciden con la agenda ${agendaMin.join(',')}`);
-  } else ok(`${file}: dividers de bloque coinciden con la agenda`);
-
-  // los minutos por ejercicio de cada bloque deben sumar los del bloque
-  const porBloque = {};
-  for (const s of bloquesSeccion) {
-    const b = s.match(/BLOQUE (\d{2}) <span class="sep">/);
-    const min = s.match(/<span>(\d+) MINUTOS<\/span>/);
-    if (b && min) porBloque[Number(b[1])] = (porBloque[Number(b[1])] || 0) + Number(min[1]);
-  }
-  agendaMin.forEach((m, i) => {
-    const real = porBloque[i + 1] || 0;
-    if (real !== m) fail(`${file}: bloque ${i + 1} declara ${m} min pero sus ejercicios suman ${real}`);
-  });
-  if (agendaMin.every((m, i) => (porBloque[i + 1] || 0) === m)) ok(`${file}: minutos de ejercicios cuadran por bloque`);
+  // --- ritmo presencial: el deck no impone minutos por bloque ni ejercicio ---
+  const tiemposFijos = visible(html).match(/\b\d+\s+MIN(?:UTOS)?\b/g) || [];
+  tiemposFijos.length === 0
+    ? ok(`${file}: sin tiempos fijos; el facilitador controla el ritmo`)
+    : fail(`${file}: conserva tiempos fijos — ${[...new Set(tiemposFijos)].join(', ')}`);
 
   // --- puntuación española: todo ? y ! con su signo de apertura ---
   const txt = visible(html);
