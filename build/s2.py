@@ -14,7 +14,7 @@ d.add('Portada', 'cover', cover(
     'CASA DE LAS BATERÍAS · ADMINISTRACIÓN Y GERENCIA COMERCIAL',
     'DATOS, DOCUMENTOS<br/>Y <span class="acc">CONTROL</span>.',
     'Sesión 2 de 2 · Análisis reproducible, seguridad y aprobación humana · 180 minutos · 6 laboratorios.',
-    'Sesión 2 · Edición 2026', 240))
+    'Sesión 2 · Edición 2026', 230))
 
 d.add('El principio', None, statement(
     'LA REGLA DE ESTA SESIÓN',
