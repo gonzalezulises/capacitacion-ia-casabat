@@ -37,11 +37,12 @@ d.add('Portada', 'cover', cover(
 
 d.add('Punto de partida', None, statement(
     'PUNTO DE PARTIDA',
-    'Ya usan IA todos los días.<br/>Lo que falta es <span style="color:var(--brand-br);">el criterio</span>.',
+    'El oficio ya lo tienen.<br/>Hoy lo <span style="color:var(--brand-br);">multiplican</span>.',
     '<p style="font-size:28px;line-height:1.48;color:var(--bone-2);max-width:1480px;margin-top:34px;">'
-    'Las cinco personas del formulario usan IA de forma habitual. Nadie es principiante. '
-    'Lo que se repite es otra cosa: corregir tres veces lo que podía salir bien a la primera. '
-    '<b style="color:var(--bone);">Hoy se trabaja con técnicas que tienen nombre y criterio de uso.</b></p>', 78))
+    'Las cinco personas del formulario ya usan IA a diario. Este grupo arranca con ventaja. '
+    'La IA no sabe cómo se cotiza aquí, qué cubre la garantía ni cómo se nombra un '
+    'procedimiento. <b style="color:var(--bone);">Eso lo ponen ustedes; hoy sumamos las '
+    'técnicas que lo convierten en horas ganadas.</b></p>', 80))
 
 d.add('Lo que pidieron', 'paper', cards(
     'LAS CUATRO NECESIDADES DEL FORMULARIO',
@@ -183,8 +184,8 @@ d.add('Laboratorio 3', 'paper', exercise_case(
     3, RAIL1, 12, 'Que suene a ti también es la técnica de los ejemplos.',
     'Jefatura de Administración',
     '<code>06_correos_de_referencia.docx</code> o tres textos tuyos', TODAS,
-    'Pedir «que no suene a IA» no funciona: es una queja, no dice a qué debe sonar. Lo que '
-    'funciona es darle tres textos tuyos.',
+    '«Que no suene a IA» es difícil de pedir, porque no dice a qué debe sonar. Hay un atajo: '
+    'darle tres textos tuyos y que saque el patrón.',
     'Cómo escribes tú: cómo arrancas, qué largo tienen tus frases, cómo cierras.',
     ['Elige tres textos tuyos distintos: uno al equipo, un informe corto, uno a proveedor.',
      'Pide la ficha de tu estilo, sin que califique los textos.',

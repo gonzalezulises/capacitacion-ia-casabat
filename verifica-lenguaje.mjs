@@ -250,6 +250,28 @@ supuestos.length === 0
   : supuestos.forEach(([frase, por_que]) =>
       fail(`dice «${frase}» — ${por_que}`));
 
+// --- 3c. el deck no juzga a quien lo lee ---
+// La segunda lámina llegó a decir «lo que falta es el criterio» y «corregir tres
+// veces lo que podía salir bien a la primera». Eso es un diagnóstico sobre los
+// participantes, hecho antes de que abran la boca. El material enseña una
+// técnica; no califica a la sala.
+const JUICIOS = [
+  ['lo que falta es el criterio', 'di qué suma la técnica, no qué le falta a la persona'],
+  ['nadie es principiante', 'suena a que se les mide; di que el grupo arranca con ventaja'],
+  ['no tienen criterio', 'nunca'],
+  ['no saben', 'habla de lo que la herramienta no sabe, no la persona'],
+  ['corregir tres veces', 'no retrates su trabajo como ineficiente'],
+  ['el problema de ustedes', 'nunca'],
+  ['lo hacen mal', 'nunca'],
+  ['se equivocan al', 'habla del pedido, no de quien lo escribe'],
+  ['deberían saber', 'nunca'],
+  ['es una queja', 'califica el pedido sin descalificar a quien pregunta'],
+];
+const juicios = JUICIOS.filter(([frase]) => enBajo.includes(frase));
+juicios.length === 0
+  ? ok(`sin juicios sobre la sala: ${JUICIOS.length} fórmulas ausentes`)
+  : juicios.forEach(([frase, por_que]) => fail(`juzga a los participantes: «${frase}» — ${por_que}`));
+
 // --- 4. cada laboratorio aterriza en CasaBat ---
 const sinContexto = labs.filter((s) => {
   const t = visible(s).toLowerCase();
