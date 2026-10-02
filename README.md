@@ -40,7 +40,9 @@ Diseñada desde el formulario previo (5 respuestas de la cohorte). Cada bloque r
 | Tus cifras en una pantalla | «ejemplo de dashboard o gráficos» · 3 de 5 | 4 |
 | Procedimientos sin dolor | «nomenclatura y códigos de procedimientos» | 4 |
 
-Los laboratorios de tablero y de gráfico traen una receta por herramienta —Gemini, ChatGPT y Claude— en slides propios, porque el formulario reportó ChatGPT en tres respuestas y Gemini en dos. Cada receta entrega un bloque para copiar y pegar.
+El laboratorio de tablero trae una receta por herramienta —Gemini, ChatGPT y Claude— en slides propios, porque el formulario reportó ChatGPT en tres respuestas y Gemini en dos. Cada receta entrega un bloque para copiar y pegar.
+
+Cierra un anexo opcional con tres caminos que no pasan por escribir un texto: el expediente convertido en resumen de audio con NotebookLM, la cámara de Gemini Live sobre una batería en sucursal, y una tarea programada de ChatGPT que revisa cada lunes las cotizaciones vencidas.
 
 ## Materiales
 
@@ -65,6 +67,9 @@ materiales/
   14_inventario_demanda_sucursales.xlsx
   15_prompts_que_fallaron.docx
   16_maestro_procedimientos.xlsx
+  17_tecnicas_y_cuando_usarlas.docx
+  18_reclamos_de_clientes.docx
+  19_comprobante_foto.png
   expediente-PR-ADM-014/
     Anexo B - Tabla de descuentos.docx
     PR-ADM-014-ANEXO-A_formato_de_cotizacion_v2.docx
@@ -100,6 +105,7 @@ verifica-materiales.mjs       formatos, defectos y trazabilidad
 verifica-practica.mjs         respuestas objetivas
 verifica-lenguaje.mjs         lenguaje llano de la sesión 3
 verifica-maestro.mjs          fallos del maestro de procedimientos
+verifica-insumos.mjs          que ningún laboratorio pida algo que no existe
 verifica-layout.js            desbordes visuales en navegador
 ```
 
@@ -127,6 +133,7 @@ node verifica-materiales.mjs
 node verifica-practica.mjs
 node verifica-lenguaje.mjs
 node verifica-maestro.mjs
+node verifica-insumos.mjs
 ```
 
 Las compuertas verifican:
@@ -138,7 +145,8 @@ Las compuertas verifican:
 - tres nombres conformes y tres no conformes en el expediente;
 - enlaces publicados y respuestas objetivas de la práctica;
 - lenguaje de la sesión 3: frases de 25 palabras o menos, sin jerga de la lista negra, sin conceptos en mayúsculas y con cada laboratorio anclado en algo real de CasaBat;
-- cifras del maestro de procedimientos recalculadas desde el XLSX y contrastadas contra las publicadas en el deck.
+- cifras del maestro de procedimientos recalculadas desde el XLSX y contrastadas contra las publicadas en el deck;
+- insumos de los 48 laboratorios: todo archivo nombrado existe, toda referencia a otro laboratorio apunta hacia atrás y ningún prompt deja huecos sin explicar.
 
 Para la comprobación visual, se sirve el sitio localmente y se ejecuta `verifica-layout.js` en cada deck.
 

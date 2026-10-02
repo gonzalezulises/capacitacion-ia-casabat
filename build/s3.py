@@ -9,7 +9,7 @@ materiales/17_tecnicas_y_cuando_usarlas.docx.
 Cada laboratorio declara qué técnica practica. El lenguaje lo vigila
 verifica-lenguaje.mjs; la correspondencia con el material, verifica-tecnicas.mjs.
 """
-from deck import (Deck, cover, statement, agenda, divider,
+from deck import (Deck, cover, statement, agenda, divider, divider_anexo,
                   exercise_case, closing, filelist, cards, recipe)
 
 
@@ -547,6 +547,76 @@ d.add('Laboratorio 16', 'paper', exercise_case(
     'Sales con una tarea concreta y con el nombre de quien tiene que contestarla.',
     'Salir con la pregunta escrita y la fecha puesta rinde más que salir con medio borrador.',
     prompt_label='TÉCNICAS 5, 7 Y 8 · ORDEN, COLUMNAS Y CADENA'))
+
+
+# ---------------------------------------------------------------- anexo
+
+d.add('Anexo', 'section-div', divider_anexo(
+    'Tres caminos<br/>que no son escribir.',
+    'OPCIONAL · SI SOBRA TIEMPO O PARA DESPUÉS',
+    'NotebookLM · Gemini Live · tareas programadas de ChatGPT.',
+    'Cuando el trabajo no se resuelve escribiendo un texto: escuchar, mirar o dejarlo corriendo.',
+    'Tres recetas probadas, con su límite y lo que cuesta cada una.'))
+
+d.add('Opción A · audio', 'paper', recipe(
+    'OPCIÓN A <span class="sep"></span> NOTEBOOKLM',
+    'El procedimiento, en dos minutos de audio.',
+    'NotebookLM convierte un conjunto de documentos en una conversación grabada. Desde 2025 '
+    'genera en español, con variantes de México y Latinoamérica, y admite formato breve de uno '
+    'a dos minutos. Sirve para lo que nadie va a leer entero.',
+    ['Crea un cuaderno y carga el expediente de cotizaciones.',
+     'En el panel de audio, elige el formato breve.',
+     'Fija el idioma de salida en español de Latinoamérica.',
+     'Pide el enfoque antes de generar: qué debe cubrir y qué no.',
+     'Escúchalo entero antes de pasarlo: comprueba dos datos contra el documento.',
+     'Compártelo con el equipo de sucursales para que lo oigan en ruta.'],
+    'PEGA ESTO EN EL ENFOQUE DEL AUDIO',
+    '          <p>Enfócate en lo que cambia para quien atiende en sucursal: cuándo una '
+    'cotización necesita visto bueno, quién lo da y en cuánto tiempo.</p>\n'
+    '          <p>No expliques el procedimiento entero. Nada de historia ni de alcance.</p>\n'
+    '          <p>Si dos documentos se contradicen, dilo en voz alta en vez de elegir uno.</p>',
+    'El audio suena convincente aunque se equivoque. Antes de mandarlo al equipo, comprueba a '
+    'mano los datos que menciona.'))
+
+d.add('Opción B · cámara', 'paper', recipe(
+    'OPCIÓN B <span class="sep"></span> GEMINI LIVE',
+    'La batería que tienes delante.',
+    'Gemini Live comparte la cámara del teléfono en tiempo real y responde hablando. Está '
+    'disponible sin costo en Android y iPhone. En sucursal sirve para lo que hoy se resuelve '
+    'llamando a otra persona.',
+    ['Abre Gemini en el teléfono y entra en el modo de conversación.',
+     'Activa la cámara y enfoca la etiqueta de la batería.',
+     'Pregunta en voz alta, como le preguntarías a un compañero.',
+     'Pídele que te lea el código y la fecha antes de opinar.',
+     'Contrasta lo que diga con la política antes de prometerle algo al cliente.'],
+    'DILO ASÍ, EN VOZ ALTA',
+    '          <p>Léeme el código y la fecha que ves en esta etiqueta. Si algo no se lee bien, '
+    'dímelo en vez de adivinarlo.</p>\n'
+    '          <p>Con ese código, dime si es una batería de moto o de auto.</p>\n'
+    '          <p>No me digas todavía si tiene garantía: primero quiero los datos que ves.</p>',
+    'La cámara va a ver lo que haya alrededor. En sucursal, enfoca solo el producto: nada de '
+    'pantallas con datos de clientes ni documentos de otras personas.'))
+
+d.add('Opción C · sola', 'paper', recipe(
+    'OPCIÓN C <span class="sep"></span> CHATGPT',
+    'La revisión que corre sin ti.',
+    'Las tareas programadas de ChatGPT se ejecutan una vez, cada cierto tiempo o cuando pasa '
+    'algo, y avisan del resultado. Sirven para el control que siempre se pospone porque hay '
+    'que acordarse de hacerlo.',
+    ['Resuelve primero la tarea a mano una vez, en el chat.',
+     'Cuando el resultado salga bien, pide que se repita cada lunes.',
+     'Elige qué quieres recibir: la lista completa o solo si hay algo.',
+     'Deja dicho qué hacer cuando no haya nada que reportar.',
+     'Revisa las dos primeras ejecuciones antes de confiar en ella.'],
+    'PEGA ESTO EN CHATGPT',
+    '          <p>El procedimiento marca como vencida toda cotización sin respuesta a los '
+    'quince días.</p>\n'
+    '          <p>Cada lunes a las ocho, revisa el archivo de cotizaciones que te comparta y '
+    'dime cuáles cumplen quince días sin respuesta esta semana.</p>\n'
+    '          <p>Dame nombre del cliente, monto, fecha de envío y días transcurridos. Si no '
+    'hay ninguna, respóndeme solo «ninguna esta semana».</p>',
+    'La tarea programada depende del plan de la cuenta, y necesita que el archivo esté donde '
+    'ella pueda leerlo. Pruébala dos semanas antes de apoyarte en ella.'))
 
 d.add('Cierre', None, closing(
     'CIERRE DE LA SESIÓN',
