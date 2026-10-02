@@ -54,8 +54,9 @@ d.add('Ficha técnica', 'paper', comparativa(
     'Datos de la documentación de cada fabricante, consultada el 2 de octubre de 2026. '
     'Lo que aquí dice «de una vez» es cuánto texto admite sin perder el hilo.',
     ['GEMINI', 'CHATGPT', 'CLAUDE'],
-    [('Modelo principal hoy',
-      ['Gemini 3.8 Flash', 'GPT-6 Astra', 'Claude Opus 5.5']),
+    [('Modelo de más capacidad',
+      ['<b>Gemini 3.1 Pro</b>, todavía en vista previa. El estable más capaz es 3.8 Flash',
+       '<b>GPT-6 Astra</b>', '<b>Claude Opus 5.5</b>']),
      ('Texto que admite de una vez',
       ['No publicado por modelo', '<b>1,05 millones</b> de unidades, unas 780.000 palabras',
        '<b>1 millón</b> de unidades, unas 555.000 palabras']),
@@ -69,8 +70,8 @@ d.add('Ficha técnica', 'paper', comparativa(
      ('Ajuste de esfuerzo',
       ['Según el modelo', 'Cinco niveles, de mínimo a máximo',
        'Automático: decide solo cuánto pensar'])],
-    nota='Las cifras son del API. En la aplicación de chat los límites los pone el plan '
-         'contratado, no el modelo.'))
+    nota='Las cifras son del API. En la aplicación de chat no se eligen estos nombres: el '
+         'modelo y los límites los pone el plan contratado.'))
 
 d.add('Dónde brilla cada una', 'paper', comparativa(
     'ESTADO DEL ARTE <span class="sep"></span> FORTALEZAS Y LÍMITES',

@@ -31,9 +31,14 @@ HERRAMIENTAS = [
     {
         "nombre": "Gemini · Google",
         "familia": [
-            ("Gemini 3.8 Flash", "El de uso general. Admite texto, imágenes, vídeo y audio. "
-                                 "Hace llamadas a funciones, devuelve salidas estructuradas y "
-                                 "ejecuta código."),
+            ("Gemini 3.1 Pro", "La línea de más capacidad: inteligencia avanzada, resolución "
+                               "de problemas complejos y trabajo agéntico. Está en vista "
+                               "previa, no en estable."),
+            ("Gemini 3.8 Flash", "El estable de uso general, y el más capaz de la línea Flash. "
+                                 "Admite texto, imágenes, vídeo y audio. Hace llamadas a "
+                                 "funciones, devuelve salidas estructuradas y ejecuta código."),
+            ("Gemini 2.5 Pro", "El Pro estable de la generación anterior, para tareas complejas "
+                               "con razonamiento profundo."),
             ("Gemini 3.8 Live", "Conversación por voz con latencia baja, para hablar sin "
                                 "esperas. Admite audio y vídeo en directo."),
             ("Gemini 3.8 Flash TTS", "Voz sintética de calidad de estudio en 130 idiomas."),
@@ -140,6 +145,9 @@ HERRAMIENTAS = [
 NO_VERIFICADO = [
     "La ventana de contexto y la fecha de corte de los modelos Gemini no aparecen por modelo en "
     "la documentación pública consultada.",
+    "Google reparte la familia en muchas líneas —Pro, Flash, Flash-Lite— y la de más capacidad "
+    "estaba en vista previa el día de la consulta. Comparar «el modelo principal» de las tres "
+    "casas no es una comparación entre iguales.",
     "Los precios de las aplicaciones de chat para empresa cambian por región y por plan: "
     "confírmalos en la página oficial de cada proveedor antes de contratar.",
     "Varios artículos de comparativa publicados en 2026 dan números que la documentación de los "
