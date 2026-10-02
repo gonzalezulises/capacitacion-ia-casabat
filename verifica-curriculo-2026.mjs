@@ -156,17 +156,44 @@ const laboratoriosS3 = s3
   .split(/(?=<section\b)/)
   .filter(section => section.includes('<div class="ex-num">'));
 
-for (const [bloque, patron, pedido] of [
-  [1, /seis partes|pedido que funcionó|dos resultados/i, '«qué prompts usar» · 3 de 5 respondientes'],
-  [2, /forma de escribir|frases que delatan|sin que te reescriba/i, '«que no se vea que es IA»'],
-  [3, /tablero|gráfico que se entiende|cinco cifras/i, '«ejemplo de dashboard o gráficos» · 3 de 5'],
-  [4, /nombres|anexo|procedimiento/i, '«nomenclatura y códigos de procedimientos»'],
+// Las cuatro necesidades siguen cubiertas, sin atarlas a un bloque fijo: el
+// reparto puede cambiar, lo que no puede es que una necesidad se caiga.
+for (const [patron, pedido] of [
+  [/instrucción explícita|ejemplos|elegir, no acumular/i, '«qué prompts usar» · 3 de 5 respondientes'],
+  [/tu estilo|suene a ti/i, '«que no se vea que es IA»'],
+  [/tablero|gráfico que se entiende|cinco cifras/i, '«ejemplo de dashboard o gráficos» · 3 de 5'],
+  [/nombres|anexo|procedimiento/i, '«nomenclatura y códigos de procedimientos»'],
 ]) {
-  const laboratorios = laboratoriosS3.slice((bloque - 1) * 4, bloque * 4).join('\n');
-  patron.test(laboratorios)
-    ? ok(`sesión 3: el bloque ${bloque} responde ${pedido}`)
-    : fail(`sesión 3: el bloque ${bloque} ya no responde ${pedido}`);
+  patron.test(laboratoriosS3.join('\n'))
+    ? ok(`sesión 3: sigue respondiendo ${pedido}`)
+    : fail(`sesión 3: ya no responde ${pedido}`);
 }
+
+// Lo que separa un laboratorio profesional de un ejercicio suelto: cada uno
+// declara qué técnica practica, y la técnica está fichada en el material de
+// consulta con su fuente.
+const sinTecnica = laboratoriosS3.filter(section => !/TÉCNICAS?\s+[\d\s,Y]+·/.test(section));
+sinTecnica.length === 0
+  ? ok('sesión 3: los 16 laboratorios declaran qué técnica practican')
+  : fail(`sesión 3: ${sinTecnica.length} laboratorio(s) no declaran técnica`);
+
+const TECNICAS = ['INSTRUCCIÓN EXPLÍCITA', 'EJEMPLOS', 'TU ESTILO', 'DELIMITADORES',
+                  'ORDEN', 'QUE CITE ANTES', 'COLUMNAS', 'PARTIR Y ENCADENAR'];
+const practicadas = TECNICAS.filter(t => new RegExp(t, 'i').test(s3));
+practicadas.length >= 7
+  ? ok(`sesión 3: practica ${practicadas.length} de las ${TECNICAS.length} técnicas del material`)
+  : fail(`sesión 3: solo practica ${practicadas.length} técnicas; se esperaban al menos 7`);
+
+// Las tres casas tienen que seguir citadas: es lo que separa esto de una opinión.
+for (const casa of ['GOOGLE', 'OPENAI', 'ANTHROPIC']) {
+  new RegExp(casa, 'i').test(s3)
+    ? ok(`sesión 3: cita a ${casa.toLowerCase()}`)
+    : fail(`sesión 3: ya no cita a ${casa.toLowerCase()}`);
+}
+
+existsSync('materiales/17_tecnicas_y_cuando_usarlas.docx')
+  ? ok('materiales/17_tecnicas_y_cuando_usarlas.docx: presente')
+  : fail('materiales/17_tecnicas_y_cuando_usarlas.docx: falta');
 
 // Los tableros y los gráficos se piden en tres herramientas distintas, porque el
 // instrumento reportó ChatGPT en 3 respuestas y Gemini en 2.
