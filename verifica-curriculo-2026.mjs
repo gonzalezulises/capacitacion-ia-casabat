@@ -277,16 +277,22 @@ existsSync('materiales/17_tecnicas_y_cuando_usarlas.docx')
 // Los tableros y los gráficos se piden en tres herramientas distintas, porque el
 // instrumento reportó ChatGPT en 3 respuestas y Gemini en 2.
 const recetasS3 = s3.split(/(?=<section\b)/).filter(section => /RECETA [ABC]/.test(section));
-recetasS3.length === 6
-  ? ok('sesión 3: seis recetas por herramienta (tablero y gráfico × Gemini, ChatGPT y Claude)')
-  : fail(`sesión 3: hay ${recetasS3.length} recetas; se esperaban 6`);
+recetasS3.length === 3
+  ? ok('sesión 3: una receta de tablero por herramienta')
+  : fail(`sesión 3: hay ${recetasS3.length} recetas; se esperaba una por herramienta`);
+
+// Una receta sin archivo deja al participante sin saber sobre qué trabaja.
+const sinArchivo = recetasS3.filter(section => !/04_ventas_sucursales_2026\.xlsx/.test(section));
+sinArchivo.length === 0
+  ? ok('sesión 3: las tres recetas nombran el archivo con el que se trabaja')
+  : fail(`sesión 3: ${sinArchivo.length} receta(s) no dicen con qué archivo se trabaja`);
 
 for (const herramienta of ['GEMINI', 'CHATGPT', 'CLAUDE']) {
   const propias = recetasS3.filter(section => section.includes(`<span>RECETA`) &&
-    new RegExp(`RECETA [ABC] <span class="sep"></span> ${herramienta}`).test(section));
-  propias.length === 2
-    ? ok(`sesión 3: ${herramienta.toLowerCase()} tiene su receta de tablero y de gráfico`)
-    : fail(`sesión 3: ${herramienta.toLowerCase()} tiene ${propias.length} recetas; se esperaban 2`);
+    new RegExp(`RECETA [ABC] <span class="sep"></span> ${herramienta}`, 'i').test(section));
+  propias.length === 1
+    ? ok(`sesión 3: ${herramienta.toLowerCase()} tiene su propia receta`)
+    : fail(`sesión 3: ${herramienta.toLowerCase()} tiene ${propias.length} recetas; se esperaba 1`);
 }
 
 // Cada receta entrega un bloque para copiar y pegar: sin eso es una explicación,

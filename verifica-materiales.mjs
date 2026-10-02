@@ -202,7 +202,7 @@ for (const deck of DECKS) {
       .replace(/^[·,\s]+|[·,\s]+$/g, '');
     if (!libre) continue;
     const delParticipante = /\b(tu|tus|tuyo|tuya|tuyos|tuyas|su|sus|cada|propio|propia|real|anonimizad)\b/i.test(libre);
-    const deOtroLaboratorio = /laboratorio|cuaderno del|salida del|modelo en|dashboard del|Gem v|hallazgos|cifras/i.test(libre);
+    const deOtroLaboratorio = /laboratorio|cuaderno del|salida del|modelo en|dashboard del|Gem v|hallazgos|cifras|compañer|ficha del|guion del/i.test(libre);
     const fuentePublica = /web pública|internet|fuentes públicas/i.test(libre);
     if (!delParticipante && !deOtroLaboratorio && !fuentePublica) {
       const titulo = (seccion.match(/<h2 class="ex-title">([^<]+)</) || [, '?'])[1];

@@ -325,9 +325,9 @@ if (densos === 0) ok(`situaciones de ${MAX_PALABRAS_SITUACION} palabras o menos 
 const recetas = secciones.filter((s) => /RECETA/.test(s));
 for (const herramienta of ['Gemini', 'ChatGPT', 'Claude']) {
   const n = recetas.filter((s) => new RegExp(herramienta, 'i').test(s)).length;
-  n >= 2
-    ? ok(`${herramienta}: ${n} recetas propias (tablero y gráfico)`)
-    : fail(`${herramienta}: ${n} receta(s); se esperaban al menos 2`);
+  n >= 1
+    ? ok(`${herramienta}: ${n} receta(s) propia(s)`)
+    : fail(`${herramienta}: sin receta propia`);
 }
 
 // --- el bloque 1 de la sesión 1, reescrito con el mismo listón ---

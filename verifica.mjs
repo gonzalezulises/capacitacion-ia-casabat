@@ -113,6 +113,26 @@ for (const file of DECKS) {
     }
   }
 
+  // El prompt se copia y se usa tal cual. Un «pega aquí la regla …» entre
+  // etiquetas no se entiende, no dice de dónde sale el contenido y deja al
+  // participante rellenando un hueco en mitad del ejercicio.
+  for (const sec of bloquesSeccion) {
+    if (!sec.includes('class="prompt-card')) continue;
+    const titulo = (sec.match(/<h2 class="ex-title">([^<]+)</) || [, '?'])[1];
+    const cuerpo = (sec.match(/<div class="prompt-card[\s\S]*?(?=<div class="result")/) || [''])[0];
+    const parrafos = [...cuerpo.matchAll(/<p>([\s\S]*?)<\/p>/g)].map(m => m[1]);
+    const plano = parrafos.join(' ').replace(/<[^>]+>/g, '');
+    if (/pega (aquí|aca|acá)/i.test(plano)) {
+      fail(`${file}: el prompt de «${titulo}» dice «pega aquí» — di qué archivo se adjunta`);
+    }
+    if (/…/.test(plano)) {
+      fail(`${file}: el prompt de «${titulo}» tiene puntos suspensivos en vez de texto usable`);
+    }
+    if (/&lt;\/?[a-z_]+&gt;/.test(cuerpo)) {
+      fail(`${file}: el prompt de «${titulo}» usa etiquetas tipo XML; escríbelo en español`);
+    }
+  }
+
   const labsPorBloque = {};
   for (const s of bloquesSeccion) {
     if (!s.includes('class="ex-num"')) continue;
