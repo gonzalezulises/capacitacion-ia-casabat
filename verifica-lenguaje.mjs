@@ -327,6 +327,25 @@ presumidos.length === 0
   ? ok(`sin superlativos sin prueba: ${SUPERLATIVOS.length} fórmulas ausentes`)
   : presumidos.forEach((f) => fail(`dice «${f}» sin una prueba comparativa que lo sostenga`));
 
+// --- 3g. un modelo en vista previa se declara como tal ---
+// La tabla llegó a presentar Gemini 3.8 Flash como «el modelo principal».
+// La documentación dice «our most intelligent Flash model»: el mejor de su
+// línea, no de la familia. El Pro existía y estaba en vista previa. El error
+// vino de leer un resumen parcial de la página y no volver a la fuente.
+const comparativa = html.split(/(?=<section\b)/).filter((x) => /class="comparativa"/.test(x)).join(' ');
+if (comparativa) {
+  const texto = visible(comparativa);
+  /Pro/.test(texto) && !/vista previa|preview/i.test(texto)
+    ? fail('la comparativa nombra un modelo Pro sin decir si está en vista previa')
+    : ok('la comparativa declara el estado de los modelos que nombra');
+  /consultada el|octubre de 2026/i.test(texto)
+    ? ok('la comparativa dice cuándo se consultó la documentación')
+    : fail('la comparativa no dice de qué fecha son los datos');
+  /modelo principal/i.test(texto)
+    ? fail('la comparativa dice «modelo principal»: las familias no son comparables así')
+    : ok('la comparativa no presenta un modelo como «el principal»');
+}
+
 // --- 4. cada laboratorio aterriza en CasaBat ---
 const sinContexto = labs.filter((s) => {
   const t = visible(s).toLowerCase();
