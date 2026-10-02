@@ -151,7 +151,8 @@ d.add('Laboratorio 3', 'paper', exercise_case(
            'Si alguna no se puede respaldar con los documentos cargados, márcala en vez de '
            'suavizarla.'),
     'El resumen con cada frase marcada como comprobada o sin respaldo.',
-    'Descubres que el procedimiento remite a un anexo que no está en el expediente.',
+    'El resumen queda con al menos una afirmación marcada sin respaldo: la que remite a un anexo '
+    'que no está en el expediente.',
     'La cláusula 4.9 manda al Anexo E, el criterio de reactivación de cotizaciones vencidas. '
     'Ese anexo no existe aquí.',
     prompt_label='AUDITA EL RESUMEN'))
@@ -343,7 +344,8 @@ d.add('Laboratorio 15', 'paper', exercise_case(
            'Devuelve por sucursal: checklist, calibración, contradicción, evidencia faltante, compromiso, dueño, fecha, firma y estado.',
            'Cita el archivo. No resuelvas contradicciones por inferencia ni marques cerrado un compromiso incompleto.'),
     'Matriz de auditoría y lista de correcciones al informe o al video.',
-    'Detecta todas las anomalías plantadas y cada conclusión puede abrirse en su documento fuente.'))
+    'La matriz recoge todas las anomalías de los cuatro reportes y cada conclusión se abre en su '
+    'documento fuente.'))
 
 d.add('Laboratorio 16', 'paper', exercise_case(
     16, RAIL4, 10, 'Aplicación individual: diseña tu propia cadena de comunicación y control.',

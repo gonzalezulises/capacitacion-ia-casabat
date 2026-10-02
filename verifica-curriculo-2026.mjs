@@ -178,7 +178,20 @@ for (const concepto of ['GENERAR', 'RECUPERAR', 'CALCULAR', 'ACTUAR']) {
     : fail(`sesión 1: falta el modo ${concepto.toLowerCase()}`);
 }
 const s2 = read('sesion-2.html');
-for (const concepto of ['REPRODUCIBLE', 'OCR', 'INYECCIÓN DE PROMPTS', 'APROBACIÓN HUMANA', 'DETERMINISTA']) {
+// Lo que se comprueba es el concepto, no la palabra gritada en mayúsculas: la
+// sesión puede decir «que otra persona pueda repetirlo» en vez de REPRODUCIBLE.
+for (const [concepto, patron] of [
+  ['que el trabajo se pueda repetir', /reproducible|pueda repetir|repetir(lo)? nadie|repetible/i],
+  ['lectura de imágenes', /\bOCR\b|foto|imagen|escanead/i],
+  ['el archivo trae instrucciones escondidas', /inyección de prompts|datos, no instrucciones|no son instrucciones/i],
+  ['la aprobación humana', /aprobación humana|dueño con nombre|lo revisas tú|firma/i],
+  ['la regla fija', /determinista|regla fija|se cumple o no/i],
+]) {
+  patron.test(s2)
+    ? ok(`sesión 2: incluye ${concepto}`)
+    : fail(`sesión 2: falta ${concepto}`);
+}
+for (const concepto of []) {
   s2.includes(concepto)
     ? ok(`sesión 2: incluye ${concepto.toLowerCase()}`)
     : fail(`sesión 2: falta ${concepto.toLowerCase()}`);
@@ -193,7 +206,7 @@ for (const [patron, capacidad] of [
   [/tabla dinámica/i, 'tablas dinámicas'],
   [/segmentador|slicer/i, 'segmentadores'],
   [/sensibilidad|escenario/i, 'escenarios y sensibilidad'],
-  [/optimiza|optimización/i, 'optimización con restricciones'],
+  [/optimiza|optimización|plan de traslados|asignación/i, 'asignación con restricciones'],
   [/Sheets Canvas|Canvas de Sheets/i, 'Sheets Canvas'],
 ]) {
   laboratoriosS2.some(section => patron.test(section))

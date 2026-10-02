@@ -117,23 +117,21 @@ d.add('Agenda', 'paper', agenda(
 d.add('Los materiales', 'paper', filelist(
     'ARCHIVOS DE LA SESIÓN',
     'Material de trabajo<br/>en la <span style="color:var(--brand);">sesión</span>.',
-    'Todos se descargan de la página del taller. Son casos inventados de Casa de las '
-    'Baterías: ninguno trae información real de clientes.',
-    [('PARA LOS PEDIDOS Y TU VOZ', [
+    'Los que se abren en sala. El resto, y el paquete completo, están en la página del taller. '
+    'Son casos inventados de CasaBat: ninguno trae información real de clientes.',
+    [('PARA PEDIR Y PARA DECIDIR', [
         ('17_tecnicas_y_cuando_usarlas.docx', 'Las nueve técnicas, con su fuente y su caso'),
         ('20_comparativa_herramientas.docx', 'Las tres herramientas, ficha por ficha'),
-        ('15_prompts_que_fallaron.docx', 'Ocho pedidos flojos y su versión arreglada'),
-        ('06_correos_de_referencia.docx', 'Tres textos para sacar tu forma de escribir'),
         ('03_politica_garantia.docx', 'Qué cubre la garantía y qué no'),
         ('18_reclamos_de_clientes.docx', 'Cinco reclamos como llegan de verdad'),
-        ('19_comprobante_foto.png', 'La foto de un recibo, con el sello flojo'),
+        ('22_que_puedo_subir.docx', 'Qué se sube a una IA y qué se tapa antes'),
      ]),
-     ('PARA LAS CIFRAS Y LOS PROCEDIMIENTOS', [
+     ('PARA LAS CIFRAS Y LOS PROCESOS', [
         ('04_ventas_sucursales_2026.xlsx', 'Ventas del semestre en cuatro países'),
+        ('21_cotizaciones_semestre.xlsx', 'Sesenta y dos cotizaciones con su motivo de pérdida'),
         ('16_maestro_procedimientos.xlsx', 'Cuarenta y un procedimientos con fallos a propósito'),
         ('09_reglas_de_nomenclatura.docx', 'La regla contra la que se revisan los nombres'),
-        ('10_PR-ADM-014_v3_BORRADOR.docx', 'Una versión propuesta, todavía sin firmar'),
-        ('08_reporte_mensual_mayo.docx', 'Un reporte de cierre, como referencia'),
+        ('19_comprobante_foto.png', 'La foto de un recibo, con el sello flojo'),
      ])]))
 
 # ---------------------------------------------------------------- bloque 1
@@ -159,7 +157,8 @@ d.add('Laboratorio 1', 'paper', exercise_case(
            'Antes de calcular, avísame si hay categorías escritas de varias formas. No '
            'agregues cifras que no te pedí.'),
     'Las dos respuestas lado a lado, con las cifras contadas.',
-    'La segunda trae tres líneas, su porcentaje y las filas; la primera, ninguna.',
+    'El resultado del segundo pedido trae las tres líneas, su porcentaje, las filas de origen y '
+    'el aviso de categorías sin unificar. Los cuatro, o no está terminado.',
     'Tres de las seis líneas suman el 84 por ciento. Si la respuesta no se acerca, es que '
     'contó las categorías mal escritas como si fueran distintas.',
     prompt_label='TÉCNICA 1 · INSTRUCCIÓN EXPLÍCITA'))
@@ -180,7 +179,8 @@ d.add('Laboratorio 2', 'paper', exercise_case(
            'Completa una columna nueva con el valor normalizado del resto. No toques la '
            'columna original. Si un caso no es claro, escribe «revisar» en vez de decidir.'),
     'Columna nueva normalizada y la lista de los casos marcados para revisar.',
-    'Las seis líneas reales quedan con un solo nombre y no aparece ninguna categoría nueva.',
+    'La columna nueva deja las seis líneas reales con un solo nombre, sin categorías inventadas '
+    'y con los dudosos marcados.',
     'Si tus tres ejemplos se parecen mucho entre sí, aprende ese parecido y falla en el '
     'resto. Anthropic lo dice así: que sean diversos.',
     prompt_label='TÉCNICA 2 · EJEMPLOS'))
@@ -250,7 +250,7 @@ d.add('Laboratorio 5', 'paper', exercise_case(
            'Con la política, dime si procede este reclamo, por qué, y qué cláusula lo decide. '
            'Cópiame esa cláusula tal cual.'),
     'La respuesta al caso, separando lo que dice la política de lo que pide el cliente.',
-    'Responde que no procede por el uso, no por el plazo, y cita la exclusión.',
+    'La respuesta se apoya en la exclusión por uso, no en el plazo, y cita la cláusula.',
     'El plazo es lo primero que se mira y aquí no es lo que decide. La política excluye usar la '
     'batería en un equipo distinto al declarado en la compra.',
     prompt_label='TÉCNICAS 4 Y 5 · DELIMITADORES Y ORDEN'))
@@ -273,43 +273,45 @@ d.add('Laboratorio 6', 'paper', exercise_case(
            'Al final dime una cosa: con este archivo, ¿puedo saber si esas ventas tuvieron la '
            'aprobación que pide la cláusula?'),
     'La cláusula citada, el conteo con su monto y la respuesta sobre lo que falta.',
-    'Reconoce que el archivo no registra aprobaciones y que no se puede concluir incumplimiento.',
+    'La conclusión distingue las ventas que requerían aprobación de las que incumplen, porque el '
+    'archivo no registra aprobaciones.',
     'La respuesta cómoda es «92 ventas incumplen». La correcta es «92 ventas requerían '
     'aprobación de Finanzas y aquí no consta si la tuvieron».',
     prompt_label='TÉCNICA 6 · QUE CITE ANTES'))
 
 d.add('Laboratorio 7', 'paper', exercise_case(
-    7, RAIL2, 13, 'La cadena de tres pasos: borrador, revisión, final.',
-    'Analista de Administración',
-    '<code>08_reporte_mensual_mayo.docx</code> · cifras del laboratorio 1', TODAS,
-    'El reporte del mes se escribe de una sentada y se corrige tres veces. Partirlo en tres '
-    'pasos cuesta lo mismo y deja ver dónde falla.',
-    'Qué se revisa en el paso del medio, y cuándo no vale la pena encadenar.',
-    ['Paso uno: pide el borrador del reporte con las cifras ya calculadas.',
-     'Paso dos: en un pedido nuevo, que lo revise contra cuatro criterios tuyos.',
-     'Paso tres: que lo reescriba aplicando solo las correcciones que apruebes.'],
-    prompt('<span class="kw">PASO 1</span> · Con estas cifras [pégalas] y el reporte del mes '
-           'anterior como modelo, escríbeme el borrador del cierre. Cada cifra con su fuente.',
-           '<span class="kw">PASO 2</span> · Revisa ese borrador contra cuatro criterios: cada '
-           'cifra tiene fuente, ninguna frase va más allá del dato, el orden sigue al del mes '
-           'anterior, no hay relleno. Dame solo la lista de problemas y no lo reescribas.',
-           '<span class="kw">PASO 3</span> · Ahora reescríbelo aplicando solo las correcciones '
-           'que te marqué. Lo demás queda igual.'),
-    'El borrador, la lista de problemas y la versión final con los cambios aprobados.',
-    'Puedes señalar qué cambió entre el borrador y la versión final, y por qué.',
-    'Si la tarea sale bien de una, no la partas. Encadena cuando necesites revisar el paso '
-    'del medio, no por costumbre.',
+    7, RAIL2, 14, '¿A cuáles cinco damos seguimiento hoy?',
+    'Gerencia Comercial', '<code>21_cotizaciones_semestre.xlsx</code>', TODAS,
+    'Sesenta y dos cotizaciones del semestre. Dieciséis llevan más de dos semanas sin '
+    'respuesta, por 145.000 dólares. El lunes solo da para llamar a cinco.',
+    '¿Qué cinco, con qué argumento, y cómo sabrás si la llamada sirvió?',
+    ['Paso uno: pide el panorama del embudo, sin que priorice todavía.',
+     'Paso dos: pide los cinco con el criterio escrito y la fila de cada uno.',
+     'Paso tres: pide el borrador de seguimiento para el primero.'],
+    prompt('<span class="kw">PASO 1</span> · Te adjunto las cotizaciones del semestre. Dame el '
+           'panorama: cuántas por estado, importe en juego y qué problemas tiene el archivo. '
+           'No priorices todavía.',
+           '<span class="kw">PASO 2</span> · Ahora propón cinco para llamar el lunes. Para cada '
+           'una: cliente, importe, días sin respuesta, margen, por qué esa y no otra, y la fila '
+           'de donde sale.',
+           '<span class="kw">PASO 3</span> · Escribe el seguimiento de la primera. Y dime qué '
+           'tendría que pasar en las próximas dos semanas para saber si llamar sirvió de algo.'),
+    'Cinco cotizaciones priorizadas con su evidencia, un borrador y una forma de medir.',
+    'Cada una de las cinco se rastrea a su fila, y el criterio de elección está escrito.',
+    'La lista que propone la IA es una hipótesis, no un hallazgo. Sin decir qué se mediría '
+    'después, es una corazonada bien redactada.',
     prompt_label='TÉCNICA 8 · PARTIR Y ENCADENAR'))
 
 d.add('Laboratorio 8', 'paper', exercise_case(
     8, RAIL2, 10, 'La foto del comprobante que mandó el cliente.',
     'Asistente de sucursal',
-    '<code>19_comprobante_foto.png</code> · <code>03_politica_garantia.docx</code>', TODAS,
+    '<code>19_comprobante_foto.png</code> · <code>03_politica_garantia.docx</code> · '
+    '<code>22_que_puedo_subir.docx</code>', TODAS,
     'El cliente no trae el recibo: manda una foto desde el celular. Hay que decidir el reclamo con '
     'lo que se lea ahí, y el sello de la fecha salió flojo.',
     '¿Alcanza esa foto para resolver el reclamo, o falta algo?',
-    ['Sube la foto y pide que transcriba lo que se lee, campo por campo.',
-     'Pide que marque lo que no se lee con seguridad.',
+    ['Antes de subir nada: mira qué datos del cliente trae la foto y decide qué tapas.',
+     'Sube la foto y pide la transcripción campo por campo, con lo ilegible marcado.',
      'Cruza lo legible con la política y decide si ya se puede responder.',
      'Si tienes a mano un documento escaneado de tu área, repite la prueba con él.'],
     prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Te mando la foto de un '
@@ -319,8 +321,10 @@ d.add('Laboratorio 8', 'paper', exercise_case(
            'más probable.',
            'Con la política de garantía que te paso: ¿se puede resolver el reclamo con esto? '
            'Si falta algún dato, dime exactamente cuál pedirle al cliente.'),
-    'La transcripción con sus huecos, y la lista de lo que hay que pedirle al cliente.',
-    'Detecta que la fecha no trae año y que el código no dice si la batería es de moto o auto.',
+    'La transcripción con sus huecos, lo que hay que pedirle al cliente y qué tapaste antes '
+    'de subir la foto.',
+    'La transcripción marca como ilegible el año y señala que el código no identifica la línea '
+    'de producto.',
     'Sin el año no se sabe si pasaron tres meses o quince, y el plazo cambia según la línea. '
     'Una IA que resuelva el caso con esta foto se lo está inventando.',
     prompt_label='TÉCNICA 6 · QUE CITE ANTES'))
@@ -350,7 +354,8 @@ d.add('Laboratorio 9', 'paper', exercise_case(
            'Termina con cinco preguntas de negocio que este archivo sí puede responder y tres '
            'que no, diciendo qué columna faltaría para cada una.'),
     'Una ficha del archivo de media página, con sus problemas y sus límites.',
-    'Detecta las categorías repetidas y las devoluciones vacías sin que se las señales.',
+    'La ficha recoge las categorías repetidas y las devoluciones vacías, sin que nadie se las '
+    'haya señalado antes.',
     'El archivo trae el país escrito de siete formas y la línea de producto de diez. Si eso no '
     'aparece en la ficha, la IA no lo miró: insiste.',
     prompt_label='TÉCNICA 1 · INSTRUCCIÓN EXPLÍCITA'))
@@ -419,8 +424,9 @@ d.add('Receta A · Gemini', 'paper', recipe(
     '          <p>Arriba, cuatro tarjetas con los totales del semestre. Debajo, un gráfico de '
     'barras de ingreso por línea, de mayor a menor.</p>\n'
     '          <p>Añade un segmentador por país.</p>',
-    'Sheets Canvas va por licencia: Workspace Business o Enterprise, Standard y Plus. Sin ella, '
-    'el segmentador y los gráficos nativos hacen el mismo trabajo.'))
+    'Sheets Canvas pide plan elegible y, además, cuenta con el idioma en inglés y navegador: en '
+    'una clase en español puede sencillamente no aparecer. Sin él, el segmentador y los '
+    'gráficos nativos hacen el mismo trabajo.'))
 
 d.add('Receta B · ChatGPT', 'paper', recipe(
     'RECETA B <span class="sep"></span> CHATGPT',
@@ -449,8 +455,8 @@ d.add('Receta C · Claude', 'paper', recipe(
     'RECETA C <span class="sep"></span> CLAUDE',
     'El tablero como página que se usa.',
     'Se trabaja con <code>04_ventas_sucursales_2026.xlsx</code>. Claude devuelve un artifact: una '
-    'página que se abre al lado del chat y se maneja con el ratón. Desde abril de 2026 los Live '
-    'Artifacts quedan guardados y recargan los datos al abrirse.',
+    'página que se abre al lado del chat y se maneja con el ratón. Se publica y se comparte con '
+    'un enlace.',
     ['Sube el archivo al chat.',
      'Pide el perfil y los problemas antes de calcular.',
      'Pide el tablero como página de una sola pantalla.',
@@ -465,8 +471,9 @@ d.add('Receta C · Claude', 'paper', recipe(
     'de ingreso por línea debajo y un filtro por país que funcione con el ratón.</p>\n'
     '          <p>Al pasar el cursor por una barra quiero ver el ingreso y las unidades. Si una '
     'cifra sale de una columna con celdas vacías, dilo en la propia página.</p>',
-    'El artifact se calcula con los datos que subiste. Si el archivo cambia, hay que volver a '
-    'subirlo: solo los Live Artifacts recargan datos solos.'))
+    'El artifact se calcula con los datos que subiste: si el archivo cambia, hay que volver a '
+    'subirlo. Los llamados «live artifacts» son los de Cowork anteriores al 19 de agosto de '
+    '2026: siguen abriéndose, pero ya no se editan.'))
 
 d.add('Laboratorio 12', 'paper', exercise_case(
     12, RAIL3, 10, 'La pregunta que nadie había previsto.',
@@ -516,7 +523,8 @@ d.add('Laboratorio 13', 'paper', exercise_case(
            'Revisa los 41 y dame estas columnas: archivo, cumple, regla que rompe, parte mala, '
            'nombre corregido. Uno por fila, sin agrupar. Al final, cuántos fallan.'),
     'La tabla de los 41, con el nombre corregido propuesto para cada uno.',
-    'Encuentra los 12 de los 41 nombres mal puestos, y los tres que revisas a mano coinciden.',
+    'La tabla marca los 12 de los 41 nombres que rompen la regla, y los tres que revisas a mano '
+    'coinciden con lo que dice.',
     'Dos archivos rompen la regla y además tienen el código repetido. Revisar el nombre no es '
     'revisar el contenido: son dos pasadas distintas.',
     prompt_label='TÉCNICAS 2, 5 Y 7 · EJEMPLOS, ORDEN Y COLUMNAS'))
@@ -563,23 +571,27 @@ d.add('Laboratorio 15', 'paper', exercise_case(
     prompt_label='TÉCNICA 8 · PARTIR Y ENCADENAR'))
 
 d.add('Laboratorio 16', 'paper', exercise_case(
-    16, RAIL4, 9, 'El procedimiento que nadie ha abierto en dos años.',
-    'Cada participante, con su propio trabajo', 'un procedimiento de tu área, sin datos de clientes', TODAS,
-    'En toda área hay uno así: sin actualizar desde hace años, con anexos sueltos, o que dos '
-    'sucursales aplican de forma distinta.',
-    '¿Qué parte dejas resuelta hoy y qué tienes que pedirle a alguien?',
-    ['Escribe cuál es y qué le falta.',
-     'Pásale la revisión de nombre y el cruce de anexos.',
-     'Saca las preguntas para su dueño, con fecha y nombre.'],
-    prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi procedimiento pendiente es '
-           '[cuál] y le falta [qué].',
-           'Revísale el nombre y el código con la regla de nombres que te adjunto. Cruza sus anexos '
-           'en las dos direcciones.',
-           'Después dame las preguntas para su dueño y qué puedo redactar yo sin esperarlo.'),
-    'El procedimiento revisado y las preguntas listas, con fecha y destinatario.',
-    'Sales con una tarea concreta y con el nombre de quien tiene que contestarla.',
-    'Salir con la pregunta escrita y la fecha puesta rinde más que salir con medio borrador.',
-    prompt_label='TÉCNICAS 5, 7 Y 8 · ORDEN, COLUMNAS Y CADENA'))
+    16, RAIL4, 12, 'La misma tarea, con y sin IA, con cronómetro.',
+    'Por parejas, cada uno con su propio trabajo', 'una tarea tuya que se repita cada semana',
+    TODAS,
+    'Todo el mundo dice que la IA ahorra tiempo. Casi nadie lo ha medido, contando lo que '
+    'cuesta revisar y corregir lo que sale.',
+    '¿Esta tarea concreta merece hacerse con IA, o sale más a cuenta a mano?',
+    ['Uno la hace a mano y el otro con IA, con el reloj andando.',
+     'Suma el tiempo de revisar y corregir: ahí se va la ventaja.',
+     'Comparen las dos versiones y cuenten los errores de cada una.'],
+    prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi tarea es [cuál] y la hago '
+           '[cada cuánto]. A mano me toma [cuánto].',
+           'Ayúdame a resolverla, y cuando terminemos dime qué partes tuve que corregir y '
+           'cuántas veces volvimos atrás.',
+           'Con eso, calcula el ahorro real por semana y dime en qué caso no valdría la pena '
+           'hacerla así.'),
+    'Una ficha con los dos tiempos, los errores de cada versión y la decisión.',
+    'La ficha incluye el tiempo de revisión, no solo el de generación, y dice quién más podría '
+    'repetir la tarea.',
+    'Si al sumar la revisión la ventaja desaparece, el resultado honesto es que esa tarea no se '
+    'hace con IA. Saberlo vale tanto como lo contrario.',
+    prompt_label='TÉCNICA 1 · INSTRUCCIÓN EXPLÍCITA'))
 
 
 # ---------------------------------------------------------------- anexo
@@ -650,6 +662,51 @@ d.add('Opción C · sola', 'paper', recipe(
     'hay ninguna, respóndeme solo «ninguna esta semana».</p>',
     'La tarea programada depende del plan de la cuenta, y necesita que el archivo esté donde '
     'ella pueda leerlo. Pruébala dos semanas antes de apoyarte en ella.'))
+
+d.add('Opción D · ensayo', 'paper', recipe(
+    'OPCIÓN D <span class="sep"></span> CUALQUIERA DE LAS TRES',
+    'El comprador que pide lo que no puedes dar.',
+    'La IA hace de cliente difícil y tú practicas la conversación antes de tenerla. Funciona '
+    'por escrito y, si la herramienta lo permite, hablando. Lo que se entrena no es la labia: '
+    'es preguntar, reconocer el límite y cerrar el siguiente paso.',
+    ['Dale el papel y las reglas antes de empezar.',
+     'Dile qué puedes autorizar y qué no: ahí está el ejercicio.',
+     'Conversa cinco minutos sin salirte del papel.',
+     'Pide la evaluación al terminar, no durante.',
+     'Repite la conversación corrigiendo una sola cosa.'],
+    'PEGA ESTO Y EMPIEZA',
+    '          <p>Vas a hacer de encargado de compras de una flota de 40 vehículos. Quieres un '
+    '22 % de descuento y 60 días de crédito. Insiste, negocia y no lo pongas fácil.</p>\n'
+    '          <p>Yo soy de Gerencia Comercial. Puedo autorizar hasta 12 % y 30 días: por '
+    'encima tiene que aprobarlo Finanzas. No me lo recuerdes tú.</p>\n'
+    '          <p>Habla solo como el comprador. Cuando yo escriba «corte», sal del papel y '
+    'dime: qué pregunté bien, qué concedí sin necesidad, si reconocí mi límite y si cerré un '
+    'compromiso con fecha.</p>',
+    'Una conversación fluida no prueba nada. Lo que cuenta es si saliste con un compromiso '
+    'concreto sin prometer lo que no puedes autorizar.'))
+
+d.add('Opción E · flujo', 'paper', recipe(
+    'OPCIÓN E <span class="sep"></span> REQUIERE QUE TI LO HABILITE',
+    'La solicitud llega y el trabajo empieza.',
+    'El salto de encadenar a mano a que el trabajo arranque solo cuando llega algo. Lo que sí '
+    'se puede hacer hoy en sala es diseñarlo: los pasos, lo que pasa cuando algo falla y quién '
+    'recibe la excepción. Ejecutarlo depende de los accesos que habilite TI.',
+    ['Escribe el disparador: qué tiene que llegar para que arranque.',
+     'Lista los pasos: extraer los datos, registrarlos, preparar el borrador.',
+     'Define la excepción: qué sale del flujo y a quién va.',
+     'Prueba en papel tres fallos: llega dos veces, falta el país, se cae un paso.',
+     'Deja escrito quién revisa y cada cuánto.'],
+    'PEGA ESTO PARA DISEÑARLO',
+    '          <p>Quiero un flujo que arranque cuando llega una solicitud de cotización por '
+    'correo.</p>\n'
+    '          <p>Tiene que extraer cliente, país, producto e importe, registrarlos en una hoja '
+    'y preparar un borrador para revisión.</p>\n'
+    '          <p>Diséñame el flujo paso a paso. Para cada paso: qué entra, qué sale y qué pasa '
+    'si falla.</p>\n'
+    '          <p>Dime qué hace el flujo si la misma solicitud llega dos veces, si falta el '
+    'país, y si un paso se cae a la mitad. Esas tres respuestas son las que importan.</p>',
+    'Antes de automatizar nada con datos reales hay que hablar con TI: permisos, dónde se '
+    'guarda y quién responde si el flujo hace algo mal un domingo.'))
 
 d.add('Cierre', None, closing(
     'CIERRE DE LA SESIÓN',

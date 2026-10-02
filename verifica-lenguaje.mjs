@@ -292,6 +292,41 @@ sobran.length === 0
   ? ok('la apertura enuncia las capacidades de la sesión')
   : fail('la apertura no dice qué capacidades se desarrollan');
 
+// --- 3e. el criterio describe el resultado, no predice al modelo ---
+// «La primera, ninguna» daba por hecho que el pedido vago fallaría. Si el
+// modelo acierta, el ejercicio se cae. Un criterio dice qué tiene que tener el
+// resultado para darlo por bueno; conseguirlo es trabajo del participante.
+const PREDICE = [
+  [/\bdetecta\b/i, 'describe lo que el resultado contiene, no lo que la IA hará'],
+  [/\bencuentra\b/i, 'describe lo que el resultado contiene, no lo que la IA hará'],
+  [/\bresponde que\b/i, 'di qué debe sostener la respuesta, no cuál será'],
+  [/\breconoce\b/i, 'di qué distingue el resultado, no que el modelo lo reconozca'],
+  [/\bdescubres\b/i, 'di con qué sale el participante, no qué le pasará'],
+  [/\bno (trae|devuelve|dice)\b/i, 'no apuestes a que el modelo falle'],
+];
+let predicciones = 0;
+for (const bruto of labs) {
+  const criterio = bloqueDe(bruto, 'criterion');
+  if (!criterio) continue;
+  const titulo = (bruto.match(/<h2 class="ex-title">([^<]+)</) || [, '?'])[1];
+  for (const [patron, consejo] of PREDICE) {
+    if (patron.test(criterio)) {
+      predicciones += 1;
+      fail(`«${titulo}»: el criterio predice al modelo — ${consejo}`);
+    }
+  }
+}
+if (predicciones === 0) ok('los criterios describen el resultado, no predicen al modelo');
+
+// --- 3f. sin superlativos que no se han medido ---
+const SUPERLATIVOS = ['lo mejor del mercado', 'el mejor del mercado', 'la mejor del mercado',
+  'el más potente', 'la más potente', 'sin rival', 'imbatible', 'el líder del mercado',
+  'la mejor herramienta', 'insuperable'];
+const presumidos = SUPERLATIVOS.filter((f) => enBajo.includes(f));
+presumidos.length === 0
+  ? ok(`sin superlativos sin prueba: ${SUPERLATIVOS.length} fórmulas ausentes`)
+  : presumidos.forEach((f) => fail(`dice «${f}» sin una prueba comparativa que lo sostenga`));
+
 // --- 4. cada laboratorio aterriza en CasaBat ---
 const sinContexto = labs.filter((s) => {
   const t = visible(s).toLowerCase();

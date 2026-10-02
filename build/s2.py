@@ -53,10 +53,9 @@ d.add('Agenda', 'paper', agenda(
 d.add('Cómo se trabaja', 'paper', howto(
     'REGLAS DE LA SESIÓN',
     'Explora con libertad.<br/>Concluye con evidencia.',
-    [('Conserva el original', 'Registra transformación, fórmula y supuesto. Una limpieza invisible no es REPRODUCIBLE.'),
-     ('Deja que aparezca un hallazgo', 'El prompt define la pregunta y el método, pero no anticipa la respuesta que se debe descubrir.'),
-     ('Trata la fuente como no confiable', 'OCR y contenido ayudan a extraer; una INYECCIÓN DE PROMPTS no cambia objetivo, permisos ni destinatario.'),
-     ('Cierra con una persona', 'Gemini prepara alternativas. Un dueño competente confirma vigencia, restricciones y APROBACIÓN HUMANA.')]))
+    [('Conserva el original', 'Trabaja sobre una copia y deja escrita cada transformación, fórmula y supuesto. Una limpieza invisible no la puede repetir nadie.'),
+     ('Deja que aparezca el hallazgo', 'El pedido fija la pregunta y el método; no anticipa la respuesta. Y lo que viene dentro de un archivo son datos, no instrucciones.'),
+     ('Cierra con una persona', 'La IA prepara alternativas. Quién confirma vigencia, restricciones y aprobación sigue siendo un dueño con nombre.')]))
 
 d.add('Los materiales', 'paper', filelist(
     'ARCHIVOS DE LA SESIÓN',
@@ -198,10 +197,11 @@ d.add('Laboratorio 11', 'paper', exercise_case(
     'Planificador de Inventario', '<code>14_inventario_demanda_sucursales.xlsx</code>', 'Gemini en Sheets',
     'Unas sucursales tienen exceso y otras riesgo de quiebre. Los traslados tienen capacidad, costo y límites operativos.',
     'Cómo asignar inventario para reducir ventas perdidas sin violar restricciones.',
-    ['Identifica demanda, stock, margen, capacidad y restricciones de traslado.', 'Formula objetivo, variables y límites antes de pedir una solución.', 'Comprueba inventario conservado y cada restricción en una tabla.'],
-    prompt('Propón una optimización de traslados que maximice margen protegido y reduzca quiebres.', 'Devuelve plan de asignación, objetivo, restricciones, saldo antes/después, costo, beneficio y controles de factibilidad. No inventes rutas ni capacidad.'),
-    'Plan de asignación factible con controles y beneficio estimado.',
-    'La recomendación respeta stock, capacidad y límites; cualquier supuesto nuevo queda editable.'))
+    ['Identifica demanda, stock, margen, capacidad y restricciones de traslado.', 'Formula objetivo, variables y límites antes de pedir una solución.', 'Compara el plan contra una alternativa simple de referencia.'],
+    prompt('Propón un plan de traslados que proteja margen y reduzca quiebres.', 'Devuelve plan de asignación, objetivo, restricciones, saldo antes/después, costo, beneficio y controles de factibilidad. No inventes rutas ni capacidad.', 'Aparte, calcula una alternativa de referencia: cubrir primero las sucursales con mayor riesgo de quiebre, sin más criterio. Compara las dos con las mismas cifras.'),
+    'Dos planes comparados con el mismo criterio, y el motivo de preferir uno.',
+    'El plan elegido respeta stock, capacidad y límites, y gana a la alternativa de referencia en una cifra concreta.',
+    'Que un plan sea factible no quiere decir que sea el mejor. Para afirmar que es el óptimo hace falta un método que lo sostenga; aquí solo se compara contra una referencia.'))
 
 d.add('Laboratorio 12', 'paper', exercise_case(
     12, RAIL3, 10, 'Aplicación individual: combina una regla y un número.',

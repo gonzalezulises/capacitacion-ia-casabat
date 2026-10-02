@@ -82,6 +82,9 @@ materiales/
   17_tecnicas_y_cuando_usarlas.docx
   18_reclamos_de_clientes.docx
   19_comprobante_foto.png
+  20_comparativa_herramientas.docx
+  21_cotizaciones_semestre.xlsx
+  22_que_puedo_subir.docx
   expediente-PR-ADM-014/
     Anexo B - Tabla de descuentos.docx
     PR-ADM-014-ANEXO-A_formato_de_cotizacion_v2.docx
@@ -118,6 +121,7 @@ verifica-practica.mjs         respuestas objetivas
 verifica-lenguaje.mjs         lenguaje llano de la sesión 3
 verifica-maestro.mjs          fallos del maestro de procedimientos
 verifica-insumos.mjs          que ningún laboratorio pida algo que no existe
+verifica-cotizaciones.mjs     cifras y patrón del archivo comercial
 verifica-layout.js            desbordes visuales en navegador
 ```
 
@@ -146,6 +150,7 @@ node verifica-practica.mjs
 node verifica-lenguaje.mjs
 node verifica-maestro.mjs
 node verifica-insumos.mjs
+node verifica-cotizaciones.mjs
 ```
 
 Las compuertas verifican:
@@ -158,7 +163,9 @@ Las compuertas verifican:
 - enlaces publicados y respuestas objetivas de la práctica;
 - lenguaje de la sesión 3: frases de 25 palabras o menos, sin jerga de la lista negra, sin conceptos en mayúsculas y con cada laboratorio anclado en algo real de CasaBat;
 - cifras del maestro de procedimientos recalculadas desde el XLSX y contrastadas contra las publicadas en el deck;
-- insumos de los 48 laboratorios: todo archivo nombrado existe, toda referencia a otro laboratorio apunta hacia atrás y ningún prompt deja huecos sin explicar.
+- insumos de los 48 laboratorios: todo archivo nombrado existe, toda referencia a otro laboratorio apunta hacia atrás y ningún prompt deja huecos sin explicar;
+- criterios que describen el resultado y no predicen lo que hará el modelo, y ausencia de superlativos sin prueba comparativa;
+- cifras y patrón del archivo de cotizaciones recalculados desde el XLSX: si el descuento alto deja de convertir peor, el laboratorio pierde su hallazgo y la compuerta avisa.
 
 Para la comprobación visual, se sirve el sitio localmente y se ejecuta `verifica-layout.js` en cada deck.
 

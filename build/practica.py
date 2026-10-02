@@ -112,7 +112,7 @@ EJ = [
              'criterio con que registran una devolución.'),
  dict(n=8, nivel='N2', tramo='A', min=15, titulo='Prueba la voz CasaBat con el reporte de mayo',
    archivos=[a('06_correos_de_referencia.docx')],
-   encargo='Usa la ficha de voz que armaste en la sesión 1 (laboratorio 6). Dale un texto que <b>no</b> escribiste '
+   encargo='Usa la ficha de voz que armaste en la sesión 1 (laboratorio 3). Dale un texto que <b>no</b> escribiste '
            'tú —sirve el reporte de mayo— y pídele que reescriba su resumen del mes aplicando tu ficha.',
    criterio='La regla del 20 %: si tienes que editar más de una quinta parte, el problema está en la '
             'ficha, no en el texto. Vuelve a la ficha y añade la regla que faltó.',
