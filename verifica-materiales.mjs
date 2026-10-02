@@ -25,7 +25,7 @@ const todos = [...readdirSync(M).filter(f => !f.startsWith('.')),
 const docx = todos.filter(f => f.endsWith('.docx'));
 const xlsx = todos.filter(f => f.endsWith('.xlsx'));
 const retirados = todos.filter(f => /\.(?:md|csv)$/i.test(f));
-docx.length === 25 ? ok('Office: 25 documentos Word') : fail(`Office: ${docx.length} DOCX; se esperaban 25`);
+docx.length === 26 ? ok('Office: 26 documentos Word') : fail(`Office: ${docx.length} DOCX; se esperaban 26`);
 xlsx.length === 4 ? ok('Office: 4 libros Excel') : fail(`Office: ${xlsx.length} XLSX; se esperaban 4`);
 retirados.length === 0 ? ok('Office: ningún MD o CSV para participantes')
   : fail(`Office: aún existen formatos retirados — ${retirados.join(' · ')}`);
@@ -34,7 +34,7 @@ if (existsSync('materiales.zip')) {
   const zip = execFileSync('unzip', ['-Z1', 'materiales.zip'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
   const zipOffice = zip.filter(f => /\.(?:docx|xlsx)$/i.test(f));
   const zipRetirados = zip.filter(f => /\.(?:md|csv)$/i.test(f));
-  zipOffice.length === 29 ? ok('ZIP: contiene los 29 archivos Office') : fail(`ZIP: contiene ${zipOffice.length} archivos Office; se esperaban 29`);
+  zipOffice.length === 30 ? ok('ZIP: contiene los 30 archivos Office') : fail(`ZIP: contiene ${zipOffice.length} archivos Office; se esperaban 30`);
   zipRetirados.length === 0 ? ok('ZIP: no contiene MD o CSV') : fail(`ZIP: conserva formatos retirados — ${zipRetirados.join(' · ')}`);
 }
 

@@ -166,6 +166,25 @@
   /* Al imprimir a PDF el botón no pinta nada. */
   @media print{.copiar{display:none;}}
 
+
+  /* === Tabla comparativa === */
+  .comparativa{margin-top:26px;display:flex;flex-direction:column;}
+  .cmp-fila{display:grid;grid-template-columns:230px repeat(3,1fr);gap:0 28px;
+    padding:13px 0;border-bottom:1px solid var(--rule-l);align-items:start;}
+  section:not(.paper) .cmp-fila{border-bottom-color:var(--rule-d);}
+  .cmp-fila:last-child{border-bottom:none;}
+  .cmp-cabecera{border-bottom:2px solid var(--brand);padding-bottom:10px;}
+  .cmp-col{font-family:var(--display);font-size:34px;font-weight:600;color:var(--brand);line-height:1;}
+  section:not(.paper) .cmp-col{color:var(--brand-br);}
+  .cmp-et{font-size:19px;line-height:1.3;color:var(--muted-l);letter-spacing:.02em;font-weight:500;}
+  section:not(.paper) .cmp-et{color:var(--muted-d);}
+  .cmp-celda{font-size:20px;line-height:1.34;color:var(--graphite-2);}
+  section:not(.paper) .cmp-celda{color:var(--bone-2);}
+  .cmp-celda b{color:var(--graphite);font-weight:650;}
+  section:not(.paper) .cmp-celda b{color:var(--bone);}
+  .cmp-nota{margin-top:20px;font-size:18px;line-height:1.4;color:var(--muted-l);max-width:1560px;}
+  section:not(.paper) .cmp-nota{color:var(--muted-d);}
+
   /* ===== Agenda ===== */
   .agenda-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 64px;margin-top:36px;}
   .ag-block{padding:20px 0 0;border-top:1px solid var(--rule-d);}

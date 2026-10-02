@@ -166,6 +166,25 @@
   /* Al imprimir a PDF el botón no pinta nada. */
   @media print{.copiar{display:none;}}
 
+
+  /* === Tabla comparativa === */
+  .comparativa{margin-top:26px;display:flex;flex-direction:column;}
+  .cmp-fila{display:grid;grid-template-columns:230px repeat(3,1fr);gap:0 28px;
+    padding:13px 0;border-bottom:1px solid var(--rule-l);align-items:start;}
+  section:not(.paper) .cmp-fila{border-bottom-color:var(--rule-d);}
+  .cmp-fila:last-child{border-bottom:none;}
+  .cmp-cabecera{border-bottom:2px solid var(--brand);padding-bottom:10px;}
+  .cmp-col{font-family:var(--display);font-size:34px;font-weight:600;color:var(--brand);line-height:1;}
+  section:not(.paper) .cmp-col{color:var(--brand-br);}
+  .cmp-et{font-size:19px;line-height:1.3;color:var(--muted-l);letter-spacing:.02em;font-weight:500;}
+  section:not(.paper) .cmp-et{color:var(--muted-d);}
+  .cmp-celda{font-size:20px;line-height:1.34;color:var(--graphite-2);}
+  section:not(.paper) .cmp-celda{color:var(--bone-2);}
+  .cmp-celda b{color:var(--graphite);font-weight:650;}
+  section:not(.paper) .cmp-celda b{color:var(--bone);}
+  .cmp-nota{margin-top:20px;font-size:18px;line-height:1.4;color:var(--muted-l);max-width:1560px;}
+  section:not(.paper) .cmp-nota{color:var(--muted-d);}
+
   /* ===== Agenda ===== */
   .agenda-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 64px;margin-top:36px;}
   .ag-block{padding:20px 0 0;border-top:1px solid var(--rule-d);}
@@ -512,7 +531,7 @@
 <!-- ===== 02 · Punto de partida ===== -->
 <section data-label="02 Punto de partida">
   <div class="frame">
-    <div class="top-rail"><span>CÓMO FUNCIONA Y QUÉ SE DESARROLLA HOY</span><span>02 / 33</span></div>
+    <div class="top-rail"><span>CÓMO FUNCIONA Y QUÉ SE DESARROLLA HOY</span><span>02 / 34</span></div>
     <div style="margin:auto 0;">
       <h1 class="display" style="font-size:84px;max-width:1560px;">Sin fuente, completa.<br/>Con fuente, <span style="color:var(--brand-br);">cita</span>.</h1>
       <p style="font-size:28px;line-height:1.48;color:var(--bone-2);max-width:1480px;margin-top:34px;">Un modelo de lenguaje predice la continuación más probable de un texto. No consulta la lista de precios ni la política de garantía: hay que ponérselas delante. <b style="color:var(--bone);">De ahí salen las cuatro capacidades de la sesión: especificar el pedido, acotar la fuente, fijar el formato de salida y verificar contra el documento.</b></p>
@@ -524,29 +543,55 @@
   </div>
 </section>
 
-<!-- ===== 03 · Las herramientas ===== -->
-<section class="paper" data-label="03 Las herramientas">
+<!-- ===== 03 · Ficha técnica ===== -->
+<section class="paper" data-label="03 Ficha técnica">
   <div class="frame">
-    <div class="top-rail"><span>ESTADO DEL ARTE · OCTUBRE DE 2026</span><span>03 / 33</span></div>
-    <h1 class="display" style="margin-top:24px;font-size:76px;">Análisis comparativo<br/>de <span style="color:var(--brand);">herramientas líderes</span>.</h1>
-    <p class="intro-cards">Hoy las tres resuelven el trabajo de oficina con solvencia. La diferencia ya no está en cuál escribe mejor, sino en dónde vive cada una y qué te deja en la mano al terminar.</p>
-    <div class="cards-grid" style="grid-template-columns:repeat(3,1fr);">
-      <div class="tc">
-        <h3>GEMINI</h3>
-        <p class="cuando">Trabaja dentro de tus archivos: la hoja de cálculo, el documento, el correo. Lo que produce se queda ahí, compartido como siempre.</p>
-        <p class="ej">A cambio, depende de la licencia de la cuenta y a veces no aparece. Para fuentes cerradas con cita, su cuaderno es lo mejor del mercado.</p>
+    <div class="top-rail"><span>ESTADO DEL ARTE <span class="sep"></span> OCTUBRE DE 2026</span><span>03 / 34</span></div>
+    <h1 class="display" style="margin-top:22px;font-size:68px;">Las tres, con sus números.</h1>
+    <p class="intro-cards">Datos de la documentación de cada fabricante, consultada el 2 de octubre de 2026. Lo que aquí dice «de una vez» es cuánto texto admite sin perder el hilo.</p>
+    <div class="comparativa">
+      <div class="cmp-fila cmp-cabecera">
+        <div class="cmp-et"></div>
+<div class="cmp-col">GEMINI</div><div class="cmp-col">CHATGPT</div><div class="cmp-col">CLAUDE</div>
       </div>
-      <div class="tc">
-        <h3>CHATGPT</h3>
-        <p class="cuando">El más sólido con un archivo de datos encima: perfila columnas, detecta lo roto y devuelve una hoja de Excel ya armada.</p>
-        <p class="ej">Lo que produce nace fuera de tus herramientas y hay que bajarlo. Si te da una imagen del tablero, no se puede filtrar: pide el archivo.</p>
+      <div class="cmp-fila">
+        <div class="cmp-et">Modelo principal hoy</div>
+        <div class="cmp-celda">Gemini 3.8 Flash</div>
+        <div class="cmp-celda">GPT-6 Astra</div>
+        <div class="cmp-celda">Claude Opus 5.5</div>
       </div>
-      <div class="tc">
-        <h3>CLAUDE</h3>
-        <p class="cuando">Devuelve una página que se usa con el ratón: filtras, pasas el cursor y ves el dato. Es la vía más corta a un tablero que se comparte con un enlace.</p>
-        <p class="ej">No vive dentro de la hoja y no se actualiza solo: si cambia el archivo, hay que volver a pedirlo.</p>
+      <div class="cmp-fila">
+        <div class="cmp-et">Texto que admite de una vez</div>
+        <div class="cmp-celda">No publicado por modelo</div>
+        <div class="cmp-celda"><b>1,05 millones</b> de unidades, unas 780.000 palabras</div>
+        <div class="cmp-celda"><b>1 millón</b> de unidades, unas 555.000 palabras</div>
+      </div>
+      <div class="cmp-fila">
+        <div class="cmp-et">Qué puede leer</div>
+        <div class="cmp-celda">Texto, imagen, <b>audio y vídeo</b></div>
+        <div class="cmp-celda">Texto e imagen</div>
+        <div class="cmp-celda">Texto e imagen</div>
+      </div>
+      <div class="cmp-fila">
+        <div class="cmp-et">Sabe del mundo hasta</div>
+        <div class="cmp-celda">No publicado por modelo</div>
+        <div class="cmp-celda">Abril de 2026</div>
+        <div class="cmp-celda"><b>Junio de 2026</b></div>
+      </div>
+      <div class="cmp-fila">
+        <div class="cmp-et">Lo que devuelve de una tirada</div>
+        <div class="cmp-celda">Texto, voz, imagen, vídeo y música</div>
+        <div class="cmp-celda">Hasta 128.000 unidades de texto, y voz e imagen aparte</div>
+        <div class="cmp-celda">Hasta 128.000 unidades de texto</div>
+      </div>
+      <div class="cmp-fila">
+        <div class="cmp-et">Ajuste de esfuerzo</div>
+        <div class="cmp-celda">Según el modelo</div>
+        <div class="cmp-celda">Cinco niveles, de mínimo a máximo</div>
+        <div class="cmp-celda">Automático: decide solo cuánto pensar</div>
       </div>
     </div>
+    <p class="cmp-nota">Las cifras son del API. En la aplicación de chat los límites los pone el plan contratado, no el modelo.</p>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
       <div class="rhs">03</div>
@@ -554,8 +599,46 @@
   </div>
 </section>
 
-<!-- ===== 04 · Agenda ===== -->
-<section class="paper" data-label="04 Agenda">
+<!-- ===== 04 · Dónde brilla cada una ===== -->
+<section class="paper" data-label="04 Dónde brilla cada una">
+  <div class="frame">
+    <div class="top-rail"><span>ESTADO DEL ARTE <span class="sep"></span> FORTALEZAS Y LÍMITES</span><span>04 / 34</span></div>
+    <h1 class="display" style="margin-top:22px;font-size:68px;">Ninguna gana en todo.<br/>El trabajo decide.</h1>
+    <p class="intro-cards">Para el trabajo de administración y gerencia comercial, esto es lo que cambia entre una y otra.</p>
+    <div class="comparativa">
+      <div class="cmp-fila cmp-cabecera">
+        <div class="cmp-et"></div>
+<div class="cmp-col">GEMINI</div><div class="cmp-col">CHATGPT</div><div class="cmp-col">CLAUDE</div>
+      </div>
+      <div class="cmp-fila">
+        <div class="cmp-et">Dónde es más fuerte</div>
+        <div class="cmp-celda">Único que entiende <b>audio y vídeo</b>. Vive dentro de la hoja, el documento y el correo. Su cuaderno de fuentes cita y genera resúmenes hablados.</div>
+        <div class="cmp-celda">El más sólido con un <b>archivo de datos</b> encima: perfila, detecta lo roto y devuelve la hoja armada. Complemento para Excel y Sheets.</div>
+        <div class="cmp-celda">Documentos largos y trabajo encadenado. Devuelve <b>páginas que se usan</b> con el ratón, no capturas.</div>
+      </div>
+      <div class="cmp-fila">
+        <div class="cmp-et">Dónde se queda corta</div>
+        <div class="cmp-celda">Las funciones mejores dependen de la licencia Workspace y a veces no aparecen.</div>
+        <div class="cmp-celda">Lo que produce <b>nace fuera</b> de tus herramientas y hay que bajarlo. Si da una imagen del tablero, no se filtra.</div>
+        <div class="cmp-celda">No vive dentro de la hoja ni del correo, y el tablero <b>no se actualiza solo</b> cuando cambia el archivo.</div>
+      </div>
+      <div class="cmp-fila">
+        <div class="cmp-et">Para qué la usaría aquí</div>
+        <div class="cmp-celda">Expediente con citas, resumen hablado para la ruta, la cámara sobre una batería.</div>
+        <div class="cmp-celda">Limpiar las ventas del semestre y devolver el Excel con el filtro puesto.</div>
+        <div class="cmp-celda">Cruzar la política con un reclamo, auditar 41 procedimientos, tablero compartible.</div>
+      </div>
+    </div>
+    <p class="cmp-nota">El detalle completo, con enlaces a la documentación de cada fabricante, está en <a class="mat" href="materiales/20_comparativa_herramientas.docx" target="_blank" rel="noopener"><code>20_comparativa_herramientas.docx</code></a>.</p>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">04</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 · Agenda ===== -->
+<section class="paper" data-label="05 Agenda">
   <div class="frame">
     <div class="top-rail"><span>AGENDA DE LA SESIÓN</span><span>4 BLOQUES <span class="sep"></span> 16 LABORATORIOS <span class="sep"></span> RITMO DEL FACILITADOR</span></div>
     <h1 class="display" style="margin-top:52px;font-size:96px;">Lo que exploraremos hoy.</h1>
@@ -603,15 +686,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">04</div>
+      <div class="rhs">05</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 05 · Los materiales ===== -->
-<section class="paper" data-label="05 Los materiales">
+<!-- ===== 06 · Los materiales ===== -->
+<section class="paper" data-label="06 Los materiales">
   <div class="frame">
-    <div class="top-rail"><span>ARCHIVOS DE LA SESIÓN</span><span>05 / 33</span></div>
+    <div class="top-rail"><span>ARCHIVOS DE LA SESIÓN</span><span>06 / 34</span></div>
     <h1 class="display" style="margin-top:44px;font-size:88px;">Material de trabajo<br/>en la <span style="color:var(--brand);">sesión</span>.</h1>
     <p style="font-size:24px;line-height:1.45;color:var(--graphite-2);max-width:1500px;margin:20px 0 0;">Todos se descargan de la página del taller. Son casos inventados de Casa de las Baterías: ninguno trae información real de clientes.</p>
     <div class="agenda-grid" style="margin-top:28px;">
@@ -619,6 +702,7 @@
         <div class="bnum">PARA LOS PEDIDOS Y TU VOZ</div>
         <ul class="files">
           <li><a class="mat" href="materiales/17_tecnicas_y_cuando_usarlas.docx" target="_blank" rel="noopener"><code>17_tecnicas_y_cuando_usarlas.docx</code></a><span>Las nueve técnicas, con su fuente y su caso</span></li>
+          <li><a class="mat" href="materiales/20_comparativa_herramientas.docx" target="_blank" rel="noopener"><code>20_comparativa_herramientas.docx</code></a><span>Las tres herramientas, ficha por ficha</span></li>
           <li><a class="mat" href="materiales/15_prompts_que_fallaron.docx" target="_blank" rel="noopener"><code>15_prompts_que_fallaron.docx</code></a><span>Ocho pedidos flojos y su versión arreglada</span></li>
           <li><a class="mat" href="materiales/06_correos_de_referencia.docx" target="_blank" rel="noopener"><code>06_correos_de_referencia.docx</code></a><span>Tres textos para sacar tu forma de escribir</span></li>
           <li><a class="mat" href="materiales/03_politica_garantia.docx" target="_blank" rel="noopener"><code>03_politica_garantia.docx</code></a><span>Qué cubre la garantía y qué no</span></li>
@@ -639,13 +723,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">05</div>
+      <div class="rhs">06</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 06 · Bloque 1 ===== -->
-<section class="section-div" data-label="06 Bloque 1">
+<!-- ===== 07 · Bloque 1 ===== -->
+<section class="section-div" data-label="07 Bloque 1">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 1 DE 4</span><span>4 LABORATORIOS</span></div>
     <div class="layout">
@@ -659,13 +743,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">06</div>
+      <div class="rhs">07</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 07 · Laboratorio 1 ===== -->
-<section class="paper" data-label="07 Laboratorio 1">
+<!-- ===== 08 · Laboratorio 1 ===== -->
+<section class="paper" data-label="08 Laboratorio 1">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> ELEGIR LA TÉCNICA</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -718,13 +802,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">07</div>
+      <div class="rhs">08</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 08 · Laboratorio 2 ===== -->
-<section class="paper" data-label="08 Laboratorio 2">
+<!-- ===== 09 · Laboratorio 2 ===== -->
+<section class="paper" data-label="09 Laboratorio 2">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> ELEGIR LA TÉCNICA</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -777,13 +861,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">08</div>
+      <div class="rhs">09</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 09 · Laboratorio 3 ===== -->
-<section class="paper" data-label="09 Laboratorio 3">
+<!-- ===== 10 · Laboratorio 3 ===== -->
+<section class="paper" data-label="10 Laboratorio 3">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> ELEGIR LA TÉCNICA</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -835,13 +919,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">09</div>
+      <div class="rhs">10</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 10 · Laboratorio 4 ===== -->
-<section class="paper" data-label="10 Laboratorio 4">
+<!-- ===== 11 · Laboratorio 4 ===== -->
+<section class="paper" data-label="11 Laboratorio 4">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> ELEGIR LA TÉCNICA</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -894,13 +978,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">10</div>
+      <div class="rhs">11</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 11 · Bloque 2 ===== -->
-<section class="section-div" data-label="11 Bloque 2">
+<!-- ===== 12 · Bloque 2 ===== -->
+<section class="section-div" data-label="12 Bloque 2">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 2 DE 4</span><span>4 LABORATORIOS</span></div>
     <div class="layout">
@@ -914,13 +998,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">11</div>
+      <div class="rhs">12</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 12 · Laboratorio 5 ===== -->
-<section class="paper" data-label="12 Laboratorio 5">
+<!-- ===== 13 · Laboratorio 5 ===== -->
+<section class="paper" data-label="13 Laboratorio 5">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> TRABAJAR CON DOCUMENTOS</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -973,13 +1057,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">12</div>
+      <div class="rhs">13</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 13 · Laboratorio 6 ===== -->
-<section class="paper" data-label="13 Laboratorio 6">
+<!-- ===== 14 · Laboratorio 6 ===== -->
+<section class="paper" data-label="14 Laboratorio 6">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> TRABAJAR CON DOCUMENTOS</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1032,13 +1116,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">13</div>
+      <div class="rhs">14</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 14 · Laboratorio 7 ===== -->
-<section class="paper" data-label="14 Laboratorio 7">
+<!-- ===== 15 · Laboratorio 7 ===== -->
+<section class="paper" data-label="15 Laboratorio 7">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> TRABAJAR CON DOCUMENTOS</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1091,13 +1175,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">14</div>
+      <div class="rhs">15</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 15 · Laboratorio 8 ===== -->
-<section class="paper" data-label="15 Laboratorio 8">
+<!-- ===== 16 · Laboratorio 8 ===== -->
+<section class="paper" data-label="16 Laboratorio 8">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> TRABAJAR CON DOCUMENTOS</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1151,13 +1235,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">15</div>
+      <div class="rhs">16</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 16 · Bloque 3 ===== -->
-<section class="section-div" data-label="16 Bloque 3">
+<!-- ===== 17 · Bloque 3 ===== -->
+<section class="section-div" data-label="17 Bloque 3">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 3 DE 4</span><span>4 LABORATORIOS</span></div>
     <div class="layout">
@@ -1171,13 +1255,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">16</div>
+      <div class="rhs">17</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 17 · Laboratorio 9 ===== -->
-<section class="paper" data-label="17 Laboratorio 9">
+<!-- ===== 18 · Laboratorio 9 ===== -->
+<section class="paper" data-label="18 Laboratorio 9">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> TUS CIFRAS EN UNA PANTALLA</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1231,13 +1315,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">17</div>
+      <div class="rhs">18</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 18 · Laboratorio 10 ===== -->
-<section class="paper" data-label="18 Laboratorio 10">
+<!-- ===== 19 · Laboratorio 10 ===== -->
+<section class="paper" data-label="19 Laboratorio 10">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> TUS CIFRAS EN UNA PANTALLA</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1290,13 +1374,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">18</div>
+      <div class="rhs">19</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 19 · Laboratorio 11 ===== -->
-<section class="paper" data-label="19 Laboratorio 11">
+<!-- ===== 20 · Laboratorio 11 ===== -->
+<section class="paper" data-label="20 Laboratorio 11">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> TUS CIFRAS EN UNA PANTALLA</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1349,15 +1433,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">19</div>
+      <div class="rhs">20</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 20 · Receta A · Gemini ===== -->
-<section class="paper" data-label="20 Receta A · Gemini">
+<!-- ===== 21 · Receta A · Gemini ===== -->
+<section class="paper" data-label="21 Receta A · Gemini">
   <div class="frame">
-    <div class="top-rail"><span>RECETA A <span class="sep"></span> GEMINI EN SHEETS</span><span>20 / 33</span></div>
+    <div class="top-rail"><span>RECETA A <span class="sep"></span> GEMINI EN SHEETS</span><span>21 / 34</span></div>
     <h1 class="display" style="margin-top:24px;font-size:72px;">El tablero dentro de la hoja.</h1>
     <p class="intro-cards">Se trabaja con <a class="mat" href="materiales/04_ventas_sucursales_2026.xlsx" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.xlsx</code></a>. Gemini actúa sobre la hoja misma: desde abril de 2026 el panel lateral construye y edita hojas enteras desde una instrucción, y Sheets Canvas levanta encima una capa interactiva.</p>
     <div class="ex-body" style="margin-top:24px;">
@@ -1391,15 +1475,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">20</div>
+      <div class="rhs">21</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 21 · Receta B · ChatGPT ===== -->
-<section class="paper" data-label="21 Receta B · ChatGPT">
+<!-- ===== 22 · Receta B · ChatGPT ===== -->
+<section class="paper" data-label="22 Receta B · ChatGPT">
   <div class="frame">
-    <div class="top-rail"><span>RECETA B <span class="sep"></span> CHATGPT</span><span>21 / 33</span></div>
+    <div class="top-rail"><span>RECETA B <span class="sep"></span> CHATGPT</span><span>22 / 34</span></div>
     <h1 class="display" style="margin-top:24px;font-size:72px;">El tablero desde el archivo.</h1>
     <p class="intro-cards">Se trabaja con <a class="mat" href="materiales/04_ventas_sucursales_2026.xlsx" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.xlsx</code></a>. Hay dos caminos: el complemento para Excel y Sheets, general desde mayo de 2026, actúa dentro de la hoja; el chat con el archivo subido devuelve el tablero armado.</p>
     <div class="ex-body" style="margin-top:24px;">
@@ -1432,15 +1516,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">21</div>
+      <div class="rhs">22</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 22 · Receta C · Claude ===== -->
-<section class="paper" data-label="22 Receta C · Claude">
+<!-- ===== 23 · Receta C · Claude ===== -->
+<section class="paper" data-label="23 Receta C · Claude">
   <div class="frame">
-    <div class="top-rail"><span>RECETA C <span class="sep"></span> CLAUDE</span><span>22 / 33</span></div>
+    <div class="top-rail"><span>RECETA C <span class="sep"></span> CLAUDE</span><span>23 / 34</span></div>
     <h1 class="display" style="margin-top:24px;font-size:72px;">El tablero como página que se usa.</h1>
     <p class="intro-cards">Se trabaja con <a class="mat" href="materiales/04_ventas_sucursales_2026.xlsx" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.xlsx</code></a>. Claude devuelve un artifact: una página que se abre al lado del chat y se maneja con el ratón. Desde abril de 2026 los Live Artifacts quedan guardados y recargan los datos al abrirse.</p>
     <div class="ex-body" style="margin-top:24px;">
@@ -1473,13 +1557,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">22</div>
+      <div class="rhs">23</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 23 · Laboratorio 12 ===== -->
-<section class="paper" data-label="23 Laboratorio 12">
+<!-- ===== 24 · Laboratorio 12 ===== -->
+<section class="paper" data-label="24 Laboratorio 12">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> TUS CIFRAS EN UNA PANTALLA</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1532,13 +1616,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">23</div>
+      <div class="rhs">24</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 24 · Bloque 4 ===== -->
-<section class="section-div" data-label="24 Bloque 4">
+<!-- ===== 25 · Bloque 4 ===== -->
+<section class="section-div" data-label="25 Bloque 4">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 4 DE 4</span><span>4 LABORATORIOS</span></div>
     <div class="layout">
@@ -1552,13 +1636,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">24</div>
+      <div class="rhs">25</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 25 · Laboratorio 13 ===== -->
-<section class="paper" data-label="25 Laboratorio 13">
+<!-- ===== 26 · Laboratorio 13 ===== -->
+<section class="paper" data-label="26 Laboratorio 13">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> AMPLIFICANDO LA GESTIÓN DE PROCESOS</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1611,13 +1695,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">25</div>
+      <div class="rhs">26</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 26 · Laboratorio 14 ===== -->
-<section class="paper" data-label="26 Laboratorio 14">
+<!-- ===== 27 · Laboratorio 14 ===== -->
+<section class="paper" data-label="27 Laboratorio 14">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> AMPLIFICANDO LA GESTIÓN DE PROCESOS</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1669,13 +1753,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">26</div>
+      <div class="rhs">27</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 27 · Laboratorio 15 ===== -->
-<section class="paper" data-label="27 Laboratorio 15">
+<!-- ===== 28 · Laboratorio 15 ===== -->
+<section class="paper" data-label="28 Laboratorio 15">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> AMPLIFICANDO LA GESTIÓN DE PROCESOS</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1728,13 +1812,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">27</div>
+      <div class="rhs">28</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 28 · Laboratorio 16 ===== -->
-<section class="paper" data-label="28 Laboratorio 16">
+<!-- ===== 29 · Laboratorio 16 ===== -->
+<section class="paper" data-label="29 Laboratorio 16">
   <div class="frame">
     <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> AMPLIFICANDO LA GESTIÓN DE PROCESOS</span><span>APLICACIÓN PRÁCTICA</span></div>
     <div class="ex-header case-header">
@@ -1787,13 +1871,13 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">28</div>
+      <div class="rhs">29</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 29 · Anexo ===== -->
-<section class="section-div" data-label="29 Anexo">
+<!-- ===== 30 · Anexo ===== -->
+<section class="section-div" data-label="30 Anexo">
   <div class="frame">
     <div class="top-rail"><span>MATERIAL DE CONSULTA</span><span>OPCIONAL · SI SOBRA TIEMPO O PARA DESPUÉS</span></div>
     <div class="layout">
@@ -1807,15 +1891,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">29</div>
+      <div class="rhs">30</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 30 · Opción A · audio ===== -->
-<section class="paper" data-label="30 Opción A · audio">
+<!-- ===== 31 · Opción A · audio ===== -->
+<section class="paper" data-label="31 Opción A · audio">
   <div class="frame">
-    <div class="top-rail"><span>OPCIÓN A <span class="sep"></span> NOTEBOOKLM</span><span>30 / 33</span></div>
+    <div class="top-rail"><span>OPCIÓN A <span class="sep"></span> NOTEBOOKLM</span><span>31 / 34</span></div>
     <h1 class="display" style="margin-top:24px;font-size:72px;">El procedimiento, en dos minutos de audio.</h1>
     <p class="intro-cards">NotebookLM convierte un conjunto de documentos en una conversación grabada. Desde 2025 genera en español, con variantes de México y Latinoamérica, y admite formato breve de uno a dos minutos. Sirve para lo que nadie va a leer entero.</p>
     <div class="ex-body" style="margin-top:24px;">
@@ -1847,15 +1931,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">30</div>
+      <div class="rhs">31</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 31 · Opción B · cámara ===== -->
-<section class="paper" data-label="31 Opción B · cámara">
+<!-- ===== 32 · Opción B · cámara ===== -->
+<section class="paper" data-label="32 Opción B · cámara">
   <div class="frame">
-    <div class="top-rail"><span>OPCIÓN B <span class="sep"></span> GEMINI LIVE</span><span>31 / 33</span></div>
+    <div class="top-rail"><span>OPCIÓN B <span class="sep"></span> GEMINI LIVE</span><span>32 / 34</span></div>
     <h1 class="display" style="margin-top:24px;font-size:72px;">La batería que tienes delante.</h1>
     <p class="intro-cards">Gemini Live comparte la cámara del teléfono en tiempo real y responde hablando. Está disponible sin costo en Android y iPhone. En sucursal sirve para lo que hoy se resuelve llamando a otra persona.</p>
     <div class="ex-body" style="margin-top:24px;">
@@ -1886,15 +1970,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">31</div>
+      <div class="rhs">32</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 32 · Opción C · sola ===== -->
-<section class="paper" data-label="32 Opción C · sola">
+<!-- ===== 33 · Opción C · sola ===== -->
+<section class="paper" data-label="33 Opción C · sola">
   <div class="frame">
-    <div class="top-rail"><span>OPCIÓN C <span class="sep"></span> CHATGPT</span><span>32 / 33</span></div>
+    <div class="top-rail"><span>OPCIÓN C <span class="sep"></span> CHATGPT</span><span>33 / 34</span></div>
     <h1 class="display" style="margin-top:24px;font-size:72px;">La revisión que corre sin ti.</h1>
     <p class="intro-cards">Las tareas programadas de ChatGPT se ejecutan una vez, cada cierto tiempo o cuando pasa algo, y avisan del resultado. Sirven para el control que siempre se pospone porque hay que acordarse de hacerlo.</p>
     <div class="ex-body" style="margin-top:24px;">
@@ -1925,15 +2009,15 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">32</div>
+      <div class="rhs">33</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 33 · Cierre ===== -->
-<section data-label="33 Cierre">
+<!-- ===== 34 · Cierre ===== -->
+<section data-label="34 Cierre">
   <div class="frame">
-    <div class="top-rail"><span>CIERRE DE LA SESIÓN</span><span>33 / 33</span></div>
+    <div class="top-rail"><span>CIERRE DE LA SESIÓN</span><span>34 / 34</span></div>
     <div class="layout"><h1>Nueve técnicas.<br/>Las que <span style="color:var(--brand-br);">tu trabajo pide</span>.</h1></div>
     <div class="next">
       <div><span class="lbl">EL CRITERIO</span><p>Sabes qué técnica pide cada tarea y cuál puedes dejar fuera.</p></div>
@@ -1942,7 +2026,7 @@
     </div>
     <div class="footer">
       <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
-      <div class="rhs">33</div>
+      <div class="rhs">34</div>
     </div>
   </div>
 </section>

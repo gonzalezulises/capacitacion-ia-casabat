@@ -13,7 +13,7 @@ Cada laboratorio declara qué técnica practica. El lenguaje lo vigila
 verifica-lenguaje.mjs; la correspondencia con el material, verifica-tecnicas.mjs.
 """
 from deck import (Deck, cover, statement, agenda, divider, divider_anexo,
-                  exercise_case, closing, filelist, cards, recipe)
+                  exercise_case, closing, filelist, cards, recipe, comparativa)
 
 
 def prompt(*paragraphs):
@@ -48,26 +48,55 @@ d.add('Punto de partida', None, statement(
     'especificar el pedido, acotar la fuente, fijar el formato de salida y verificar contra '
     'el documento.</b></p>', 84))
 
-d.add('Las herramientas', 'paper', cards(
-    'ESTADO DEL ARTE · OCTUBRE DE 2026',
-    'Análisis comparativo<br/>de <span style="color:var(--brand);">herramientas líderes</span>.',
-    'Hoy las tres resuelven el trabajo de oficina con solvencia. La diferencia ya no está en '
-    'cuál escribe mejor, sino en dónde vive cada una y qué te deja en la mano al terminar.',
-    [('GEMINI',
-      'Trabaja dentro de tus archivos: la hoja de cálculo, el documento, el correo. Lo que '
-      'produce se queda ahí, compartido como siempre.',
-      'A cambio, depende de la licencia de la cuenta y a veces no aparece. Para fuentes '
-      'cerradas con cita, su cuaderno es lo mejor del mercado.'),
-     ('CHATGPT',
-      'El más sólido con un archivo de datos encima: perfila columnas, detecta lo roto y '
-      'devuelve una hoja de Excel ya armada.',
-      'Lo que produce nace fuera de tus herramientas y hay que bajarlo. Si te da una imagen '
-      'del tablero, no se puede filtrar: pide el archivo.'),
-     ('CLAUDE',
-      'Devuelve una página que se usa con el ratón: filtras, pasas el cursor y ves el dato. '
-      'Es la vía más corta a un tablero que se comparte con un enlace.',
-      'No vive dentro de la hoja y no se actualiza solo: si cambia el archivo, hay que '
-      'volver a pedirlo.')], cols=3))
+d.add('Ficha técnica', 'paper', comparativa(
+    'ESTADO DEL ARTE <span class="sep"></span> OCTUBRE DE 2026',
+    'Las tres, con sus números.',
+    'Datos de la documentación de cada fabricante, consultada el 2 de octubre de 2026. '
+    'Lo que aquí dice «de una vez» es cuánto texto admite sin perder el hilo.',
+    ['GEMINI', 'CHATGPT', 'CLAUDE'],
+    [('Modelo principal hoy',
+      ['Gemini 3.8 Flash', 'GPT-6 Astra', 'Claude Opus 5.5']),
+     ('Texto que admite de una vez',
+      ['No publicado por modelo', '<b>1,05 millones</b> de unidades, unas 780.000 palabras',
+       '<b>1 millón</b> de unidades, unas 555.000 palabras']),
+     ('Qué puede leer',
+      ['Texto, imagen, <b>audio y vídeo</b>', 'Texto e imagen', 'Texto e imagen']),
+     ('Sabe del mundo hasta',
+      ['No publicado por modelo', 'Abril de 2026', '<b>Junio de 2026</b>']),
+     ('Lo que devuelve de una tirada',
+      ['Texto, voz, imagen, vídeo y música', 'Hasta 128.000 unidades de texto, y voz e imagen aparte',
+       'Hasta 128.000 unidades de texto']),
+     ('Ajuste de esfuerzo',
+      ['Según el modelo', 'Cinco niveles, de mínimo a máximo',
+       'Automático: decide solo cuánto pensar'])],
+    nota='Las cifras son del API. En la aplicación de chat los límites los pone el plan '
+         'contratado, no el modelo.'))
+
+d.add('Dónde brilla cada una', 'paper', comparativa(
+    'ESTADO DEL ARTE <span class="sep"></span> FORTALEZAS Y LÍMITES',
+    'Ninguna gana en todo.<br/>El trabajo decide.',
+    'Para el trabajo de administración y gerencia comercial, esto es lo que cambia entre una '
+    'y otra.',
+    ['GEMINI', 'CHATGPT', 'CLAUDE'],
+    [('Dónde es más fuerte',
+      ['Único que entiende <b>audio y vídeo</b>. Vive dentro de la hoja, el documento y el '
+       'correo. Su cuaderno de fuentes cita y genera resúmenes hablados.',
+       'El más sólido con un <b>archivo de datos</b> encima: perfila, detecta lo roto y '
+       'devuelve la hoja armada. Complemento para Excel y Sheets.',
+       'Documentos largos y trabajo encadenado. Devuelve <b>páginas que se usan</b> con el '
+       'ratón, no capturas.']),
+     ('Dónde se queda corta',
+      ['Las funciones mejores dependen de la licencia Workspace y a veces no aparecen.',
+       'Lo que produce <b>nace fuera</b> de tus herramientas y hay que bajarlo. Si da una '
+       'imagen del tablero, no se filtra.',
+       'No vive dentro de la hoja ni del correo, y el tablero <b>no se actualiza solo</b> '
+       'cuando cambia el archivo.']),
+     ('Para qué la usaría aquí',
+      ['Expediente con citas, resumen hablado para la ruta, la cámara sobre una batería.',
+       'Limpiar las ventas del semestre y devolver el Excel con el filtro puesto.',
+       'Cruzar la política con un reclamo, auditar 41 procedimientos, tablero compartible.'])],
+    nota='El detalle completo, con enlaces a la documentación de cada fabricante, está en '
+         '<code>20_comparativa_herramientas.docx</code>.'))
 
 d.add('Agenda', 'paper', agenda(
     '4 BLOQUES <span class="sep"></span> 16 LABORATORIOS <span class="sep"></span> RITMO DEL FACILITADOR',
@@ -92,6 +121,7 @@ d.add('Los materiales', 'paper', filelist(
     'Baterías: ninguno trae información real de clientes.',
     [('PARA LOS PEDIDOS Y TU VOZ', [
         ('17_tecnicas_y_cuando_usarlas.docx', 'Las nueve técnicas, con su fuente y su caso'),
+        ('20_comparativa_herramientas.docx', 'Las tres herramientas, ficha por ficha'),
         ('15_prompts_que_fallaron.docx', 'Ocho pedidos flojos y su versión arreglada'),
         ('06_correos_de_referencia.docx', 'Tres textos para sacar tu forma de escribir'),
         ('03_politica_garantia.docx', 'Qué cubre la garantía y qué no'),
