@@ -13,12 +13,12 @@ RAIL2 = 'BLOQUE 02 <span class="sep"></span> EXPLICAR SIN INVENTAR'
 RAIL3 = 'BLOQUE 03 <span class="sep"></span> RESOLVER CON DATOS Y DOCUMENTOS'
 RAIL4 = 'BLOQUE 04 <span class="sep"></span> CONVERTIR ANÁLISIS EN DECISIÓN'
 
-d = Deck('Sesión 2 · Analizar y decidir con Gemini · Casa de las Baterías', {'sesion': 2})
+d = Deck('Sesión 2 · Del dato a una decisión defendible · Casa de las Baterías', {'sesion': 2})
 
 d.add('Portada', 'cover', cover(
     'CASA DE LAS BATERÍAS · ADMINISTRACIÓN Y GERENCIA COMERCIAL',
     'DEL DATO A UNA<br/><span class="acc">DECISIÓN DEFENDIBLE</span>.',
-    'Sesión 2 de 2 · 16 laboratorios con Sheets, Gemini, documentos, escenarios y aplicación individual.',
+    'Sesión 2 · 16 laboratorios con Sheets, Gemini, documentos, escenarios y aplicación individual.',
     'Sesión 2 · Edición 2026', 216))
 
 d.add('El reto', None, statement(

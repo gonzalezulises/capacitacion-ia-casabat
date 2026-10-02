@@ -9,6 +9,18 @@ Programa 2026 de tres sesiones presenciales con ritmo flexible para Administraci
 - Materiales para participantes: 23 DOCX y 4 XLSX
 - Datos: todos los casos y cifras son ficticios
 
+## Rótulo en pantalla y nombre de archivo
+
+Los archivos conservan su nombre original para no romper los enlaces ya compartidos. Lo que cambió en octubre de 2026 fue el orden del programa.
+
+| Rótulo en pantalla | Archivo | Título |
+| --- | --- | --- |
+| Sesión 1 | `sesion-3.html` | IA para Administración y Gerencia Comercial |
+| Sesión 2 | `sesion-2.html` | Del dato a una decisión defendible |
+| Sesión complementaria | `sesion-1.html` | De la necesidad a la capacidad |
+
+Los verificadores nombran las sesiones por su archivo, no por su rótulo.
+
 ## Diseño curricular
 
 ### Sesión 1 De una necesidad a capacidad instalada

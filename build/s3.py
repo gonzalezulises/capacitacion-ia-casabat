@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Sesión 3 — IA para Administración y Gerencia Comercial.
+"""Sesión 1 — IA para Administración y Gerencia Comercial.
+
+El archivo conserva el nombre sesion-3.html para no romper los enlaces ya
+compartidos; lo que cambia es su rótulo en pantalla.
 
 El contenido sale de dos sitios. Las cuatro necesidades, del formulario previo
 (5 respuestas). Las técnicas, de la documentación oficial de Google, OpenAI y
@@ -24,7 +27,7 @@ RAIL4 = 'BLOQUE 04 <span class="sep"></span> AMPLIFICANDO LA GESTIÓN DE PROCESO
 
 TODAS = 'Gemini, ChatGPT o Claude'
 
-d = Deck('Sesión 3 · IA para Administración y Gerencia Comercial · Casa de las Baterías',
+d = Deck('Sesión 1 · IA para Administración y Gerencia Comercial · Casa de las Baterías',
          {'sesion': 3})
 
 # ---------------------------------------------------------------- apertura
@@ -32,8 +35,8 @@ d = Deck('Sesión 3 · IA para Administración y Gerencia Comercial · Casa de l
 d.add('Portada', 'cover', cover(
     'CASA DE LAS BATERÍAS · ADMINISTRACIÓN Y GERENCIA COMERCIAL',
     'IA PARA ADMINISTRACIÓN<br/>Y <span class="acc">GERENCIA COMERCIAL</span>.',
-    'Sesión 3 · 16 laboratorios sobre nueve técnicas documentadas, con datos y documentos de Casa de las Baterías.',
-    'Sesión 3 · Edición 2026', 180))
+    'Sesión 1 · 16 laboratorios sobre nueve técnicas documentadas, con datos y documentos de Casa de las Baterías.',
+    'Sesión 1 · Edición 2026', 180))
 
 d.add('Punto de partida', None, statement(
     'CÓMO FUNCIONA Y QUÉ SE DESARROLLA HOY',

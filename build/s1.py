@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Sesión 1 — Elegir la herramienta, investigar, crear y dejar capacidad instalada."""
+"""Sesión complementaria — Elegir la herramienta, investigar, crear y dejar capacidad
+instalada. El archivo conserva el nombre sesion-1.html para no romper enlaces."""
 from deck import (Deck, cover, statement, agenda, howto, divider,
                   exercise_case, closing, filelist, cards)
 
@@ -13,13 +14,13 @@ RAIL2 = 'BLOQUE 02 <span class="sep"></span> INVESTIGAR Y CONVERTIR'
 RAIL3 = 'BLOQUE 03 <span class="sep"></span> CREAR UNA GEM ÚTIL'
 RAIL4 = 'BLOQUE 04 <span class="sep"></span> LLEVARLA A OPERACIÓN'
 
-d = Deck('Sesión 1 · De una necesidad a capacidad instalada · Casa de las Baterías', {'sesion': 1})
+d = Deck('Sesión complementaria · De una necesidad a capacidad instalada · Casa de las Baterías', {'sesion': 1})
 
 d.add('Portada', 'cover', cover(
     'CASA DE LAS BATERÍAS · ADMINISTRACIÓN Y GERENCIA COMERCIAL',
     'DE LA NECESIDAD<br/>A LA <span class="acc">CAPACIDAD</span>.',
-    'Sesión 1 de 2 · 16 laboratorios con NotebookLM, Deep Research, Canvas, Gems, Docs, Vids y Drive.',
-    'Sesión 1 · Edición 2026'))
+    'Sesión complementaria · 16 laboratorios con NotebookLM, Deep Research, Canvas, Gems, Docs, Vids y Drive.',
+    'Sesión complementaria · Edición 2026'))
 
 d.add('El trabajo primero', None, statement(
     'PUNTO DE PARTIDA',
@@ -359,7 +360,7 @@ d.add('Laboratorio 16', 'paper', exercise_case(
     'Cada herramienta agrega una función distinta y la salida final conserva una ruta hacia la evidencia.'))
 
 d.add('Cierre', None, closing(
-    'CIERRE DE SESIÓN 1',
+    'CIERRE DE LA SESIÓN',
     'No aprendiste cuatro botones.<br/>Aprendiste a <span style="color:var(--brand-br);">elegir y gobernar</span>.',
     [('EVIDENCIA INTERNA', 'NotebookLM convierte un expediente en hallazgos citados, sin ocultar contradicciones.'),
      ('EVIDENCIA EXTERNA', 'Deep Research investiga; Canvas convierte; la revisión humana decide.'),
