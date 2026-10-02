@@ -25,7 +25,7 @@ const todos = [...readdirSync(M).filter(f => !f.startsWith('.')),
 const docx = todos.filter(f => f.endsWith('.docx'));
 const xlsx = todos.filter(f => f.endsWith('.xlsx'));
 const retirados = todos.filter(f => /\.(?:md|csv)$/i.test(f));
-docx.length === 24 ? ok('Office: 24 documentos Word') : fail(`Office: ${docx.length} DOCX; se esperaban 24`);
+docx.length === 25 ? ok('Office: 25 documentos Word') : fail(`Office: ${docx.length} DOCX; se esperaban 25`);
 xlsx.length === 4 ? ok('Office: 4 libros Excel') : fail(`Office: ${xlsx.length} XLSX; se esperaban 4`);
 retirados.length === 0 ? ok('Office: ningún MD o CSV para participantes')
   : fail(`Office: aún existen formatos retirados — ${retirados.join(' · ')}`);
@@ -34,7 +34,7 @@ if (existsSync('materiales.zip')) {
   const zip = execFileSync('unzip', ['-Z1', 'materiales.zip'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
   const zipOffice = zip.filter(f => /\.(?:docx|xlsx)$/i.test(f));
   const zipRetirados = zip.filter(f => /\.(?:md|csv)$/i.test(f));
-  zipOffice.length === 28 ? ok('ZIP: contiene los 28 archivos Office') : fail(`ZIP: contiene ${zipOffice.length} archivos Office; se esperaban 28`);
+  zipOffice.length === 29 ? ok('ZIP: contiene los 29 archivos Office') : fail(`ZIP: contiene ${zipOffice.length} archivos Office; se esperaban 29`);
   zipRetirados.length === 0 ? ok('ZIP: no contiene MD o CSV') : fail(`ZIP: conserva formatos retirados — ${zipRetirados.join(' · ')}`);
 }
 
@@ -179,6 +179,39 @@ for (const [n, re, que] of esperados) {
   re.test(fila)
     ? ok(`correos pendientes: el ${n} sigue siendo ${que}`)
     : fail(`correos pendientes: el ${n} ya no es ${que} — dice "${fila.slice(0, 60)}…"`);
+}
+
+// ---------- 5b. Todo insumo que un laboratorio promete existe ----------
+// El laboratorio 5 de la sesión 3 pedía «el reclamo del cliente» y ese texto no
+// estaba en ningún material: quien llegaba al ejercicio no tenía qué pegar. La
+// comprobación 6 no lo vio porque solo mira los nombres de archivo entre <code>.
+// Un insumo vale si es un archivo del curso, algo que el propio participante
+// trae, o la salida de un laboratorio anterior de esa misma sesión.
+for (const deck of DECKS) {
+  if (!existsSync(deck)) continue;
+  const html = readFileSync(deck, 'utf8');
+  const sinInsumo = [];
+  for (const seccion of html.split(/(?=<section\b)/)) {
+    if (!seccion.includes('class="ex-num"')) continue;
+    const entrada = (seccion.match(/<span class="input"><b>[^<]*<\/b>([\s\S]*?)<\/span>/) || [, ''])[1];
+    const libre = entrada
+      .replace(/<a[^>]*>[\s\S]*?<\/a>|<code>[\s\S]*?<\/code>/g, '')   // archivos reales
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/^[·,\s]+|[·,\s]+$/g, '');
+    if (!libre) continue;
+    const delParticipante = /\b(tu|tus|tuyo|tuya|tuyos|tuyas|su|sus|cada|propio|propia|real|anonimizad)\b/i.test(libre);
+    const deOtroLaboratorio = /laboratorio|cuaderno del|salida del|modelo en|dashboard del|Gem v|hallazgos|cifras/i.test(libre);
+    const fuentePublica = /web pública|internet|fuentes públicas/i.test(libre);
+    if (!delParticipante && !deOtroLaboratorio && !fuentePublica) {
+      const titulo = (seccion.match(/<h2 class="ex-title">([^<]+)</) || [, '?'])[1];
+      sinInsumo.push(`«${titulo}» promete «${libre}», que no es un archivo del curso`);
+    }
+  }
+  sinInsumo.length === 0
+    ? ok(`${deck}: todo insumo prometido por un laboratorio existe o lo trae el participante`)
+    : sinInsumo.forEach((m) => fail(`${deck}: ${m}`));
 }
 
 // ---------- 6. Todo archivo citado en los decks existe ----------
