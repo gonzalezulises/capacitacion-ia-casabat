@@ -1729,8 +1729,10 @@
 // porque ese archivo es el motor original y su sha1 está verificado.
 (function () {
   function texto(tarjeta) {
+    // textContent y no innerText: el motor oculta los slides que no están
+    // activos, y en un slide oculto innerText devuelve cadena vacía.
     return [...tarjeta.querySelectorAll('p')]
-      .map(function (p) { return p.innerText.trim(); })
+      .map(function (p) { return p.textContent.replace(/\s+/g, ' ').trim(); })
       .filter(Boolean)
       .join('\n\n');
   }
