@@ -12,7 +12,7 @@ const oks = [];
 const ok = (m) => oks.push(m);
 const fail = (m) => fails.push(m);
 
-const DECKS = ['sesion-1.html', 'sesion-2.html'];
+const DECKS = ['sesion-1.html', 'sesion-2.html', 'sesion-3.html'];
 const EJ_POR_SESION = 16;
 
 // texto visible: sin <style>, <script> ni etiquetas

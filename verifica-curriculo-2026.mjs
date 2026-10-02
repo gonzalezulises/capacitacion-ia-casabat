@@ -10,7 +10,7 @@ const ok = (m) => oks.push(m);
 const fail = (m) => fails.push(m);
 const read = (p) => readFileSync(p, 'utf8');
 
-const decks = ['sesion-1.html', 'sesion-2.html'];
+const decks = ['sesion-1.html', 'sesion-2.html', 'sesion-3.html'];
 for (const file of decks) {
   if (!existsSync(file)) {
     fail(`${file}: no existe`);
@@ -36,7 +36,7 @@ laboratoriosDeCorreo <= 3
   ? ok(`sesión 1: limita a ${laboratoriosDeCorreo} los laboratorios centrados en correo`)
   : fail(`sesión 1: ${laboratoriosDeCorreo} de 12 laboratorios siguen centrados en correo; máximo 3`);
 
-for (const [sesion, html] of [[1, s1], [2, read('sesion-2.html')]]) {
+for (const [sesion, html] of [[1, s1], [2, read('sesion-2.html')], [3, read('sesion-3.html')]]) {
   const laboratorios = html.split(/(?=<section\b)/).filter(section => section.includes('<div class="ex-num">'));
   for (let bloque = 0; bloque < 4; bloque++) {
     const cierre = laboratorios[bloque * 4 + 3] || '';
@@ -147,6 +147,56 @@ existsSync('materiales/14_inventario_demanda_sucursales.xlsx')
   ? ok('sesión 2: anexo de inventario y demanda presente')
   : fail('sesión 2: falta materiales/14_inventario_demanda_sucursales.xlsx');
 
+// --- sesión 3: cada pedido del formulario previo tiene su bloque ---
+// El instrumento (5 respuestas, cohorte Administración y Gerencia Comercial)
+// pidió cuatro cosas. Si una regeneración borra el bloque que la resuelve, la
+// sesión deja de responder lo que se preguntó.
+const s3 = read('sesion-3.html');
+const laboratoriosS3 = s3
+  .split(/(?=<section\b)/)
+  .filter(section => section.includes('<div class="ex-num">'));
+
+for (const [bloque, patron, pedido] of [
+  [1, /seis partes|pedido que funcionó|dos resultados/i, '«qué prompts usar» · 3 de 5 respondientes'],
+  [2, /forma de escribir|frases que delatan|sin que te reescriba/i, '«que no se vea que es IA»'],
+  [3, /tablero|gráfico que se entiende|cinco cifras/i, '«ejemplo de dashboard o gráficos» · 3 de 5'],
+  [4, /nombres|anexo|procedimiento/i, '«nomenclatura y códigos de procedimientos»'],
+]) {
+  const laboratorios = laboratoriosS3.slice((bloque - 1) * 4, bloque * 4).join('\n');
+  patron.test(laboratorios)
+    ? ok(`sesión 3: el bloque ${bloque} responde ${pedido}`)
+    : fail(`sesión 3: el bloque ${bloque} ya no responde ${pedido}`);
+}
+
+// Los tableros y los gráficos se piden en tres herramientas distintas, porque el
+// instrumento reportó ChatGPT en 3 respuestas y Gemini en 2.
+const recetasS3 = s3.split(/(?=<section\b)/).filter(section => /RECETA [ABC]/.test(section));
+recetasS3.length === 6
+  ? ok('sesión 3: seis recetas por herramienta (tablero y gráfico × Gemini, ChatGPT y Claude)')
+  : fail(`sesión 3: hay ${recetasS3.length} recetas; se esperaban 6`);
+
+for (const herramienta of ['GEMINI', 'CHATGPT', 'CLAUDE']) {
+  const propias = recetasS3.filter(section => section.includes(`<span>RECETA`) &&
+    new RegExp(`RECETA [ABC] <span class="sep"></span> ${herramienta}`).test(section));
+  propias.length === 2
+    ? ok(`sesión 3: ${herramienta.toLowerCase()} tiene su receta de tablero y de gráfico`)
+    : fail(`sesión 3: ${herramienta.toLowerCase()} tiene ${propias.length} recetas; se esperaban 2`);
+}
+
+// Cada receta entrega un bloque para copiar y pegar: sin eso es una explicación,
+// no una receta.
+const sinBloque = recetasS3.filter(section => !/PEGA ESTO EN/.test(section));
+sinBloque.length === 0
+  ? ok('sesión 3: las seis recetas traen su bloque para copiar y pegar')
+  : fail(`sesión 3: ${sinBloque.length} receta(s) sin bloque para copiar`);
+
+for (const material of [
+  'materiales/15_prompts_que_fallaron.docx',
+  'materiales/16_maestro_procedimientos.xlsx',
+]) {
+  existsSync(material) ? ok(`${material}: presente`) : fail(`${material}: falta`);
+}
+
 const publicables = [
   ...decks.map(read),
   read('practica.html'),
@@ -163,9 +213,9 @@ for (const [patron, etiqueta] of [
 }
 
 const hub = read('index.html');
-hub.includes('<b>32</b><span>laboratorios principales')
-  ? ok('hub: comunica 32 laboratorios principales')
-  : fail('hub: no comunica los 32 laboratorios principales');
+hub.includes('<b>48</b><span>laboratorios principales')
+  ? ok('hub: comunica 48 laboratorios principales')
+  : fail('hub: no comunica los 48 laboratorios principales');
 
 for (const material of [
   'materiales/01_especificacion_de_tarea.docx',

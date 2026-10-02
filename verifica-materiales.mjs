@@ -15,7 +15,7 @@ const ok = (m) => oks.push(m);
 const fail = (m) => fails.push(m);
 const leer = (p) => readFileSync(p, 'utf8');
 const leerOffice = (tipo, p) => JSON.parse(execFileSync('python3', ['build/office_reader.py', tipo, p], { encoding: 'utf8' }));
-const DECKS = ['sesion-1.html', 'sesion-2.html'];
+const DECKS = ['sesion-1.html', 'sesion-2.html', 'sesion-3.html'];
 const sinTilde = (s) => s.normalize('NFKD').replace(/[̀-ͯ]/g, '');
 
 // ---------- 0. Contrato Office ----------
@@ -25,8 +25,8 @@ const todos = [...readdirSync(M).filter(f => !f.startsWith('.')),
 const docx = todos.filter(f => f.endsWith('.docx'));
 const xlsx = todos.filter(f => f.endsWith('.xlsx'));
 const retirados = todos.filter(f => /\.(?:md|csv)$/i.test(f));
-docx.length === 22 ? ok('Office: 22 documentos Word') : fail(`Office: ${docx.length} DOCX; se esperaban 22`);
-xlsx.length === 3 ? ok('Office: 3 libros Excel') : fail(`Office: ${xlsx.length} XLSX; se esperaban 3`);
+docx.length === 23 ? ok('Office: 23 documentos Word') : fail(`Office: ${docx.length} DOCX; se esperaban 23`);
+xlsx.length === 4 ? ok('Office: 4 libros Excel') : fail(`Office: ${xlsx.length} XLSX; se esperaban 4`);
 retirados.length === 0 ? ok('Office: ningún MD o CSV para participantes')
   : fail(`Office: aún existen formatos retirados — ${retirados.join(' · ')}`);
 
@@ -34,7 +34,7 @@ if (existsSync('materiales.zip')) {
   const zip = execFileSync('unzip', ['-Z1', 'materiales.zip'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
   const zipOffice = zip.filter(f => /\.(?:docx|xlsx)$/i.test(f));
   const zipRetirados = zip.filter(f => /\.(?:md|csv)$/i.test(f));
-  zipOffice.length === 25 ? ok('ZIP: contiene los 25 archivos Office') : fail(`ZIP: contiene ${zipOffice.length} archivos Office; se esperaban 25`);
+  zipOffice.length === 27 ? ok('ZIP: contiene los 27 archivos Office') : fail(`ZIP: contiene ${zipOffice.length} archivos Office; se esperaban 27`);
   zipRetirados.length === 0 ? ok('ZIP: no contiene MD o CSV') : fail(`ZIP: conserva formatos retirados — ${zipRetirados.join(' · ')}`);
 }
 
@@ -183,7 +183,7 @@ for (const [n, re, que] of esperados) {
 
 // ---------- 6. Todo archivo citado en los decks existe ----------
 const citados = new Set();
-for (const deck of ['sesion-1.html', 'sesion-2.html']) {
+for (const deck of DECKS) {
   const html = leer(deck);
   for (const m of html.matchAll(/<code>([^<]+\.(?:docx|xlsx))<\/code>/g)) citados.add(m[1]);
   for (const m of html.matchAll(/<code>(expediente-PR-ADM-014\/?)<\/code>/g)) citados.add(m[1]);
