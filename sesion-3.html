@@ -1,0 +1,1843 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Sesión 3 · IA para Administración y Gerencia Comercial · Casa de las Baterías</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="deck-stage.js"></script>
+<style>
+  :root{
+    /* Identidad de Casa de las Baterias — tomada de
+       casabat-comparador-cliente/app/globals.css y del logotipo. */
+    --brand:#1C5C92;       /* azul del logotipo — acento sobre papel */
+    --brand-br:#4E9BD6;    /* el mismo azul aclarado para leerse sobre tinta */
+    --brand-dark:#14456E;
+    --brand-light:#E8F1F9;
+    --red:#C0392B;         /* rojo del techo y de #SomosEnergia */
+    --red-br:#E0685A;
+
+    --ink:#0E2A43;         /* tinta: el azul de marca llevado a fondo */
+    --ink-2:#14456E;
+    --bone:#EDF3F9;
+    --bone-2:#A9C2D8;
+    --paper:#F4F7FB;       /* --canvas del comparador */
+    --graphite:#0F172A;    /* --foreground del comparador */
+    --graphite-2:#334155;
+    --muted-d:#7D9AB5;
+    --muted-l:#5B6B81;     /* --color-slate-500 */
+    --rule-d:#1D4E7A;
+    --rule-l:#D3DEEA;
+
+    --pad-x: 96px;
+    --pad-top: 80px;
+
+    --display: 'Antonio', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', 'Menlo', monospace;
+  }
+
+  html,body{margin:0;background:#000;font-family:var(--sans);}
+
+  deck-stage > section{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:var(--sans);
+    overflow:hidden;
+  }
+  section.paper{background:var(--paper);color:var(--graphite);}
+
+  .frame{
+    width:100%;height:100%;
+    padding:var(--pad-top) var(--pad-x) 120px;
+    box-sizing:border-box;
+    display:flex;flex-direction:column;
+    position:relative;
+  }
+
+  /* === Footer === */
+  .footer{
+    position:absolute;
+    left:var(--pad-x);right:var(--pad-x);bottom:36px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:24px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--muted-d);
+  }
+  section.paper .footer{color:var(--muted-l);}
+  .footer .lhs{display:flex;gap:36px;align-items:center;white-space:nowrap;}
+  .footer .lhs span, .footer .rhs{white-space:nowrap;}
+  .footer .dot{width:5px;height:5px;background:var(--brand-br);border-radius:50%;flex-shrink:0;}
+  section.paper .footer .dot{background:var(--brand);}
+  .footer .rhs{letter-spacing:0.3em;font-variant-numeric:tabular-nums;}
+
+  /* === Top rail === */
+  .top-rail{
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:24px;font-weight:500;
+    letter-spacing:0.25em;text-transform:uppercase;
+    color:var(--muted-d);gap:24px;
+  }
+  .top-rail > span{white-space:nowrap;}
+  section.paper .top-rail{color:var(--muted-l);}
+  .top-rail .sep{width:24px;height:1px;background:currentColor;display:inline-block;margin:0 14px;vertical-align:middle;opacity:.6;}
+
+  h1.display, h2.display{
+    font-family:var(--display);
+    font-weight:600;line-height:1.0;
+    letter-spacing:-0.01em;margin:0;
+  }
+
+  .label{
+    font-size:24px;letter-spacing:0.28em;text-transform:uppercase;
+    font-weight:500;color:var(--muted-d);
+  }
+  section.paper .label{color:var(--muted-l);}
+  .label.acc{color:var(--brand);}
+  section:not(.paper) .label.acc{color:var(--brand-br);}
+
+  /* La marca va sobre una placa blanca: el logotipo original tiene fondo blanco
+     y sobre la tinta azul se leería como un recorte sucio. */
+  .marca{
+    position:absolute;top:58px;right:var(--pad-x);
+    width:168px;height:168px;background:#fff;padding:13px;
+    box-sizing:border-box;object-fit:contain;
+  }
+
+  /* ===== Portada ===== */
+  .cover .frame{justify-content:space-between;}
+  .cover h1{
+    font-family:var(--display);
+    font-size:250px;line-height:0.95;letter-spacing:-0.01em;
+    font-weight:700;color:var(--bone);margin:0;
+  }
+  .cover h1 .acc{color:var(--brand-br);}
+  .cover .eyebrow{
+    font-size:24px;letter-spacing:0.4em;text-transform:uppercase;
+    color:var(--brand-br);margin-bottom:64px;font-weight:500;
+  }
+  .cover .sub{
+    font-family:var(--sans);font-size:34px;line-height:1.3;font-weight:300;
+    color:var(--bone-2);max-width:1300px;margin-top:60px;
+  }
+
+  /* La portada va sobre el blanco exacto del logotipo (#FDFFFE, medido en el
+     propio JPG). Antes la marca llevaba una placa blanca para no verse sucia
+     sobre la tinta azul, y esa placa se leía como un cuadrado pegado. Al
+     igualar el fondo del slide al del archivo, la placa desaparece. El resto
+     del deck conserva su azul. */
+  section.cover{background:#FDFFFE;color:var(--graphite);}
+  section.cover .marca{background:none;padding:0;}
+  section.cover h1{color:var(--brand-dark);}
+  section.cover h1 .acc{color:var(--red);}
+  section.cover .eyebrow{color:var(--brand);}
+  section.cover .sub{color:var(--muted-l);}
+  section.cover .top-rail,
+  section.cover .footer{color:var(--muted-l);}
+  section.cover .footer .dot{background:var(--brand);}
+
+  /* ===== Agenda ===== */
+  .agenda-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 64px;margin-top:36px;}
+  .ag-block{padding:20px 0 0;border-top:1px solid var(--rule-d);}
+  section.paper .ag-block{border-top-color:var(--rule-l);}
+  .ag-block .bnum{
+    font-family:var(--mono);font-size:22px;color:var(--brand-br);
+    letter-spacing:0.18em;text-transform:uppercase;font-weight:500;margin-bottom:14px;
+  }
+  section.paper .ag-block .bnum{color:var(--brand);}
+  .ag-block h3{
+    font-family:var(--display);font-size:40px;line-height:1.05;
+    font-weight:600;margin:0 0 14px;letter-spacing:0;
+  }
+  .ag-block ul{margin:0;padding:0;list-style:none;}
+  .ag-block li{
+    font-size:23px;padding:7px 0;
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule-d);color:var(--bone-2);
+  }
+  section.paper .ag-block li{border-bottom-color:var(--rule-l);color:var(--graphite-2);}
+  .ag-block li:last-child{border-bottom:none;}
+  .ag-block li span{color:var(--muted-d);font-variant-numeric:tabular-nums;letter-spacing:0.15em;font-size:22px;white-space:nowrap;flex-shrink:0;margin-left:16px;}
+  section.paper .ag-block li span{color:var(--muted-l);}
+
+  /* Lista de materiales: archivo a la izquierda, para qué sirve a la derecha */
+  ul.files{margin:0;padding:0;list-style:none;}
+  ul.files li{
+    display:block;padding:10px 0;border-bottom:1px solid var(--rule-d);
+    color:var(--bone-2);font-size:22px;
+  }
+  section.paper ul.files li{border-bottom-color:var(--rule-l);color:var(--graphite-2);}
+  ul.files li:last-child{border-bottom:none;}
+  ul.files li code{
+    font-family:var(--mono);font-size:19px;background:none;padding:0;
+    color:var(--brand);display:block;margin-bottom:3px;
+    overflow-wrap:anywhere;
+  }
+  section:not(.paper) ul.files li code{color:var(--brand-br);}
+  ul.files li span{display:block;line-height:1.3;font-size:21px;}
+
+  /* ===== Divider de bloque ===== */
+  .section-div .frame{padding-top:96px;padding-bottom:96px;}
+  .section-div .block-no{
+    font-family:var(--display);font-size:560px;line-height:0.78;
+    letter-spacing:-0.03em;color:var(--brand-br);font-weight:700;margin:0;
+  }
+  .section-div h1{
+    font-family:var(--display);font-size:112px;line-height:1.02;
+    letter-spacing:-0.01em;font-weight:600;color:var(--bone);margin:0;max-width:1500px;
+  }
+  .section-div .layout{display:grid;grid-template-columns:520px 1fr;gap:64px;align-items:end;margin:auto 0;}
+  .section-div .meta{
+    margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;
+    border-top:1px solid var(--rule-d);padding-top:28px;grid-column:1 / -1;
+  }
+  .section-div .meta div{font-size:23px;color:var(--bone-2);line-height:1.45;}
+  .section-div .meta div b{
+    display:block;color:var(--muted-d);font-weight:500;font-size:22px;
+    letter-spacing:0.25em;text-transform:uppercase;margin-bottom:12px;
+  }
+
+  /* ===== Teoria + demo externa ===== */
+  .teoria{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:28px;}
+  .teoria .label{display:block;margin-bottom:18px;}
+  ol.ideas{margin:0;padding:0;list-style:none;counter-reset:idea;}
+  ol.ideas li{
+    counter-increment:idea;padding:0 0 20px 56px;position:relative;
+    font-size:24px;line-height:1.42;color:var(--graphite-2);
+  }
+  section:not(.paper) ol.ideas li{color:var(--bone-2);}
+  ol.ideas li::before{
+    content:counter(idea,decimal-leading-zero);
+    position:absolute;left:0;top:1px;font-family:var(--display);font-weight:700;
+    font-size:34px;color:var(--brand);line-height:1;
+  }
+  section:not(.paper) ol.ideas li::before{color:var(--brand-br);}
+  ol.ideas li b{display:block;font-family:var(--display);font-weight:600;font-size:30px;
+    color:var(--graphite);margin-bottom:6px;line-height:1.1;}
+  section:not(.paper) ol.ideas li b{color:var(--bone);}
+
+  .demo{background:var(--brand-light);border-left:4px solid var(--brand);padding:26px 30px;}
+  section:not(.paper) .demo{background:rgba(78,155,214,0.12);border-left-color:var(--brand-br);}
+  .demo .label{color:var(--brand);margin-bottom:14px;}
+  section:not(.paper) .demo .label{color:var(--brand-br);}
+  .demo a.url{
+    display:block;font-family:var(--mono);font-size:22px;color:var(--brand-dark);
+    text-decoration:underline;text-underline-offset:5px;margin-bottom:22px;overflow-wrap:anywhere;
+  }
+  section:not(.paper) .demo a.url{color:var(--bone);}
+  .demo ol.steps li{font-size:22px;padding-bottom:12px;}
+  .demo .observa{
+    margin:16px 0 0;padding-top:16px;border-top:1px solid var(--rule-l);
+    font-size:22px;line-height:1.4;color:var(--graphite-2);
+  }
+  section:not(.paper) .demo .observa{color:var(--bone-2);border-top-color:var(--rule-d);}
+  .demo .observa b{
+    display:block;color:var(--brand);font-size:20px;text-transform:uppercase;
+    letter-spacing:0.26em;margin-bottom:10px;font-weight:600;font-family:var(--sans);
+  }
+  section:not(.paper) .demo .observa b{color:var(--brand-br);}
+
+  /* ===== Ejercicios ===== */
+  .ex-header{display:grid;grid-template-columns:170px 1fr;gap:40px;margin:36px 0 28px;align-items:end;}
+  .ex-num-label{font-size:22px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted-l);margin-bottom:10px;font-weight:500;}
+  .ex-num{font-family:var(--display);font-size:150px;line-height:0.8;letter-spacing:-0.02em;color:var(--brand);font-weight:700;}
+  section:not(.paper) .ex-num{color:var(--brand-br);}
+  .ex-title{
+    font-family:var(--display);font-size:58px;line-height:1.08;
+    letter-spacing:0;font-weight:600;color:var(--graphite);margin:0;
+  }
+  section:not(.paper) .ex-title{color:var(--bone);}
+  .ex-tool{margin-top:12px;font-size:23px;color:var(--muted-l);font-weight:400;}
+  section:not(.paper) .ex-tool{color:var(--bone-2);}
+  .ex-tool b{color:var(--brand);text-transform:uppercase;letter-spacing:0.18em;font-size:22px;margin-right:14px;font-weight:600;}
+  section:not(.paper) .ex-tool b{color:var(--brand-br);}
+
+  .case-header{margin:28px 0 20px;align-items:center;}
+  .case-header .ex-num{font-size:124px;}
+  .case-header .ex-title{font-size:54px;line-height:1.04;}
+  .case-meta{display:flex;gap:24px;align-items:center;margin-top:13px;font-size:18px;color:var(--muted-l);min-width:0;}
+  .case-meta > span{display:flex;align-items:center;gap:8px;min-width:0;}
+  .case-meta .input{flex:1;}
+  .case-meta b{color:var(--brand);font-size:16px;letter-spacing:.16em;font-weight:650;white-space:nowrap;}
+  .case-meta code{font-size:16px;overflow-wrap:anywhere;}
+  section:not(.paper) .case-meta{color:var(--bone-2);}
+  section:not(.paper) .case-meta b{color:var(--brand-br);}
+
+  .case-body{gap:36px;}
+  .case-body .col{gap:17px;}
+  .case-body .concept-block .label{margin-bottom:9px;}
+  .situation{font-family:var(--display);font-size:28px;line-height:1.16;color:var(--graphite);font-weight:600;}
+  .situation b{color:var(--brand);font-weight:650;}
+  section:not(.paper) .situation{color:var(--bone);}
+  section:not(.paper) .situation b{color:var(--brand-br);}
+  .decision{padding-top:10px;border-top:1px solid var(--rule-l);font-size:20px;line-height:1.35;color:var(--graphite-2);}
+  .decision .label{display:block;margin-bottom:7px;font-size:17px;}
+  .decision b{color:var(--graphite);font-weight:650;}
+  section:not(.paper) .decision{border-color:var(--rule-d);color:var(--bone-2);}
+  section:not(.paper) .decision b{color:var(--bone);}
+  .case-body .steps-block .label{margin-bottom:11px;}
+  .case-body ol.steps li{font-size:20px;line-height:1.32;padding:0 0 9px 45px;}
+  .case-body ol.steps li::before{font-size:19px;}
+  .case-body .prompt-card{font-size:19px;line-height:1.34;padding:20px 24px;}
+  .case-body .prompt-card .label{font-size:18px;margin-bottom:13px;}
+  .case-body .prompt-card.dense{font-size:17.5px;line-height:1.3;padding:18px 22px;}
+  .case-body .prompt-card.denser{font-size:16px;line-height:1.26;padding:16px 20px;}
+  .case-body .result{font-size:19px;line-height:1.32;padding-top:11px;}
+  .case-body .result > b{font-size:18px;margin-bottom:7px;}
+  .criterion{margin-top:9px;padding-top:8px;border-top:1px solid var(--rule-l);}
+  .criterion span{color:var(--brand);font-size:16px;letter-spacing:.18em;font-weight:650;margin-right:10px;}
+  section:not(.paper) .criterion{border-color:var(--rule-d);}
+  section:not(.paper) .criterion span{color:var(--brand-br);}
+
+  .ex-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .col{display:flex;flex-direction:column;gap:24px;}
+
+  .concept-block .label{margin-bottom:16px;display:block;}
+  .concept{font-family:var(--display);font-size:33px;line-height:1.16;color:var(--graphite);font-weight:600;}
+  section:not(.paper) .concept{color:var(--bone);}
+  .concept b{color:var(--brand);font-weight:600;}
+  section:not(.paper) .concept b{color:var(--brand-br);}
+
+  .steps-block .label{margin-bottom:18px;display:block;}
+  ol.steps{margin:0;padding:0;list-style:none;counter-reset:step;}
+  ol.steps li{
+    counter-increment:step;padding:0 0 14px 52px;position:relative;
+    font-size:23px;line-height:1.4;color:var(--graphite-2);
+  }
+  section:not(.paper) ol.steps li{color:var(--bone-2);}
+  ol.steps li::before{
+    content:counter(step,decimal-leading-zero);
+    position:absolute;left:0;top:0;
+    font-family:var(--mono);font-weight:500;font-size:22px;
+    color:var(--brand);letter-spacing:0.06em;
+  }
+  section:not(.paper) ol.steps li::before{color:var(--brand-br);}
+  ol.steps li:last-child{padding-bottom:0;}
+  ol.steps li b{color:var(--graphite);font-weight:700;}
+  section:not(.paper) ol.steps li b{color:var(--bone);}
+
+  /* Tarjeta de prompt */
+  .prompt-card{
+    background:var(--ink);color:var(--bone);border-radius:0;
+    padding:28px 32px;font-family:var(--mono);font-size:22px;line-height:1.45;
+    position:relative;border-left:4px solid var(--brand-br);
+  }
+  /* Densidad segun cuanto texto lleva el prompt: el slide nunca debe desbordar. */
+  .prompt-card.dense{font-size:20px;line-height:1.36;padding:24px 28px;}
+  .prompt-card.dense .label{margin-bottom:18px;}
+  .prompt-card.denser{font-size:18px;line-height:1.32;padding:20px 24px;}
+  .prompt-card.denser .label{margin-bottom:14px;font-size:20px;}
+  .prompt-card.dense p{margin-bottom:9px;}
+  .prompt-card.denser p{margin-bottom:8px;}
+  section:not(.paper) .prompt-card{background:var(--paper);color:var(--graphite);border-left:4px solid var(--brand);}
+  .prompt-card .label{
+    color:var(--brand-br);margin-bottom:22px;display:block;
+    font-family:var(--sans);font-size:22px;letter-spacing:0.28em;
+  }
+  section:not(.paper) .prompt-card .label{color:var(--brand);}
+  .prompt-card p{margin:0 0 10px;}
+  .prompt-card p:last-child{margin-bottom:0;}
+  .prompt-card .kw{color:var(--brand-br);font-weight:500;}
+  section:not(.paper) .prompt-card .kw{color:var(--brand);}
+
+  /* Resultado esperado */
+  .result{padding:14px 0 0;border-top:1px solid var(--rule-l);font-size:22px;line-height:1.38;color:var(--graphite-2);}
+  section:not(.paper) .result{color:var(--bone-2);border-top-color:var(--rule-d);}
+  .result b{
+    color:var(--brand);display:block;font-size:22px;text-transform:uppercase;
+    letter-spacing:0.28em;margin-bottom:14px;font-weight:500;font-family:var(--sans);
+  }
+  section:not(.paper) .result b{color:var(--brand-br);}
+
+  /* Aviso de limite — honestidad sobre lo que la IA no hace */
+  .caveat{
+    margin-top:10px;border-left:4px solid var(--red);padding:10px 16px;
+    font-size:18.5px;line-height:1.36;color:var(--graphite-2);background:rgba(192,57,43,0.07);
+  }
+  section:not(.paper) .caveat{color:var(--bone-2);background:rgba(224,104,90,0.12);}
+  /* solo el primer <b> es el rotulo; los demas son enfasis dentro del texto */
+  .caveat > b:first-child{color:var(--red);text-transform:uppercase;letter-spacing:0.2em;font-size:17px;font-weight:600;display:block;margin-bottom:6px;}
+  .caveat b{color:var(--graphite);font-weight:600;}
+  section:not(.paper) .caveat > b:first-child{color:var(--red-br);}
+  section:not(.paper) .caveat b{color:var(--bone);}
+
+  /* ===== Tres pasos / tarjetas ===== */
+  .howto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:64px;}
+  .howto-card{border-top:1px solid var(--rule-l);padding-top:32px;}
+  section:not(.paper) .howto-card{border-top-color:var(--rule-d);}
+  .howto-card .n{font-family:var(--display);font-size:104px;color:var(--brand);line-height:0.88;font-weight:700;margin-bottom:32px;letter-spacing:-0.02em;}
+  section:not(.paper) .howto-card .n{color:var(--brand-br);}
+  .howto-card h3{font-family:var(--display);font-size:40px;font-weight:600;margin:0 0 18px;line-height:1.12;}
+  .howto-card p{font-size:23px;line-height:1.45;color:var(--graphite-2);margin:0;}
+  section:not(.paper) .howto-card p{color:var(--bone-2);}
+
+  /* ===== Diagnostico / cifras ===== */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;margin-top:64px;}
+  .stat .label{display:block;margin-bottom:16px;}
+  .stat b{
+    font-family:var(--display);font-size:136px;line-height:0.95;color:var(--brand-br);
+    font-weight:700;letter-spacing:-0.02em;margin-bottom:24px;
+    display:flex;align-items:flex-end;min-height:130px;
+  }
+  /* Valores que son palabras y no cifras: caben en su columna sin invadir la vecina. */
+  .stat b.word{font-size:72px;line-height:1.06;letter-spacing:-0.01em;}
+  section.paper .stat b{color:var(--brand);}
+  .stat p{font-size:22px;line-height:1.4;color:var(--bone-2);margin:0;}
+  section.paper .stat p{color:var(--graphite-2);}
+
+  /* ===== Dos columnas contrapuestas ===== */
+  .contraste{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:26px;}
+  .cc{padding-top:18px;border-top:3px solid var(--brand);}
+  .cc.no{border-top-color:var(--red);}
+  .cc .label{display:block;margin-bottom:12px;color:var(--brand);}
+  .cc.no .label{color:var(--red);}
+  section:not(.paper) .cc .label{color:var(--brand-br);}
+  section:not(.paper) .cc.no .label{color:var(--red-br);}
+  .cc h3{font-family:var(--display);font-size:44px;font-weight:600;line-height:1.06;margin:0 0 16px;color:var(--graphite);}
+  section:not(.paper) .cc h3{color:var(--bone);}
+  .cc ul{margin:0;padding:0;list-style:none;}
+  .cc li{font-size:23px;line-height:1.42;color:var(--graphite-2);padding:9px 0 9px 26px;position:relative;}
+  section:not(.paper) .cc li{color:var(--bone-2);}
+  .cc li::before{content:'';position:absolute;left:0;top:19px;width:12px;height:2px;background:var(--brand);}
+  .cc.no li::before{background:var(--red);}
+  section:not(.paper) .cc li::before{background:var(--brand-br);}
+  section:not(.paper) .cc.no li::before{background:var(--red-br);}
+  .cc li b{color:var(--graphite);font-weight:600;}
+  section:not(.paper) .cc li b{color:var(--bone);}
+  .cc-cierre{
+    margin:28px 0 0;padding-top:18px;border-top:1px solid var(--rule-l);
+    font-size:25px;line-height:1.4;color:var(--graphite);max-width:1560px;
+  }
+  section:not(.paper) .cc-cierre{color:var(--bone);border-top-color:var(--rule-d);}
+  .cc-cierre b{color:var(--brand);font-weight:600;}
+  section:not(.paper) .cc-cierre b{color:var(--brand-br);}
+
+  /* ===== Rejilla de tarjetas (anexos) ===== */
+  .intro-cards{font-size:23px;line-height:1.45;color:var(--graphite-2);max-width:1560px;margin:16px 0 0;}
+  section:not(.paper) .intro-cards{color:var(--bone-2);}
+  .cards-grid{display:grid;gap:26px 40px;margin-top:26px;}
+  .tc{border-top:2px solid var(--brand);padding-top:16px;}
+  section:not(.paper) .tc{border-top-color:var(--brand-br);}
+  .tc h3{font-family:var(--display);font-size:31px;font-weight:600;margin:0 0 8px;line-height:1.08;color:var(--graphite);}
+  section:not(.paper) .tc h3{color:var(--bone);}
+  .tc .cuando{font-size:20px;line-height:1.35;color:var(--graphite-2);margin:0 0 8px;}
+  section:not(.paper) .tc .cuando{color:var(--bone-2);}
+  .tc .ej{font-family:var(--mono);font-size:17.5px;line-height:1.35;color:var(--brand);margin:0;
+    background:var(--brand-light);padding:8px 10px;}
+  section:not(.paper) .tc .ej{color:var(--bone);background:rgba(78,155,214,0.14);}
+
+  /* ===== Gobernanza ===== */
+  .gov-grid{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+  .gov-item{border-top:2px solid var(--brand-br);padding-top:28px;}
+  section.paper .gov-item{border-top-color:var(--brand);}
+  .gov-item h3{font-family:var(--display);font-size:36px;font-weight:600;margin:0 0 18px;line-height:1.16;}
+  .gov-item p{font-size:22px;color:var(--bone-2);line-height:1.5;margin:0;}
+  section.paper .gov-item p{color:var(--graphite-2);}
+
+  /* ===== Cierre ===== */
+  .closing h1{
+    font-family:var(--display);font-size:190px;line-height:0.98;letter-spacing:-0.01em;
+    font-weight:700;margin:0;color:var(--bone);
+  }
+  .closing h1 .acc{color:var(--brand-br);}
+  .closing .layout{margin:auto 0;}
+  .closing .next{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;border-top:1px solid var(--rule-d);padding-top:36px;}
+  .closing .next p{font-size:23px;line-height:1.5;color:var(--bone-2);margin:0;}
+  .closing .next .lbl{color:var(--brand-br);font-size:22px;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:14px;font-weight:500;display:block;}
+
+  /* Los nombres de archivo son enlaces al material: se abre sin salir del deck. */
+  a.mat{text-decoration:none;border-bottom:1px solid currentColor;color:inherit;}
+  a.mat code{cursor:pointer;}
+  a.mat:hover code,a.mat:focus-visible code{background:rgba(28,92,146,0.22);}
+  section:not(.paper) a.mat:hover code,section:not(.paper) a.mat:focus-visible code{background:rgba(78,155,214,0.3);}
+  a.mat:focus-visible{outline:2px solid var(--brand-br);outline-offset:2px;}
+  a.mat::after{content:' \2197';font-family:var(--sans);font-size:0.78em;opacity:.75;}
+  ul.files a.mat::after{content:none;}
+
+  code{font-family:var(--mono);font-size:0.94em;background:rgba(28,92,146,0.12);padding:1px 8px;border-radius:2px;color:var(--brand);}
+  section:not(.paper) code{background:rgba(78,155,214,0.18);color:var(--brand-br);}
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+<!-- ===== 01 · Portada ===== -->
+<section class="cover" data-label="01 Portada">
+  <div class="frame">
+    <div class="top-rail"><span>Sesión 3 · Edición 2026</span><span></span></div>
+    <img class="marca" src="assets/logo-casabat.jpg" alt="La Casa de las Baterías" width="1080" height="1080" />
+    <div style="margin:auto 0;">
+      <div class="eyebrow">CASA DE LAS BATERÍAS · ADMINISTRACIÓN Y GERENCIA COMERCIAL</div>
+      <h1 style="font-size:180px;">IA PARA ADMINISTRACIÓN<br/>Y <span class="acc">GERENCIA COMERCIAL</span>.</h1>
+      <p class="sub">Sesión 3 de 3 · 16 laboratorios sobre las cuatro cosas que pidieron en el formulario previo.</p>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">01</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 · De dónde sale ===== -->
+<section data-label="02 De dónde sale">
+  <div class="frame">
+    <div class="top-rail"><span>PUNTO DE PARTIDA</span><span>02 / 33</span></div>
+    <div style="margin:auto 0;">
+      <h1 class="display" style="font-size:80px;max-width:1560px;">Esta sesión no la armamos nosotros.<br/>La armaron <span style="color:var(--brand-br);">tus respuestas</span>.</h1>
+      <p style="font-size:28px;line-height:1.48;color:var(--bone-2);max-width:1480px;margin-top:34px;">Cinco personas contestaron el formulario. Nadie empieza de cero: todos usan IA ya. Pero las cuatro cosas que pidieron siguen pendientes. <b style="color:var(--bone);">Hoy las resolvemos, en ese orden.</b></p>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">02</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03 · Lo que pidieron ===== -->
+<section class="paper" data-label="03 Lo que pidieron">
+  <div class="frame">
+    <div class="top-rail"><span>LAS CUATRO COSAS QUE PIDIERON</span><span>03 / 33</span></div>
+    <h1 class="display" style="margin-top:24px;font-size:76px;">Cuatro pedidos.<br/>Cuatro bloques.</h1>
+    <p class="intro-cards">Entre comillas, lo que escribieron en el formulario. Debajo, dónde se resuelve hoy.</p>
+    <div class="cards-grid" style="grid-template-columns:repeat(4,1fr);">
+      <div class="tc">
+        <h3>«Qué prompts usar»</h3>
+        <p class="cuando">Tres de cinco lo pidieron. Uno dijo: «tengo que corregir demasiado lo que genera».</p>
+        <p class="ej">Bloque 1. Sales con seis pedidos tuyos, guardados y probados.</p>
+      </div>
+      <div class="tc">
+        <h3>«Que no se vea que es IA»</h3>
+        <p class="cuando">La misma persona lo dijo dos veces. También: «que no salga genérica».</p>
+        <p class="ej">Bloque 2. Sacamos tu forma de escribir de tus propios correos.</p>
+      </div>
+      <div class="tc">
+        <h3>«Ejemplo de dashboard o gráficos»</h3>
+        <p class="cuando">Tres de cinco. Otro pidió «mejorar la presentación de indicadores en menos tiempo».</p>
+        <p class="ej">Bloque 3. Un tablero de verdad, en la herramienta que tengas.</p>
+      </div>
+      <div class="tc">
+        <h3>«Nomenclatura y códigos»</h3>
+        <p class="cuando">El pedido más concreto: revisar nombres, códigos y anexos de procedimientos.</p>
+        <p class="ej">Bloque 4. Cuarenta y un procedimientos auditados en una pasada.</p>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">03</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 04 · Agenda ===== -->
+<section class="paper" data-label="04 Agenda">
+  <div class="frame">
+    <div class="top-rail"><span>AGENDA DE LA SESIÓN</span><span>4 BLOQUES <span class="sep"></span> 16 LABORATORIOS <span class="sep"></span> RITMO DEL FACILITADOR</span></div>
+    <h1 class="display" style="margin-top:52px;font-size:96px;">De «no sé qué pedirle»<br/>a «esto ya lo tengo listo».</h1>
+    <div class="agenda-grid">
+      <div class="ag-block">
+        <div class="bnum">01 · BLOQUE 1</div>
+        <h3>Pedir bien la primera vez</h3>
+        <ul>
+          <li>El mismo pedido, dos resultados</li>
+          <li>Las seis partes</li>
+          <li>Tu biblioteca de pedidos</li>
+          <li>Tu caso</li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">02 · BLOQUE 2</div>
+        <h3>Que suene a ti</h3>
+        <ul>
+          <li>Tu forma de escribir</li>
+          <li>Las frases que delatan</li>
+          <li>Cambiar una cosa sin tocar el resto</li>
+          <li>Tu caso</li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">03 · BLOQUE 3</div>
+        <h3>Tus cifras en una pantalla</h3>
+        <ul>
+          <li>Las cinco cifras que miras</li>
+          <li>Tu tablero del lunes</li>
+          <li>El gráfico que se entiende solo</li>
+          <li>Tu caso</li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">04 · BLOQUE 4</div>
+        <h3>Procedimientos sin dolor</h3>
+        <ul>
+          <li>Cuarenta y un nombres</li>
+          <li>El anexo fantasma</li>
+          <li>Veinte días</li>
+          <li>Tu caso</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">04</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 · Cómo se trabaja ===== -->
+<section class="paper" data-label="05 Cómo se trabaja">
+  <div class="frame">
+    <div class="top-rail"><span>REGLAS DE LA SESIÓN</span><span>05 / 33</span></div>
+    <h1 class="display" style="margin-top:52px;font-size:88px;max-width:1560px;">Usa la herramienta que ya tienes.<br/>Sal con algo hecho.</h1>
+    <div class="howto-grid">
+      <div class="howto-card"><div class="n">01</div><h3>Da igual cuál uses</h3><p>Gemini, ChatGPT o Claude. Los tableros y los gráficos traen receta para cada una. Sin acceso, trabaja en pareja.</p></div>
+      <div class="howto-card"><div class="n">02</div><h3>Trae tu caso, aunque sea a medias</h3><p>Cada bloque cierra con tu trabajo. Si no traes nada, usa el archivo del curso. Quítale nombres y teléfonos de clientes antes de subirlo.</p></div>
+      <div class="howto-card"><div class="n">03</div><h3>Lo que salga lo revisas tú</h3><p>La IA no aprueba una cotización ni publica un procedimiento. Eso lleva tu firma.</p></div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">05</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 06 · Los materiales ===== -->
+<section class="paper" data-label="06 Los materiales">
+  <div class="frame">
+    <div class="top-rail"><span>ARCHIVOS DE LA SESIÓN</span><span>06 / 33</span></div>
+    <h1 class="display" style="margin-top:44px;font-size:88px;">Dos archivos nuevos.<br/><span style="color:var(--brand);">Casos inventados de CasaBat</span>.</h1>
+    <p style="font-size:24px;line-height:1.45;color:var(--graphite-2);max-width:1500px;margin:20px 0 0;">Están todos en la página del taller. No hay que preparar nada antes de empezar.</p>
+    <div class="agenda-grid" style="margin-top:28px;">
+      <div class="ag-block">
+        <div class="bnum">NUEVOS EN ESTA SESIÓN</div>
+        <ul class="files">
+          <li><a class="mat" href="materiales/15_prompts_que_fallaron.docx" target="_blank" rel="noopener"><code>15_prompts_que_fallaron.docx</code></a><span>Ocho pedidos flojos y su versión arreglada</span></li>
+          <li><a class="mat" href="materiales/16_maestro_procedimientos.xlsx" target="_blank" rel="noopener"><code>16_maestro_procedimientos.xlsx</code></a><span>Cuarenta y un procedimientos con nombres y anexos mal</span></li>
+          <li><a class="mat" href="materiales/09_reglas_de_nomenclatura.docx" target="_blank" rel="noopener"><code>09_reglas_de_nomenclatura.docx</code></a><span>La regla contra la que se revisan los nombres</span></li>
+          <li><a class="mat" href="materiales/04_ventas_sucursales_2026.xlsx" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.xlsx</code></a><span>Ventas del semestre en cuatro países</span></li>
+        </ul>
+      </div>
+      <div class="ag-block">
+        <div class="bnum">YA LOS CONOCES</div>
+        <ul class="files">
+          <li><a class="mat" href="materiales/06_correos_de_referencia.docx" target="_blank" rel="noopener"><code>06_correos_de_referencia.docx</code></a><span>Tres correos para sacar tu forma de escribir</span></li>
+          <li><a class="mat" href="materiales/00_contexto_marca_casabat.docx" target="_blank" rel="noopener"><code>00_contexto_marca_casabat.docx</code></a><span>Tono de CasaBat y lo que no se promete</span></li>
+          <li><a class="mat" href="materiales/05_correos_pendientes.xlsx" target="_blank" rel="noopener"><code>05_correos_pendientes.xlsx</code></a><span>Veinte correos, uno de garantía difícil</span></li>
+          <li><a class="mat" href="materiales/03_politica_garantia.docx" target="_blank" rel="noopener"><code>03_politica_garantia.docx</code></a><span>Qué cubre la garantía y qué no</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">06</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07 · Bloque 1 ===== -->
+<section class="section-div" data-label="07 Bloque 1">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 1 DE 4</span><span>4 LABORATORIOS</span></div>
+    <div class="layout">
+      <div class="block-no">01</div>
+      <div><h1>Pedir bien<br/>la primera vez.</h1></div>
+      <div class="meta">
+        <div><b>Herramientas</b>Gemini, ChatGPT o Claude · tu tarea más repetida.</div>
+        <div><b>Objetivo</b>Dejar de corregir tres veces lo que podía salir bien de una.</div>
+        <div><b>Te llevas</b>Seis pedidos tuyos, escritos, probados y guardados donde los encuentres.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">07</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 08 · Laboratorio 1 ===== -->
+<section class="paper" data-label="08 Laboratorio 1">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> PEDIR BIEN LA PRIMERA VEZ</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">01</div>
+      </div>
+      <div>
+        <h2 class="ex-title">El mismo pedido, dos resultados muy distintos.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Jefatura de Gerencia Comercial</span>
+          <span class="input"><b>ENTRADA</b><a class="mat" href="materiales/15_prompts_que_fallaron.docx" target="_blank" rel="noopener"><code>15_prompts_que_fallaron.docx</code></a></span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Alguien pidió «hazme un correo para el cliente sobre la cotización». Volvió un correo de seis párrafos, sin número de cotización y sin monto.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué le faltaba al pedido. No era cortesía: eran datos.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Abre el caso 1 del archivo y lee el pedido flojo.</li>
+            <li>Pídeselo tal cual a tu herramienta y mira lo que vuelve.</li>
+            <li>Ahora pega el pedido arreglado y compara los dos resultados.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Escribe un correo de la jefatura comercial al contacto de una flota.</p>
+          <p>La cotización 9011 por 4.320 dólares venció el viernes. Necesito que confirme si todavía la quiere con el precio nuevo.</p>
+          <p>Tres párrafos cortos, cercano y directo. Cierra pidiendo respuesta esta semana. No prometas descuentos ni plazos de garantía.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Los dos correos, uno al lado del otro, y la lista de lo que cambió.
+          <div class="criterion"><span>CRITERIO</span>Puedes señalar las cuatro cosas que el segundo pedido dice y el primero no.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">08</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 09 · Laboratorio 2 ===== -->
+<section class="paper" data-label="09 Laboratorio 2">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> PEDIR BIEN LA PRIMERA VEZ</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">02</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Las seis partes que le faltan a casi todo pedido.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Analista de Administración</span>
+          <span class="input"><b>ENTRADA</b>tu tarea más repetida de la semana</span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Cuando el resultado sale flojo, casi siempre falta una de seis cosas. La más olvidada es la última: qué hacer cuando un dato no está.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Cuál de las seis le falta a tu pedido de siempre.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Escribe tu pedido habitual tal como lo escribes hoy.</li>
+            <li>Marca cuáles de las seis partes le faltan.</li>
+            <li>Reescríbelo con las que falten y pruébalo.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Quién habla y a quién · el dato concreto · qué tiene que pasar · la forma · lo que no se toca · qué hacer si falta un dato.</p>
+          <p>Revisa mi pedido con esa lista de seis. Dime cuáles le faltan y escríbelo otra vez con todas. No cambies lo que ya estaba bien.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Tu pedido de siempre, reescrito, con las seis partes visibles.
+          <div class="criterion"><span>CRITERIO</span>El resultado sale usable en el primer intento, sin tener que corregirlo.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">09</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 · Laboratorio 3 ===== -->
+<section class="paper" data-label="10 Laboratorio 3">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> PEDIR BIEN LA PRIMERA VEZ</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">03</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Guarda el pedido que funcionó, dale un nombre.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Coordinador de Administración</span>
+          <span class="input"><b>ENTRADA</b>los pedidos de los laboratorios 1 y 2</span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">El pedido bueno se pierde en el chat de ayer. La semana siguiente se vuelve a escribir desde cero, peor que la primera vez.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué seis pedidos tuyos vale la pena guardar para siempre.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Elige seis tareas que repites cada semana.</li>
+            <li>Guarda cada pedido en tu herramienta y ponle un nombre que entiendas.</li>
+            <li>Pásale uno a un compañero y que lo use sin preguntarte nada.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Ayúdame a ordenar mis pedidos guardados.</p>
+          <p>Para cada uno: un nombre corto, para qué sirve, qué le tengo que cambiar cada vez y qué archivo necesita.</p>
+          <p>Avísame si dos de mis seis piden lo mismo con otras palabras.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Seis pedidos guardados con nombre, y uno de ellos probado por otra persona.
+          <div class="criterion"><span>CRITERIO</span>Tu compañero lo usa y obtiene lo mismo que tú, sin que le expliques.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">10</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11 · Laboratorio 4 ===== -->
+<section class="paper" data-label="11 Laboratorio 4">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 01 <span class="sep"></span> PEDIR BIEN LA PRIMERA VEZ</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">04</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Tu caso: el pedido del lunes por la mañana.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Cada participante, con su propio trabajo</span>
+          <span class="input"><b>ENTRADA</b>la primera tarea de tu lunes</span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">El lunes tienes una tarea que vas a hacer igual que siempre. Hoy la dejas resuelta antes de que llegue.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Si el pedido sale bien sin que tengas que arreglarlo.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Escribe la tarea concreta del lunes, con su archivo si lo tiene.</li>
+            <li>Armá el pedido con las seis partes y pruébalo aquí.</li>
+            <li>Guárdalo con nombre y anota qué le cambiarás cada semana.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi tarea del lunes es [descríbela]. El archivo que uso es [cuál].</p>
+          <p>Ayúdame a escribir el pedido con las seis partes. Después dime qué parte queda débil y por qué.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Un pedido guardado, probado y listo para el lunes.
+          <div class="criterion"><span>CRITERIO</span>Lo usas el lunes sin volver a escribirlo y sin corregir el resultado.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">11</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12 · Bloque 2 ===== -->
+<section class="section-div" data-label="12 Bloque 2">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 2 DE 4</span><span>4 LABORATORIOS</span></div>
+    <div class="layout">
+      <div class="block-no">02</div>
+      <div><h1>Que suene a ti,<br/>no a robot.</h1></div>
+      <div class="meta">
+        <div><b>Herramientas</b>Gemini, ChatGPT o Claude · tres correos tuyos · el tono de CasaBat.</div>
+        <div><b>Objetivo</b>Que lo que escribas con IA se parezca a lo que escribes tú.</div>
+        <div><b>Te llevas</b>Tu ficha de voz, la lista de frases prohibidas y un correo difícil resuelto.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">12</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13 · Laboratorio 5 ===== -->
+<section class="paper" data-label="13 Laboratorio 5">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE SUENE A TI</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">05</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Tu forma de escribir ya existe. Hay que sacarla.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Jefatura de Administración</span>
+          <span class="input"><b>ENTRADA</b><a class="mat" href="materiales/06_correos_de_referencia.docx" target="_blank" rel="noopener"><code>06_correos_de_referencia.docx</code></a> o tres correos tuyos</span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Pedirle «que no suene a IA» no sirve: es una queja, no una instrucción. Lo que funciona es darle tres correos tuyos y pedirle el patrón.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Cómo escribes tú: cómo arrancas, qué largo tienen tus frases, cómo cierras.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Pega tres correos tuyos, o los tres del archivo.</li>
+            <li>Pide una ficha con tu forma de arrancar, de explicar y de cerrar.</li>
+            <li>Corrige la ficha donde no te reconozcas.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Te pego tres correos míos. No los califiques.</p>
+          <p>Dime cómo arranco, qué largo tienen mis frases, si trato de tú o de usted, cómo doy una mala noticia y cómo cierro.</p>
+          <p>Hazme una ficha de media página que pueda pegarte la próxima vez.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Una ficha de media página con tu forma de escribir.
+          <div class="criterion"><span>CRITERIO</span>Le pegas la ficha a un correo nuevo y te reconoces en el resultado.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">13</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14 · Laboratorio 6 ===== -->
+<section class="paper" data-label="14 Laboratorio 6">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE SUENE A TI</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">06</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Las frases que delatan a la IA en tres segundos.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Analista de Administración</span>
+          <span class="input"><b>ENTRADA</b><a class="mat" href="materiales/00_contexto_marca_casabat.docx" target="_blank" rel="noopener"><code>00_contexto_marca_casabat.docx</code></a></span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Hay frases que nadie de CasaBat usa al hablar. «Esperamos que se encuentre muy bien». «No dude en contactarnos». «La mejor calidad del mercado».</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué frases salen de tu lista negra y cuáles son promesas que no puedes hacer.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Junta diez frases de relleno que veas en los resultados.</li>
+            <li>Busca en el archivo de marca qué promesas están prohibidas.</li>
+            <li>Arma una lista y pégasela a la herramienta como regla fija.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Esta es mi lista de frases que no quiero ver nunca: [pégala].</p>
+          <p>Revisa este correo y quítalas todas sin cambiar lo que dice. Marca en negrita lo que tocaste.</p>
+          <p>Si encuentras una promesa de precio, de plazo o de garantía que el texto no puede sostener, señálala.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Tu lista negra y el correo limpio, con los cambios marcados.
+          <div class="criterion"><span>CRITERIO</span>El correo ya no tiene relleno y no promete nada que CasaBat no pueda cumplir.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">14</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 15 · Laboratorio 7 ===== -->
+<section class="paper" data-label="15 Laboratorio 7">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE SUENE A TI</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">07</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Cambiar una cosa sin que te reescriba todo.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Jefatura de Gerencia Comercial</span>
+          <span class="input"><b>ENTRADA</b>el correo del laboratorio 6</span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Pides un ajuste pequeño y vuelve el texto entero distinto. Se pierden datos que estaban bien y toca comparar línea por línea.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Cómo pedir un cambio chico y que el resto quede intacto.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Toma un texto que ya casi te sirve.</li>
+            <li>Pide solo dos cambios y di qué no se toca.</li>
+            <li>Compara con el anterior y comprueba que nada más se movió.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Este correo ya dice lo que quiero. Cámbiame solo dos cosas.</p>
+          <p>El primer párrafo es muy largo: pártelo en dos. El cierre suena duro: suavízalo.</p>
+          <p>No toques el resto, ni el orden, ni los montos. Devuélvemelo completo y marca en negrita lo que cambiaste.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          El texto con dos cambios y todo lo demás igual.
+          <div class="criterion"><span>CRITERIO</span>Comparas las dos versiones y solo cambió lo que pediste.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">15</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 16 · Laboratorio 8 ===== -->
+<section class="paper" data-label="16 Laboratorio 8">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 02 <span class="sep"></span> QUE SUENE A TI</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">08</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Tu caso: el correo que llevas días sin escribir.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Cada participante, con su propio trabajo</span>
+          <span class="input"><b>ENTRADA</b>un correo difícil real, o el de garantía de <a class="mat" href="materiales/05_correos_pendientes.xlsx" target="_blank" rel="noopener"><code>05_correos_pendientes.xlsx</code></a></span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Hay un correo pendiente porque cuesta escribirlo. Un cliente que insiste con una batería de moto de ocho meses. Un proveedor que no entregó.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué le dices, qué no le prometes y con qué tono.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Elige el correo difícil y escribe en una línea qué quieres lograr.</li>
+            <li>Pega tu ficha de voz y tu lista negra del bloque.</li>
+            <li>Pide el correo y revísalo contra la política de garantía.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">APLICACIÓN INDIVIDUAL</span> · Tengo que escribir a [quién] sobre [qué]. Quiero lograr [qué].</p>
+          <p>Usa mi ficha de voz y mi lista negra, que te pego abajo. Tres párrafos.</p>
+          <p>Si la respuesta depende de algo que no te di, pregúntame antes de escribir.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          El correo difícil, listo para enviar, con tu voz.
+          <div class="criterion"><span>CRITERIO</span>Lo lees en voz alta y suena a ti; no promete nada que la política no cubra.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">16</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 17 · Bloque 3 ===== -->
+<section class="section-div" data-label="17 Bloque 3">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 3 DE 4</span><span>4 LABORATORIOS</span></div>
+    <div class="layout">
+      <div class="block-no">03</div>
+      <div><h1>Tus cifras en<br/>una pantalla.</h1></div>
+      <div class="meta">
+        <div><b>Herramientas</b>Una receta para Gemini, una para ChatGPT y una para Claude.</div>
+        <div><b>Objetivo</b>Un tablero que sirva para la reunión del lunes, no una galería de gráficos.</div>
+        <div><b>Te llevas</b>Tu tablero, un gráfico que se explica solo y la receta de tu herramienta.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">17</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 18 · Laboratorio 9 ===== -->
+<section class="paper" data-label="18 Laboratorio 9">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> TUS CIFRAS EN UNA PANTALLA</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">09</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Antes de dibujar nada: ¿qué cinco cifras miras?</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Gerencia Comercial</span>
+          <span class="input"><b>ENTRADA</b><a class="mat" href="materiales/04_ventas_sucursales_2026.xlsx" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.xlsx</code></a></span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Pedir «hazme un dashboard» devuelve catorce gráficos, dos tortas de nueve pedazos y ningún total. Bonito en la pantalla, inservible en la reunión.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué cinco cifras abres primero el lunes. Esas son el tablero; el resto estorba.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Escribe las cinco cifras que de verdad miras.</li>
+            <li>Para cada una, di de qué columna del archivo sale.</li>
+            <li>Pide la lista de los problemas del archivo antes de calcular.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Estas son las cinco cifras que necesito: [escríbelas].</p>
+          <p>Antes de calcular, dime qué problemas tiene el archivo: categorías escritas de varias formas, fechas en dos formatos, celdas vacías, números raros.</p>
+          <p>Después dame cada cifra con la columna de donde sale. No agregues cifras que no te pedí.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Las cinco cifras, de dónde sale cada una y la lista de problemas del archivo.
+          <div class="criterion"><span>CRITERIO</span>Las cinco caben en una pantalla y cada una se puede rastrear a una columna.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">18</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 19 · Laboratorio 10 ===== -->
+<section class="paper" data-label="19 Laboratorio 10">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> TUS CIFRAS EN UNA PANTALLA</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">10</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Tu tablero para la reunión del lunes.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Gerencia Comercial</span>
+          <span class="input"><b>ENTRADA</b><a class="mat" href="materiales/04_ventas_sucursales_2026.xlsx" target="_blank" rel="noopener"><code>04_ventas_sucursales_2026.xlsx</code></a></span>
+          <span class="case-tool"><b>IA</b>elige tu receta: Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Hay que llevar a la reunión el semestre de cuatro países. Cuatro cifras arriba, un gráfico debajo y un filtro por país. Nada más.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué va arriba, qué va abajo y qué se queda fuera.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Decide las cuatro cifras de arriba y el gráfico de abajo.</li>
+            <li>Abre la receta de tu herramienta en los tres slides que siguen.</li>
+            <li>Haz el tablero y filtra por Panamá para comprobarlo.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card dense">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Hazme un tablero de una pantalla con este archivo de ventas.</p>
+          <p>Arriba cuatro cifras: ingreso del semestre, unidades, devoluciones y la sucursal que más cayó. Debajo, barras de ingreso por línea de producto, de mayor a menor.</p>
+          <p>Que se pueda filtrar por país. Nada más: ni tortas, ni cifras que no te pedí.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Un tablero de una pantalla que se filtra por país.
+          <div class="criterion"><span>CRITERIO</span>Cambias el filtro a Guatemala y las cuatro cifras de arriba se mueven.</div>
+        </div>
+        <div class="caveat"><b>Límite</b>Las devoluciones vienen vacías en ocho filas. Decide si eso es cero o si es un dato que falta, y déjalo escrito en el tablero.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">19</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 20 · Receta tablero · Gemini ===== -->
+<section class="paper" data-label="20 Receta tablero · Gemini">
+  <div class="frame">
+    <div class="top-rail"><span>RECETA A <span class="sep"></span> GEMINI</span><span>20 / 33</span></div>
+    <h1 class="display" style="margin-top:24px;font-size:72px;">Tu tablero en Gemini.</h1>
+    <p class="intro-cards">Gemini trabaja dentro de la hoja de cálculo. El tablero queda en Sheets y se comparte como cualquier hoja.</p>
+    <div class="ex-body" style="margin-top:24px;">
+      <div class="col">
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+          <li>Sube el archivo a Drive y ábrelo con Hojas de cálculo.</li>
+          <li>Haz una copia de la hoja. Trabaja en la copia.</li>
+          <li>Abre Gemini con el botón de la esquina y pégale el pedido.</li>
+          <li>Pide una tabla dinámica, cuatro tarjetas de cifra y un gráfico de barras.</li>
+          <li>Añade un segmentador por país: es el filtro de Sheets.</li>
+          <li>Revisa que las cifras cuadren con la hoja original antes de compartir.</li>
+          </ol>
+        </div>
+        <div class="caveat"><b>Ojo</b>Si Gemini no aparece en tu hoja, puede ser la licencia de la cuenta. Hazlo en pareja y sigue con la receta de ChatGPT.</div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PEGA ESTO EN GEMINI</span>
+          <p>Trabaja sobre la copia de esta hoja, no sobre la original.</p>
+          <p>Hazme una tabla dinámica con ingreso, unidades y devoluciones por país y por línea de producto. Arriba, cuatro tarjetas con los totales del semestre.</p>
+          <p>Un gráfico de barras de ingreso por línea, de mayor a menor. Y un segmentador por país.</p>
+          <p>Las categorías vienen escritas de varias formas. Antes de sumar, dime cuáles crees que son la misma y espera mi visto bueno.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">20</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 21 · Receta tablero · ChatGPT ===== -->
+<section class="paper" data-label="21 Receta tablero · ChatGPT">
+  <div class="frame">
+    <div class="top-rail"><span>RECETA B <span class="sep"></span> CHATGPT</span><span>21 / 33</span></div>
+    <h1 class="display" style="margin-top:24px;font-size:72px;">Tu tablero en ChatGPT.</h1>
+    <p class="intro-cards">ChatGPT analiza el archivo y devuelve el tablero como imagen, como hoja descargable o como página web. Pide el formato que vas a usar.</p>
+    <div class="ex-body" style="margin-top:24px;">
+      <div class="col">
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+          <li>Arrastra el archivo al chat.</li>
+          <li>Pide primero el perfil de columnas y los problemas del archivo.</li>
+          <li>Después pide el tablero y di en qué formato lo quieres.</li>
+          <li>Para la reunión, pide una hoja de Excel con el tablero ya armado.</li>
+          <li>Si quieres filtrar en vivo, pide una página web de una sola pantalla.</li>
+          <li>Comprueba dos cifras a mano antes de llevarlo.</li>
+          </ol>
+        </div>
+        <div class="caveat"><b>Ojo</b>Si te devuelve una imagen, no sirve para la reunión: no se puede filtrar. Pide el Excel o la página web.</div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PEGA ESTO EN CHATGPT</span>
+          <p>Te subo las ventas del semestre de Casa de las Baterías.</p>
+          <p>Primero dime qué problemas tiene el archivo: categorías repetidas con otra escritura, fechas en dos formatos, celdas vacías, números imposibles. No corrijas nada todavía.</p>
+          <p>Cuando te dé el visto bueno, hazme un tablero de una pantalla: cuatro cifras arriba y barras de ingreso por línea debajo, de mayor a menor.</p>
+          <p>Dámelo como archivo de Excel con el filtro por país ya puesto.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">21</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 22 · Receta tablero · Claude ===== -->
+<section class="paper" data-label="22 Receta tablero · Claude">
+  <div class="frame">
+    <div class="top-rail"><span>RECETA C <span class="sep"></span> CLAUDE</span><span>22 / 33</span></div>
+    <h1 class="display" style="margin-top:24px;font-size:72px;">Tu tablero en Claude.</h1>
+    <p class="intro-cards">Claude devuelve el tablero como una página que se abre al lado del chat y se usa con el ratón. Es la vía más rápida para un tablero que se filtra en vivo.</p>
+    <div class="ex-body" style="margin-top:24px;">
+      <div class="col">
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+          <li>Sube el archivo al chat.</li>
+          <li>Pide el perfil de columnas y los problemas antes de nada.</li>
+          <li>Pide el tablero como una página de una sola pantalla.</li>
+          <li>Pruébalo ahí mismo: cambia el filtro de país y mira si se mueve.</li>
+          <li>Pide los cambios hablando; la página se actualiza sola.</li>
+          <li>Para compartirlo, publícalo y manda el enlace.</li>
+          </ol>
+        </div>
+        <div class="caveat"><b>Ojo</b>El tablero sale de los datos que subiste. Si cambias el archivo, hay que volver a pedirlo: no se actualiza solo.</div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PEGA ESTO EN CLAUDE</span>
+          <p>Te subo las ventas del semestre de Casa de las Baterías.</p>
+          <p>Antes de calcular, dime qué problemas tiene el archivo y espera mi respuesta.</p>
+          <p>Después hazme un tablero de una sola pantalla: cuatro cifras arriba, barras de ingreso por línea debajo y un filtro por país que funcione con el ratón.</p>
+          <p>Sin tortas. Sin cifras que no te pedí. Si una cifra sale de una columna con celdas vacías, dilo en el propio tablero.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">22</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 23 · Laboratorio 11 ===== -->
+<section class="paper" data-label="23 Laboratorio 11">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> TUS CIFRAS EN UNA PANTALLA</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">11</div>
+      </div>
+      <div>
+        <h2 class="ex-title">El gráfico que se entiende sin que lo expliques.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Gerencia Comercial</span>
+          <span class="input"><b>ENTRADA</b>las cifras del laboratorio 10</span>
+          <span class="case-tool"><b>IA</b>elige tu receta: Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">En el archivo, tres de seis líneas de producto hacen el 84 por ciento del ingreso. Eso se ve en un gráfico y se pierde en una tabla.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué gráfico cuenta esa historia y qué gráfico la esconde.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Escribe en una frase qué quieres que entienda quien lo vea.</li>
+            <li>Pide el gráfico más simple que diga eso.</li>
+            <li>Quita todo lo que no ayude: colores de más, leyendas repetidas, decimales.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Quiero que quien vea esto entienda una sola cosa: [escríbela].</p>
+          <p>Dame el gráfico más simple que lo muestre. Ordena de mayor a menor y pon el valor sobre cada barra.</p>
+          <p>Sin tortas, sin tres dimensiones, sin colores que no signifiquen nada. Si crees que otro tipo de gráfico lo dice mejor, propónmelo y explica por qué.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Un gráfico que se explica solo, con su título escrito por ti.
+          <div class="criterion"><span>CRITERIO</span>Alguien que no estuvo en la reunión lo mira y dice lo que querías que entendiera.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">23</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 24 · Receta gráfico · Gemini ===== -->
+<section class="paper" data-label="24 Receta gráfico · Gemini">
+  <div class="frame">
+    <div class="top-rail"><span>RECETA A <span class="sep"></span> GEMINI</span><span>24 / 33</span></div>
+    <h1 class="display" style="margin-top:24px;font-size:72px;">Tu gráfico en Gemini.</h1>
+    <p class="intro-cards">El gráfico nace dentro de la hoja. Se edita con los menús de Sheets cuando la IA no acierta con el detalle.</p>
+    <div class="ex-body" style="margin-top:24px;">
+      <div class="col">
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+          <li>Selecciona la columna de líneas y la de ingreso.</li>
+          <li>Pide el gráfico a Gemini desde la hoja.</li>
+          <li>Ordena de mayor a menor en la tabla, no en el gráfico.</li>
+          <li>Añade el valor sobre cada barra desde el menú del gráfico.</li>
+          <li>Escribe tú el título: la IA pone títulos genéricos.</li>
+          </ol>
+        </div>
+        <div class="caveat"><b>Ojo</b>Si ordena mal, revisa la tabla de origen: el gráfico copia el orden de las filas.</div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PEGA ESTO EN GEMINI</span>
+          <p>Con la tabla de ingreso por línea de producto, hazme un gráfico de barras horizontales.</p>
+          <p>De mayor a menor, con el valor en dólares sobre cada barra, sin decimales.</p>
+          <p>Un solo color, salvo las tres líneas que más venden: esas en el azul de la marca. Deja el título vacío, lo escribo yo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">24</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 25 · Receta gráfico · ChatGPT ===== -->
+<section class="paper" data-label="25 Receta gráfico · ChatGPT">
+  <div class="frame">
+    <div class="top-rail"><span>RECETA B <span class="sep"></span> CHATGPT</span><span>25 / 33</span></div>
+    <h1 class="display" style="margin-top:24px;font-size:72px;">Tu gráfico en ChatGPT.</h1>
+    <p class="intro-cards">ChatGPT dibuja el gráfico al analizar el archivo. Pídelo como imagen para pegar, o dentro de la hoja si lo vas a seguir editando.</p>
+    <div class="ex-body" style="margin-top:24px;">
+      <div class="col">
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+          <li>Pide el gráfico después de haber limpiado las categorías.</li>
+          <li>Di el tipo exacto: barras horizontales, ordenadas, con el valor encima.</li>
+          <li>Pide la imagen en buena resolución para la presentación.</li>
+          <li>Si lo vas a editar, pídelo dentro de un archivo de Excel.</li>
+          <li>Revisa que los nombres de las líneas no salgan cortados.</li>
+          </ol>
+        </div>
+        <div class="caveat"><b>Ojo</b>Si los nombres salen cortados, pide más margen a la izquierda o barras horizontales en vez de verticales.</div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PEGA ESTO EN CHATGPT</span>
+          <p>Con las categorías ya unificadas, hazme un gráfico de barras horizontales de ingreso por línea de producto.</p>
+          <p>De mayor a menor, el valor en dólares sobre cada barra y sin decimales. Un solo color, y las tres líneas que más venden en azul oscuro.</p>
+          <p>Dámelo como imagen grande y también dentro de un Excel, por si necesito moverle algo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">25</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 26 · Receta gráfico · Claude ===== -->
+<section class="paper" data-label="26 Receta gráfico · Claude">
+  <div class="frame">
+    <div class="top-rail"><span>RECETA C <span class="sep"></span> CLAUDE</span><span>26 / 33</span></div>
+    <h1 class="display" style="margin-top:24px;font-size:72px;">Tu gráfico en Claude.</h1>
+    <p class="intro-cards">Claude devuelve el gráfico dentro de una página que se abre al lado. Se puede pasar el ratón por encima y ver el dato de cada barra.</p>
+    <div class="ex-body" style="margin-top:24px;">
+      <div class="col">
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+          <li>Pide el gráfico dentro de una página, no como imagen.</li>
+          <li>Di el tipo, el orden y qué se destaca.</li>
+          <li>Pásale el ratón por encima para comprobar los valores.</li>
+          <li>Pide los ajustes hablando: «sube el contraste», «quita los decimales».</li>
+          <li>Descarga la imagen desde la página cuando te sirva.</li>
+          </ol>
+        </div>
+        <div class="caveat"><b>Ojo</b>Para la presentación necesitas la imagen: descárgala de la página. La página sola no entra en un archivo de diapositivas.</div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PEGA ESTO EN CLAUDE</span>
+          <p>Hazme una página con un gráfico de barras horizontales de ingreso por línea de producto.</p>
+          <p>De mayor a menor, valor en dólares sobre cada barra, sin decimales. Las tres líneas que más venden en azul oscuro, el resto en gris.</p>
+          <p>Que al pasar el ratón por una barra se vea el ingreso y las unidades. El título lo escribo yo: déjalo vacío.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">26</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 27 · Laboratorio 12 ===== -->
+<section class="paper" data-label="27 Laboratorio 12">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 03 <span class="sep"></span> TUS CIFRAS EN UNA PANTALLA</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">12</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Tu caso: el tablero de tu área.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Cada participante, con su propio trabajo</span>
+          <span class="input"><b>ENTRADA</b>un archivo tuyo sin datos de clientes, o el de ventas del curso</span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Cada área mira sus cifras: cobros, cierre de caja, inventario, cotizaciones del mes. Hoy sale el tablero de las tuyas.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué cinco cifras son las tuyas y quién más las va a mirar.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Escribe tus cinco cifras y de dónde sale cada una.</li>
+            <li>Usa la receta de tu herramienta para armarlo.</li>
+            <li>Muéstraselo a un compañero y que te diga qué no entiende.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">APLICACIÓN INDIVIDUAL</span> · Mis cinco cifras son [escríbelas] y salen de [qué archivo].</p>
+          <p>Hazme un tablero de una pantalla con esas cinco y un gráfico que las explique.</p>
+          <p>Dime también qué cifra no se puede calcular bien con lo que te di, y qué columna me falta.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Tu tablero, con tus cifras, probado por otra persona.
+          <div class="criterion"><span>CRITERIO</span>Tu compañero lo mira y entiende las cinco cifras sin que se las expliques.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">27</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 28 · Bloque 4 ===== -->
+<section class="section-div" data-label="28 Bloque 4">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 4 DE 4</span><span>4 LABORATORIOS</span></div>
+    <div class="layout">
+      <div class="block-no">04</div>
+      <div><h1>Procedimientos<br/>sin dolor.</h1></div>
+      <div class="meta">
+        <div><b>Herramientas</b>Gemini, ChatGPT o Claude · 41 procedimientos · la regla de nombres.</div>
+        <div><b>Objetivo</b>Hacer en una pasada el cruce de nombres, códigos y anexos que hoy se hace a mano.</div>
+        <div><b>Te llevas</b>Los 41 procedimientos revisados, los anexos cruzados y un plan de veinte días.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">28</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 29 · Laboratorio 13 ===== -->
+<section class="paper" data-label="29 Laboratorio 13">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> PROCEDIMIENTOS SIN DOLOR</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">13</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Cuarenta y un nombres. Doce están mal puestos.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Analista de Administración</span>
+          <span class="input"><b>ENTRADA</b><a class="mat" href="materiales/16_maestro_procedimientos.xlsx" target="_blank" rel="noopener"><code>16_maestro_procedimientos.xlsx</code></a> · <a class="mat" href="materiales/09_reglas_de_nomenclatura.docx" target="_blank" rel="noopener"><code>09_reglas_de_nomenclatura.docx</code></a></span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Hoy esto se revisa archivo por archivo. Son 41 procedimientos y la regla tiene siete puntos. A ojo se escapan los repetidos.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Cuáles rompen la regla y qué parte del nombre falla en cada uno.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Pega la regla primero. Sin la regla, la IA inventa su criterio.</li>
+            <li>Pide una fila por archivo, los 41, sin agrupar ni resumir.</li>
+            <li>Comprueba a mano tres de los que marcó y tres de los que dejó pasar.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card dense">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Te pego la regla de nombres y la lista de los 41 procedimientos.</p>
+          <p>Revísalos uno por uno. Dame una tabla con archivo, qué regla rompe, qué parte del nombre está mal y cómo debería llamarse.</p>
+          <p>Si cumple, ponlo como correcto. No te saltes ninguno y no agrupes. Al final dime cuántos están mal.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          La tabla de los 41, con el nombre corregido propuesto para cada uno.
+          <div class="criterion"><span>CRITERIO</span>Encuentra los 12 de los 41 nombres mal puestos, y los tres que revisas a mano coinciden.</div>
+        </div>
+        <div class="caveat"><b>Límite</b>Dos archivos rompen la regla y además tienen el código repetido. Revisar el nombre no es revisar el contenido: son dos pasadas distintas.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">29</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 30 · Laboratorio 14 ===== -->
+<section class="paper" data-label="30 Laboratorio 14">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> PROCEDIMIENTOS SIN DOLOR</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">14</div>
+      </div>
+      <div>
+        <h2 class="ex-title">El anexo que se cita y no existe.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Analista de Administración</span>
+          <span class="input"><b>ENTRADA</b><a class="mat" href="materiales/16_maestro_procedimientos.xlsx" target="_blank" rel="noopener"><code>16_maestro_procedimientos.xlsx</code></a></span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Un procedimiento cita el anexo D. El anexo D no está. Y hay un anexo C guardado que nadie cita desde ninguna parte.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué anexos faltan, cuáles sobran y qué códigos aparecen dos veces como vigentes.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Pide el cruce en las dos direcciones: citados contra existentes.</li>
+            <li>Pide aparte los códigos que aparecen más de una vez como vigentes.</li>
+            <li>Ordena los hallazgos por lo que más riesgo tiene.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Con la columna de anexos citados y la de anexos que existen, hazme tres listas.</p>
+          <p>Primera: anexos citados que no existen. Segunda: anexos que existen y nadie cita. Tercera: letras de anexo con un salto, como citar A, B y D sin la C.</p>
+          <p>Aparte, dime qué códigos están dos veces como vigentes. Pon cada hallazgo con su número de fila.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Las tres listas de anexos y la lista de códigos repetidos, con su fila.
+          <div class="criterion"><span>CRITERIO</span>Cada hallazgo apunta a una fila del archivo y puedes abrirla y comprobarlo.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">30</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 31 · Laboratorio 15 ===== -->
+<section class="paper" data-label="31 Laboratorio 15">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> PROCEDIMIENTOS SIN DOLOR</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">15</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Veinte días para actualizar un procedimiento.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Jefatura de Administración</span>
+          <span class="input"><b>ENTRADA</b>los hallazgos de los laboratorios 13 y 14 · <a class="mat" href="materiales/10_PR-ADM-014_v3_BORRADOR.docx" target="_blank" rel="noopener"><code>10_PR-ADM-014_v3_BORRADOR.docx</code></a></span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">El plazo es de veinte días y el dueño del proceso tiene media hora. Lo que se hace con esa media hora decide si el borrador sale o no.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué le preguntas al dueño y qué puedes redactar sin molestarlo.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Pide las diez preguntas que hay que hacerle al dueño.</li>
+            <li>Con sus respuestas, pide el borrador y la lista de cambios.</li>
+            <li>Marca qué cambió respecto a la versión vigente y por qué.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card denser">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p>Tengo veinte días para actualizar este procedimiento y media hora con su dueño.</p>
+          <p>Dame diez preguntas concretas, ordenadas por lo que más decide. Nada de preguntas de relleno.</p>
+          <p>Después, con mis respuestas, redacta el borrador y una tabla de cambios: qué cambió, por qué y quién lo pidió. Lo que no me hayas preguntado, déjalo igual.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Las diez preguntas, el borrador y la tabla de cambios.
+          <div class="criterion"><span>CRITERIO</span>La tabla deja ver qué cambió y por qué; el borrador no toca nada que no se haya decidido.</div>
+        </div>
+        <div class="caveat"><b>Límite</b>El borrador sigue siendo borrador hasta que alguien lo firme. No le pongas fecha de vigencia tú.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">31</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 32 · Laboratorio 16 ===== -->
+<section class="paper" data-label="32 Laboratorio 16">
+  <div class="frame">
+    <div class="top-rail"><span>BLOQUE 04 <span class="sep"></span> PROCEDIMIENTOS SIN DOLOR</span><span>APLICACIÓN PRÁCTICA</span></div>
+    <div class="ex-header case-header">
+      <div class="ex-num-block">
+        <div class="ex-num-label">LABORATORIO</div>
+        <div class="ex-num">16</div>
+      </div>
+      <div>
+        <h2 class="ex-title">Tu caso: el procedimiento que tienes pendiente.</h2>
+        <div class="case-meta">
+          <span class="role"><b>ROL</b>Cada participante, con su propio trabajo</span>
+          <span class="input"><b>ENTRADA</b>un procedimiento de tu área, sin datos de clientes</span>
+          <span class="case-tool"><b>IA</b>Gemini, ChatGPT o Claude</span>
+        </div>
+      </div>
+    </div>
+    <div class="ex-body case-body">
+      <div class="col">
+        <div class="concept-block">
+          <span class="label acc">SITUACIÓN CASABAT</span>
+          <div class="situation">Todos tienen uno pendiente: el que nadie ha actualizado, el que tiene anexos sueltos, el que dos áreas usan distinto.</div>
+        </div>
+        <div class="decision"><span class="label">DECISIÓN</span>Qué parte puedes dejar resuelta hoy y qué necesitas pedirle a alguien.</div>
+        <div class="steps-block">
+          <span class="label">PASO A PASO</span>
+          <ol class="steps">
+            <li>Escribe cuál es y qué le falta.</li>
+            <li>Aplícale la revisión de nombre y el cruce de anexos.</li>
+            <li>Saca las preguntas para su dueño y ponles fecha.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <div class="prompt-card">
+          <span class="label">PROMPT DEL PARTICIPANTE</span>
+          <p><span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi procedimiento pendiente es [cuál] y le falta [qué].</p>
+          <p>Revísale el nombre y el código con la regla que te pego. Cruza sus anexos.</p>
+          <p>Después dame las preguntas para su dueño y qué puedo redactar yo sin esperarlo.</p>
+        </div>
+        <div class="result">
+          <b>ENTREGABLE</b>
+          Tu procedimiento revisado y las preguntas listas con fecha.
+          <div class="criterion"><span>CRITERIO</span>Sales con una tarea concreta y con nombre de la persona a la que se la vas a pedir.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">32</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 33 · Cierre ===== -->
+<section data-label="33 Cierre">
+  <div class="frame">
+    <div class="top-rail"><span>CIERRE DEL PROGRAMA</span><span>33 / 33</span></div>
+    <div class="layout"><h1>Pediste cuatro cosas.<br/>Te vas con <span style="color:var(--brand-br);">cuatro cosas hechas</span>.</h1></div>
+    <div class="next">
+      <div><span class="lbl">SEIS PEDIDOS</span><p>Guardados con nombre, probados por otra persona, listos para el lunes.</p></div>
+      <div><span class="lbl">TU VOZ</span><p>Una ficha de media página y la lista de frases que no vuelven a aparecer.</p></div>
+      <div><span class="lbl">UN TABLERO</span><p>Cinco cifras en una pantalla, con la receta de la herramienta que usas.</p></div>
+      <div><span class="lbl">CUARENTA Y UN NOMBRES</span><p>Revisados en una pasada, con los anexos cruzados en las dos direcciones.</p></div>
+    </div>
+    <div class="footer">
+      <div class="lhs"><span>R I Z O . M A</span><span class="dot"></span><span>C A S A B A T</span></div>
+      <div class="rhs">33</div>
+    </div>
+  </div>
+</section>
+
+</deck-stage>
+
+</body>
+</html>
