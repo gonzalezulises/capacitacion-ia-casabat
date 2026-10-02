@@ -2,7 +2,8 @@
 // Compuerta curricular: evita que una regeneración reintroduzca conceptos,
 // productos o una carga de trabajo que ya no corresponden al programa 2026.
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 
 const fails = [];
 const oks = [];
@@ -57,18 +58,65 @@ for (const [patron, capacidad] of [
     : fail(`sesión 1: no incluye un laboratorio de ${capacidad}`);
 }
 
-const laboratorio3 = laboratoriosS1[2] || '';
-const cadena03 = ['SLIDE DECK', 'INFOGRAFÍA', 'CANVAS'];
-let cursor03 = 0;
-const cadena03Completa = cadena03.every(paso => {
-  const posicion = laboratorio3.toUpperCase().indexOf(paso, cursor03);
-  if (posicion < 0) return false;
-  cursor03 = posicion + paso.length;
-  return true;
-});
-cadena03Completa
-  ? ok('sesión 1: laboratorio 3 encadena Slide Deck → infografía → Canvas')
-  : fail('sesión 1: laboratorio 3 no encadena Slide Deck → infografía → Canvas en ese orden');
+// --- sesión 1, bloque 1: de dónde sale la respuesta ---
+// El bloque enseñaba a encadenar Slide Deck, infografía y Canvas en un solo
+// laboratorio: una demo de botones que además no cabía en su tiempo. Ahora
+// enseña a distinguir de dónde viene una respuesta, y estas comprobaciones
+// cuidan que los tres sitios sigan contrastándose.
+const bloque1S1 = laboratoriosS1.slice(0, 4).join('\n');
+for (const [patron, que] of [
+  [/chat/i, 'el chat a secas'],
+  [/cuaderno|NotebookLM/i, 'el cuaderno con documentos'],
+  [/busque en internet|búsqueda/i, 'la búsqueda en internet'],
+]) {
+  patron.test(bloque1S1)
+    ? ok(`sesión 1: el bloque 1 contrasta ${que}`)
+    : fail(`sesión 1: el bloque 1 ya no contrasta ${que}`);
+}
+/cita|citas|frase exacta/i.test(bloque1S1)
+  ? ok('sesión 1: el bloque 1 exige citar la fuente')
+  : fail('sesión 1: el bloque 1 ya no exige citar la fuente');
+
+// Los hechos del bloque salen de los materiales. Si alguien edita la política o
+// el procedimiento, el laboratorio enseñaría un dato falso y nadie lo notaría.
+const leerDocx = (ruta) => JSON.parse(
+  execFileSync('python3', ['build/office_reader.py', 'docx', ruta],
+    { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 })).text;
+
+const politica = leerDocx('materiales/03_politica_garantia.docx');
+const plazoMoto = (politica.match(/Batería de moto:\s*(\d+)\s*meses/i) || [])[1];
+plazoMoto === '6'
+  ? ok(`sesión 1: la política sigue dando ${plazoMoto} meses a la batería de moto`)
+  : fail(`sesión 1: la política da ${plazoMoto} meses a la moto; el laboratorio 1 dice seis`);
+/ocho meses/i.test(bloque1S1) && plazoMoto === '6'
+  ? ok('sesión 1: el caso de ocho meses sigue quedando fuera de plazo')
+  : fail('sesión 1: el caso de garantía ya no queda fuera de plazo');
+
+const vigente = leerDocx('materiales/expediente-PR-ADM-014/PR-ADM-014_Gestion_de_Cotizaciones_v2.docx');
+const borrador = leerDocx('materiales/10_PR-ADM-014_v3_BORRADOR.docx');
+const umbral = (texto) => {
+  const m = texto.match(/supera los\s*([\d.,]+)\s*dólares/i);
+  return m ? Number(m[1].replace(/[.,]/g, '')) : null;
+};
+const umbralVigente = umbral(vigente);
+const umbralBorrador = umbral(borrador);
+const montoCaso = 4200;
+(umbralVigente && umbralBorrador && umbralVigente < montoCaso && montoCaso < umbralBorrador)
+  ? ok(`sesión 1: 4.200 sigue cayendo entre el umbral vigente (${umbralVigente}) y el del borrador (${umbralBorrador})`)
+  : fail(`sesión 1: con umbrales ${umbralVigente} y ${umbralBorrador}, una cotización de 4.200 ya no distingue las dos versiones`);
+
+/4\.200/.test(bloque1S1)
+  ? ok('sesión 1: el laboratorio 2 usa el monto que separa las dos versiones')
+  : fail('sesión 1: el laboratorio 2 ya no usa el monto de 4.200');
+
+// El anexo que se cita y no existe es lo que el laboratorio 3 hace descubrir.
+const anexosQueExisten = readdirSync('materiales/expediente-PR-ADM-014')
+  .map(n => (n.match(/ANEXO-([A-Z])/i) || n.match(/Anexo ([A-Z])/) || [])[1])
+  .filter(Boolean).map(l => l.toUpperCase());
+const citaAnexoE = /Anexo E/i.test(vigente);
+(citaAnexoE && !anexosQueExisten.includes('E'))
+  ? ok('sesión 1: el procedimiento sigue citando el Anexo E, que no está en el expediente')
+  : fail('sesión 1: el Anexo E ya no es una referencia rota; el laboratorio 3 pierde su hallazgo');
 
 const bloque4 = laboratoriosS1.slice(12, 16).join('\n');
 const cadenaBloque4 = ['PTCF', 'GOOGLE DOCS', 'GOOGLE VIDS', 'ASK GEMINI'];

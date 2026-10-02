@@ -704,11 +704,11 @@
     <div class="top-rail"><span>BLOQUE 1 DE 4</span><span>4 LABORATORIOS</span></div>
     <div class="layout">
       <div class="block-no">01</div>
-      <div><h1>Elegir el<br/>entorno.</h1></div>
+      <div><h1>De dónde sale<br/>la respuesta.</h1></div>
       <div class="meta">
-        <div><b>Herramientas</b>Gemini · NotebookLM · matriz de decisión.</div>
-        <div><b>Objetivo</b>Distinguir una respuesta rápida de un trabajo basado en fuentes o de una capacidad reusable.</div>
-        <div><b>Te llevas</b>Una prioridad, un cuaderno citado y una decisión de herramienta.</div>
+        <div><b>Herramientas</b>Gemini · NotebookLM · búsqueda en internet.</div>
+        <div><b>Objetivo</b>Distinguir una respuesta que sale de tus documentos de una que sale de la memoria del modelo.</div>
+        <div><b>Te llevas</b>Tres respuestas comparadas, una decisión con su cita y un resumen auditado.</div>
       </div>
     </div>
     <div class="footer">
@@ -728,11 +728,11 @@
         <div class="ex-num">01</div>
       </div>
       <div>
-        <h2 class="ex-title">Lunes a las ocho: decide qué merece atención.</h2>
+        <h2 class="ex-title">La misma pregunta en tres sitios, tres respuestas.</h2>
         <div class="case-meta">
-          <span class="role"><b>QUIÉN</b>Coordinador de Administración</span>
-          <span class="input"><b>ARCHIVO</b><a class="mat" href="materiales/05_correos_pendientes.xlsx" target="_blank" rel="noopener"><code>05_correos_pendientes.xlsx</code></a></span>
-          <span class="case-tool"><b>HERRAMIENTA</b>Gemini</span>
+          <span class="role"><b>QUIÉN</b>Asistente de Administración</span>
+          <span class="input"><b>ARCHIVO</b><a class="mat" href="materiales/03_politica_garantia.docx" target="_blank" rel="noopener"><code>03_politica_garantia.docx</code></a></span>
+          <span class="case-tool"><b>HERRAMIENTA</b>Gemini · chat, cuaderno y búsqueda</span>
         </div>
       </div>
     </div>
@@ -740,33 +740,34 @@
       <div class="col">
         <div class="concept-block">
           <span class="label acc">SITUACIÓN CASABAT</span>
-          <div class="situation">Llegas con <b>20 correos pendientes</b>. Antes de producir respuestas necesitas distinguir bloqueo, dinero, plazo, aprobación y simple ruido.</div>
+          <div class="situation">Un cliente reclama el reemplazo de una batería de moto que compró hace ocho meses. Haces la misma pregunta tres veces y vuelven tres respuestas.</div>
         </div>
-        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>Qué ocho casos se atienden primero y qué tipo de trabajo requiere cada uno.</div>
+        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>De dónde salió cada una, y cuál puedes defender delante del cliente.</div>
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Revisa asunto y primera línea de los 20 registros.</li>
-            <li>Clasifica cada caso como generar, recuperar, calcular, actuar o archivar.</li>
-            <li>Selecciona ocho y defiende el orden con evidencia visible.</li>
+            <li>Pregunta en el chat, sin cargar ni pegar nada.</li>
+            <li>Vuelve a preguntar con la política de garantía cargada.</li>
+            <li>Pregunta otra vez, pidiendo que busque en internet.</li>
           </ol>
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card">
+        <div class="prompt-card dense">
           <div class="prompt-top">
-            <span class="label">PROMPT DEL PARTICIPANTE</span>
+            <span class="label">DE DÓNDE SALE LA RESPUESTA</span>
             <button class="copiar" type="button">copiar</button>
           </div>
-          <p>Revisa los 20 registros del Excel y prioriza solo ocho.</p>
-          <p>Devuelve ID, señal de prioridad, modo de trabajo, fuente necesaria, dueño propuesto y riesgo de esperar. No redactes respuestas.</p>
-          <p>No conviertas tono urgente en prioridad: exige plazo, dinero, cliente, bloqueo o aprobación.</p>
+          <p>Un cliente reclama reemplazo de una batería de moto comprada hace ocho meses. ¿Le corresponde?</p>
+          <p>Dime el plazo que aplica, de dónde sacas ese plazo y qué pasa si no trae el comprobante.</p>
+          <p>Si el plazo no sale de un documento que yo te di, dilo con esas palabras.</p>
         </div>
         <div class="result">
           <b>CON QUÉ SALES</b>
-          Una tabla de triaje que pueda usarse en la reunión de las 8:30.
-          <div class="criterion"><span>ESTÁ BIEN SI</span>Cada posición cita una señal del registro y separa dueño propuesto de dueño confirmado.</div>
+          Las tres respuestas, con la fuente de cada una escrita al lado.
+          <div class="criterion"><span>ESTÁ BIEN SI</span>Solo la del cuaderno cita el plazo de la política de CasaBat.</div>
         </div>
+        <div class="caveat"><b>Ojo con esto</b>La política da seis meses para moto, sin prorrateo. Si una respuesta dice doce, está contestando por una batería de auto.</div>
       </div>
     </div>
     <div class="footer">
@@ -786,10 +787,10 @@
         <div class="ex-num">02</div>
       </div>
       <div>
-        <h2 class="ex-title">Convierte seis documentos en una sala de evidencia.</h2>
+        <h2 class="ex-title">Dos umbrales, una cotización esperando aprobación.</h2>
         <div class="case-meta">
-          <span class="role"><b>QUIÉN</b>Analista de Procesos</span>
-          <span class="input"><b>ARCHIVO</b><a class="mat" href="index.html#expediente" target="_blank" rel="noopener"><code>expediente-PR-ADM-014/</code></a></span>
+          <span class="role"><b>QUIÉN</b>Jefatura de Administración</span>
+          <span class="input"><b>ARCHIVO</b><a class="mat" href="index.html#expediente" target="_blank" rel="noopener"><code>expediente-PR-ADM-014/</code></a> · <a class="mat" href="materiales/10_PR-ADM-014_v3_BORRADOR.docx" target="_blank" rel="noopener"><code>10_PR-ADM-014_v3_BORRADOR.docx</code></a></span>
           <span class="case-tool"><b>HERRAMIENTA</b>NotebookLM / Gemini Notebook</span>
         </div>
       </div>
@@ -798,33 +799,34 @@
       <div class="col">
         <div class="concept-block">
           <span class="label acc">SITUACIÓN CASABAT</span>
-          <div class="situation">Gerencia necesita entender el procedimiento de cotizaciones sin leer seis archivos durante la reunión. El expediente contiene referencias rotas, versiones contradictorias y un anexo huérfano.</div>
+          <div class="situation">Llega una cotización de 4.200 dólares para aprobar. El procedimiento vigente dice una cosa y un borrador más nuevo dice otra.</div>
         </div>
-        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>Qué puede afirmarse desde las fuentes, qué se contradice y qué debe escalarse.</div>
+        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>Quién la aprueba hoy, y en qué documento consta.</div>
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Crea un cuaderno y carga los seis Word del expediente.</li>
-            <li>Pregunta por vigencia, aprobadores, anexos citados y contradicciones; abre las citas.</li>
-            <li>Genera un mapa mental o informe breve y marca los vacíos sin resolver.</li>
+            <li>Carga el expediente y el borrador en un cuaderno.</li>
+            <li>Pregunta quién aprueba y pide la cita de cada respuesta.</li>
+            <li>Mira la fecha de vigencia de cada documento antes de decidir.</li>
           </ol>
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card">
+        <div class="prompt-card dense">
           <div class="prompt-top">
-            <span class="label">PROMPT DEL PARTICIPANTE</span>
+            <span class="label">PREGUNTA AL CUADERNO</span>
             <button class="copiar" type="button">copiar</button>
           </div>
-          <p>Usa únicamente las fuentes seleccionadas del expediente PR-ADM-014.</p>
-          <p>Devuelve: regla vigente, documento que la sostiene, contradicción, impacto y pregunta para el dueño. Incluye una cita verificable por hallazgo.</p>
-          <p>No resuelvas contradicciones por mayoría de documentos ni uses conocimiento externo.</p>
+          <p>Con estos documentos: ¿quién aprueba hoy una cotización de 4.200 dólares?</p>
+          <p>Dame el umbral, el documento que lo fija, su versión y su fecha de vigencia. Copia la frase exacta donde lo dice.</p>
+          <p>Si dos documentos se contradicen, dímelo. No elijas uno por ser el más nuevo.</p>
         </div>
         <div class="result">
           <b>CON QUÉ SALES</b>
-          Un cuaderno CasaBat con mapa de fuentes y briefing de cinco hallazgos citados.
-          <div class="criterion"><span>ESTÁ BIEN SI</span>Cada hallazgo abre la ubicación correcta de la fuente; las contradicciones siguen visibles.</div>
+          La respuesta con su cita y la contradicción señalada.
+          <div class="criterion"><span>ESTÁ BIEN SI</span>Responde Jefatura de Administración y avisa de que el borrador no tiene fecha de vigencia.</div>
         </div>
+        <div class="caveat"><b>Ojo con esto</b>El borrador sube el umbral a 5.000 dólares. Si alguien lo aplicara hoy, esa cotización saldría sin aprobar.</div>
       </div>
     </div>
     <div class="footer">
@@ -844,11 +846,11 @@
         <div class="ex-num">03</div>
       </div>
       <div>
-        <h2 class="ex-title">Del expediente a una presentación defendible.</h2>
+        <h2 class="ex-title">Pide el resumen y después búscale el error.</h2>
         <div class="case-meta">
-          <span class="role"><b>QUIÉN</b>Secretaría del Comité de Cotizaciones</span>
-          <span class="input"><b>ARCHIVO</b>NotebookLM del laboratorio 2 · expediente PR-ADM-014</span>
-          <span class="case-tool"><b>HERRAMIENTA</b>NotebookLM Studio + Gemini Canvas</span>
+          <span class="role"><b>QUIÉN</b>Secretaría del comité de cotizaciones</span>
+          <span class="input"><b>ARCHIVO</b>el cuaderno del laboratorio 2</span>
+          <span class="case-tool"><b>HERRAMIENTA</b>NotebookLM · resumen y citas</span>
         </div>
       </div>
     </div>
@@ -856,33 +858,34 @@
       <div class="col">
         <div class="concept-block">
           <span class="label acc">SITUACIÓN CASABAT</span>
-          <div class="situation">El comité está por comenzar. Necesita una historia visual breve, pero cada regla y contradicción debe seguir conectada con el expediente.</div>
+          <div class="situation">El resumen del expediente se ve impecable y cabe en una página. Antes de llevarlo al comité hay que ver si cada frase se sostiene.</div>
         </div>
-        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>Qué necesita decidir el comité, qué evidencia lo sostiene y qué conflicto no puede resolverse todavía.</div>
+        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>Qué frase del resumen no puede respaldarse con los documentos cargados.</div>
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Genera en NotebookLM un Slide Deck ejecutivo de cinco láminas.</li>
-            <li>Genera después una infografía del mismo expediente y úsala para detectar omisiones.</li>
-            <li>Lleva ambos artefactos a Canvas, corrige la narrativa y ensaya un pitch de 90 segundos.</li>
+            <li>Pide un resumen de una página para el comité.</li>
+            <li>Pide la cita de cada afirmación, una por una.</li>
+            <li>Abre dos citas y compruébalas en el documento.</li>
           </ol>
         </div>
       </div>
       <div class="col">
-        <div class="prompt-card">
+        <div class="prompt-card dense">
           <div class="prompt-top">
-            <span class="label">PROMPT DEL PARTICIPANTE</span>
+            <span class="label">AUDITA EL RESUMEN</span>
             <button class="copiar" type="button">copiar</button>
           </div>
-          <p><span class="kw">1 · SLIDE DECK</span> · Decisión requerida, regla vigente, contradicciones, impacto y preguntas al dueño.</p>
-          <p><span class="kw">2 · INFOGRAFÍA</span> · Resume documentos, relaciones y alertas; compara contra el deck y señala una omisión.</p>
-          <p><span class="kw">3 · CANVAS</span> · Crea una presentación editable de cinco slides, incorpora la corrección y cierra con la decisión solicitada.</p>
+          <p>Hazme un resumen de una página del expediente para el comité.</p>
+          <p>Después, para cada afirmación del resumen, dime en qué documento y en qué cláusula se apoya.</p>
+          <p>Si alguna no se puede respaldar con los documentos cargados, márcala en vez de suavizarla.</p>
         </div>
         <div class="result">
           <b>CON QUÉ SALES</b>
-          Slide Deck, infografía, presentación Canvas y pitch de 90 segundos.
-          <div class="criterion"><span>ESTÁ BIEN SI</span>Las cinco slides preservan citas, muestran conflictos y no inventan una versión oficial.</div>
+          El resumen con cada frase marcada como comprobada o sin respaldo.
+          <div class="criterion"><span>ESTÁ BIEN SI</span>Descubres que el procedimiento remite a un anexo que no está en el expediente.</div>
         </div>
+        <div class="caveat"><b>Ojo con esto</b>La cláusula 4.9 manda al Anexo E, el criterio de reactivación de cotizaciones vencidas. Ese anexo no existe aquí.</div>
       </div>
     </div>
     <div class="footer">
@@ -902,11 +905,11 @@
         <div class="ex-num">04</div>
       </div>
       <div>
-        <h2 class="ex-title">Aplicación individual: elige la arquitectura de tu propio reto.</h2>
+        <h2 class="ex-title">Tu caso: la pregunta que llevas mañana.</h2>
         <div class="case-meta">
-          <span class="role"><b>QUIÉN</b>Participante en su función</span>
-          <span class="input"><b>ARCHIVO</b>una tarea real anonimizada de su trabajo</span>
-          <span class="case-tool"><b>HERRAMIENTA</b>Gemini + matriz de herramientas</span>
+          <span class="role"><b>QUIÉN</b>Cada participante, con su propio trabajo</span>
+          <span class="input"><b>ARCHIVO</b>una pregunta real de tu puesto</span>
+          <span class="case-tool"><b>HERRAMIENTA</b>Gemini · chat, cuaderno o búsqueda</span>
         </div>
       </div>
     </div>
@@ -914,32 +917,32 @@
       <div class="col">
         <div class="concept-block">
           <span class="label acc">SITUACIÓN CASABAT</span>
-          <div class="situation">Cada área de CasaBat tiene tareas distintas. El reto es identificar si tu caso necesita generar, recuperar, calcular o actuar antes de escoger una herramienta.</div>
+          <div class="situation">Mañana vas a preguntarle algo a la IA. De dónde tiene que salir esa respuesta cambia dónde conviene preguntar.</div>
         </div>
-        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>Qué entorno usarías, qué entrada mínima necesita y qué decisión seguirá siendo humana.</div>
+        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>Si tu pregunta necesita tus documentos, información de fuera, o ninguna de las dos.</div>
         <div class="steps-block">
           <span class="label">PASO A PASO</span>
           <ol class="steps">
-            <li>Describe una tarea real sin incluir datos sensibles.</li>
-            <li>Clasifícala por modo de trabajo y selecciona una herramienta.</li>
-            <li>Diseña una primera prueba pequeña y compárala con otra alternativa.</li>
+            <li>Escribe tu pregunta tal como se la harías.</li>
+            <li>Decide el sitio: chat, cuaderno con tus documentos o búsqueda.</li>
+            <li>Pruébala y comprueba una afirmación en su fuente.</li>
           </ol>
         </div>
       </div>
       <div class="col">
         <div class="prompt-card">
           <div class="prompt-top">
-            <span class="label">PROMPT DEL PARTICIPANTE</span>
+            <span class="label">TU PREGUNTA</span>
             <button class="copiar" type="button">copiar</button>
           </div>
-          <p><span class="kw">APLICACIÓN INDIVIDUAL</span> · Analiza esta tarea de mi puesto: [descríbela sin datos sensibles].</p>
-          <p>Devuelve modo, herramienta, entrada, entregable, riesgo, aprobación humana y una prueba que pueda ejecutar hoy.</p>
-          <p>Cuestiona mi elección si una herramienta más simple resuelve mejor el trabajo.</p>
+          <p><span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi pregunta es: [escríbela].</p>
+          <p>Dime si para responderla bien hacen falta documentos míos, información de internet o nada de eso. Explica por qué.</p>
+          <p>Si hacen falta mis documentos, dime cuáles y qué pasa si no los cargo.</p>
         </div>
         <div class="result">
           <b>CON QUÉ SALES</b>
-          Una ficha de arquitectura aplicada a una tarea propia.
-          <div class="criterion"><span>ESTÁ BIEN SI</span>La elección se justifica por el tipo de trabajo y termina en una prueba ejecutable.</div>
+          Tu pregunta, el sitio elegido y una afirmación comprobada en su fuente.
+          <div class="criterion"><span>ESTÁ BIEN SI</span>Puedes decir de dónde salió la respuesta sin tener que suponerlo.</div>
         </div>
       </div>
     </div>

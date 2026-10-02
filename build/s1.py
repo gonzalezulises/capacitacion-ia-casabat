@@ -86,66 +86,91 @@ d.add('Mapa de herramientas', 'paper', cards(
      ('GEM', 'Conserva instrucciones y archivos para una tarea repetitiva.', 'Úsala cuando otra persona debe repetir el trabajo.')], cols=4))
 
 d.add('Bloque 1', 'section-div', divider(
-    1, 4, 40, '4 LABORATORIOS', 'Elegir el<br/>entorno.',
-    'Gemini · NotebookLM · matriz de decisión.',
-    'Distinguir una respuesta rápida de un trabajo basado en fuentes o de una capacidad reusable.',
-    'Una prioridad, un cuaderno citado y una decisión de herramienta.'))
+    1, 4, 40, '4 LABORATORIOS', 'De dónde sale<br/>la respuesta.',
+    'Gemini · NotebookLM · búsqueda en internet.',
+    'Distinguir una respuesta que sale de tus documentos de una que sale de la memoria del modelo.',
+    'Tres respuestas comparadas, una decisión con su cita y un resumen auditado.'))
 
 d.add('Laboratorio 1', 'paper', exercise_case(
-    1, RAIL1, 10, 'Lunes a las ocho: decide qué merece atención.',
-    'Coordinador de Administración', '<code>05_correos_pendientes.xlsx</code>', 'Gemini',
-    'Llegas con <b>20 correos pendientes</b>. Antes de producir respuestas necesitas distinguir bloqueo, dinero, plazo, aprobación y simple ruido.',
-    'Qué ocho casos se atienden primero y qué tipo de trabajo requiere cada uno.',
-    ['Revisa asunto y primera línea de los 20 registros.',
-     'Clasifica cada caso como generar, recuperar, calcular, actuar o archivar.',
-     'Selecciona ocho y defiende el orden con evidencia visible.'],
-    prompt('Revisa los 20 registros del Excel y prioriza solo ocho.',
-           'Devuelve ID, señal de prioridad, modo de trabajo, fuente necesaria, dueño propuesto y riesgo de esperar. No redactes respuestas.',
-           'No conviertas tono urgente en prioridad: exige plazo, dinero, cliente, bloqueo o aprobación.'),
-    'Una tabla de triaje que pueda usarse en la reunión de las 8:30.',
-    'Cada posición cita una señal del registro y separa dueño propuesto de dueño confirmado.'))
+    1, RAIL1, 12, 'La misma pregunta en tres sitios, tres respuestas.',
+    'Asistente de Administración', '<code>03_politica_garantia.docx</code>',
+    'Gemini · chat, cuaderno y búsqueda',
+    'Un cliente reclama el reemplazo de una batería de moto que compró hace ocho meses. '
+    'Haces la misma pregunta tres veces y vuelven tres respuestas.',
+    'De dónde salió cada una, y cuál puedes defender delante del cliente.',
+    ['Pregunta en el chat, sin cargar ni pegar nada.',
+     'Vuelve a preguntar con la política de garantía cargada.',
+     'Pregunta otra vez, pidiendo que busque en internet.'],
+    prompt('Un cliente reclama reemplazo de una batería de moto comprada hace ocho meses. '
+           '¿Le corresponde?',
+           'Dime el plazo que aplica, de dónde sacas ese plazo y qué pasa si no trae el '
+           'comprobante.',
+           'Si el plazo no sale de un documento que yo te di, dilo con esas palabras.'),
+    'Las tres respuestas, con la fuente de cada una escrita al lado.',
+    'Solo la del cuaderno cita el plazo de la política de CasaBat.',
+    'La política da seis meses para moto, sin prorrateo. Si una respuesta dice doce, está '
+    'contestando por una batería de auto.',
+    prompt_label='DE DÓNDE SALE LA RESPUESTA'))
 
 d.add('Laboratorio 2', 'paper', exercise_case(
-    2, RAIL1, 10, 'Convierte seis documentos en una sala de evidencia.',
-    'Analista de Procesos', '<code>expediente-PR-ADM-014/</code>', 'NotebookLM / Gemini Notebook',
-    'Gerencia necesita entender el procedimiento de cotizaciones sin leer seis archivos durante la reunión. El expediente contiene referencias rotas, versiones contradictorias y un anexo huérfano.',
-    'Qué puede afirmarse desde las fuentes, qué se contradice y qué debe escalarse.',
-    ['Crea un cuaderno y carga los seis Word del expediente.',
-     'Pregunta por vigencia, aprobadores, anexos citados y contradicciones; abre las citas.',
-     'Genera un mapa mental o informe breve y marca los vacíos sin resolver.'],
-    prompt('Usa únicamente las fuentes seleccionadas del expediente PR-ADM-014.',
-           'Devuelve: regla vigente, documento que la sostiene, contradicción, impacto y pregunta para el dueño. Incluye una cita verificable por hallazgo.',
-           'No resuelvas contradicciones por mayoría de documentos ni uses conocimiento externo.'),
-    'Un cuaderno CasaBat con mapa de fuentes y briefing de cinco hallazgos citados.',
-    'Cada hallazgo abre la ubicación correcta de la fuente; las contradicciones siguen visibles.'))
+    2, RAIL1, 13, 'Dos umbrales, una cotización esperando aprobación.',
+    'Jefatura de Administración',
+    '<code>expediente-PR-ADM-014/</code> · <code>10_PR-ADM-014_v3_BORRADOR.docx</code>',
+    'NotebookLM / Gemini Notebook',
+    'Llega una cotización de 4.200 dólares para aprobar. El procedimiento vigente dice una cosa '
+    'y un borrador más nuevo dice otra.',
+    'Quién la aprueba hoy, y en qué documento consta.',
+    ['Carga el expediente y el borrador en un cuaderno.',
+     'Pregunta quién aprueba y pide la cita de cada respuesta.',
+     'Mira la fecha de vigencia de cada documento antes de decidir.'],
+    prompt('Con estos documentos: ¿quién aprueba hoy una cotización de 4.200 dólares?',
+           'Dame el umbral, el documento que lo fija, su versión y su fecha de vigencia. Copia '
+           'la frase exacta donde lo dice.',
+           'Si dos documentos se contradicen, dímelo. No elijas uno por ser el más nuevo.'),
+    'La respuesta con su cita y la contradicción señalada.',
+    'Responde Jefatura de Administración y avisa de que el borrador no tiene fecha de vigencia.',
+    'El borrador sube el umbral a 5.000 dólares. Si alguien lo aplicara hoy, esa cotización '
+    'saldría sin aprobar.',
+    prompt_label='PREGUNTA AL CUADERNO'))
 
 d.add('Laboratorio 3', 'paper', exercise_case(
-    3, RAIL1, 20, 'Del expediente a una presentación defendible.',
-    'Secretaría del Comité de Cotizaciones', 'NotebookLM del laboratorio 2 · expediente PR-ADM-014', 'NotebookLM Studio + Gemini Canvas',
-    'El comité está por comenzar. Necesita una historia visual breve, pero cada regla y contradicción debe seguir conectada con el expediente.',
-    'Qué necesita decidir el comité, qué evidencia lo sostiene y qué conflicto no puede resolverse todavía.',
-    ['Genera en NotebookLM un Slide Deck ejecutivo de cinco láminas.',
-     'Genera después una infografía del mismo expediente y úsala para detectar omisiones.',
-     'Lleva ambos artefactos a Canvas, corrige la narrativa y ensaya un pitch de 90 segundos.'],
-    prompt('<span class="kw">1 · SLIDE DECK</span> · Decisión requerida, regla vigente, contradicciones, impacto y preguntas al dueño.',
-           '<span class="kw">2 · INFOGRAFÍA</span> · Resume documentos, relaciones y alertas; compara contra el deck y señala una omisión.',
-           '<span class="kw">3 · CANVAS</span> · Crea una presentación editable de cinco slides, incorpora la corrección y cierra con la decisión solicitada.'),
-    'Slide Deck, infografía, presentación Canvas y pitch de 90 segundos.',
-    'Las cinco slides preservan citas, muestran conflictos y no inventan una versión oficial.'))
+    3, RAIL1, 13, 'Pide el resumen y después búscale el error.',
+    'Secretaría del comité de cotizaciones', 'el cuaderno del laboratorio 2',
+    'NotebookLM · resumen y citas',
+    'El resumen del expediente se ve impecable y cabe en una página. Antes de llevarlo al comité '
+    'hay que ver si cada frase se sostiene.',
+    'Qué frase del resumen no puede respaldarse con los documentos cargados.',
+    ['Pide un resumen de una página para el comité.',
+     'Pide la cita de cada afirmación, una por una.',
+     'Abre dos citas y compruébalas en el documento.'],
+    prompt('Hazme un resumen de una página del expediente para el comité.',
+           'Después, para cada afirmación del resumen, dime en qué documento y en qué cláusula '
+           'se apoya.',
+           'Si alguna no se puede respaldar con los documentos cargados, márcala en vez de '
+           'suavizarla.'),
+    'El resumen con cada frase marcada como comprobada o sin respaldo.',
+    'Descubres que el procedimiento remite a un anexo que no está en el expediente.',
+    'La cláusula 4.9 manda al Anexo E, el criterio de reactivación de cotizaciones vencidas. '
+    'Ese anexo no existe aquí.',
+    prompt_label='AUDITA EL RESUMEN'))
 
 d.add('Laboratorio 4', 'paper', exercise_case(
-    4, RAIL1, 10, 'Aplicación individual: elige la arquitectura de tu propio reto.',
-    'Participante en su función', 'una tarea real anonimizada de su trabajo', 'Gemini + matriz de herramientas',
-    'Cada área de CasaBat tiene tareas distintas. El reto es identificar si tu caso necesita generar, recuperar, calcular o actuar antes de escoger una herramienta.',
-    'Qué entorno usarías, qué entrada mínima necesita y qué decisión seguirá siendo humana.',
-    ['Describe una tarea real sin incluir datos sensibles.',
-     'Clasifícala por modo de trabajo y selecciona una herramienta.',
-     'Diseña una primera prueba pequeña y compárala con otra alternativa.'],
-    prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Analiza esta tarea de mi puesto: [descríbela sin datos sensibles].',
-           'Devuelve modo, herramienta, entrada, entregable, riesgo, aprobación humana y una prueba que pueda ejecutar hoy.',
-           'Cuestiona mi elección si una herramienta más simple resuelve mejor el trabajo.'),
-    'Una ficha de arquitectura aplicada a una tarea propia.',
-    'La elección se justifica por el tipo de trabajo y termina en una prueba ejecutable.'))
+    4, RAIL1, 8, 'Tu caso: la pregunta que llevas mañana.',
+    'Cada participante, con su propio trabajo', 'una pregunta real de tu puesto',
+    'Gemini · chat, cuaderno o búsqueda',
+    'Mañana vas a preguntarle algo a la IA. De dónde tiene que salir esa respuesta cambia dónde '
+    'conviene preguntar.',
+    'Si tu pregunta necesita tus documentos, información de fuera, o ninguna de las dos.',
+    ['Escribe tu pregunta tal como se la harías.',
+     'Decide el sitio: chat, cuaderno con tus documentos o búsqueda.',
+     'Pruébala y comprueba una afirmación en su fuente.'],
+    prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi pregunta es: [escríbela].',
+           'Dime si para responderla bien hacen falta documentos míos, información de internet '
+           'o nada de eso. Explica por qué.',
+           'Si hacen falta mis documentos, dime cuáles y qué pasa si no los cargo.'),
+    'Tu pregunta, el sitio elegido y una afirmación comprobada en su fuente.',
+    'Puedes decir de dónde salió la respuesta sin tener que suponerlo.',
+    prompt_label='TU PREGUNTA'))
 
 d.add('Bloque 2', 'section-div', divider(
     2, 4, 40, '4 LABORATORIOS', 'Investigar y<br/>convertir.',

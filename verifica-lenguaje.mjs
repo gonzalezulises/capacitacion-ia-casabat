@@ -288,6 +288,48 @@ for (const herramienta of ['Gemini', 'ChatGPT', 'Claude']) {
     : fail(`${herramienta}: ${n} receta(s); se esperaban al menos 2`);
 }
 
+// --- el bloque 1 de la sesión 1, reescrito con el mismo listón ---
+// Solo esos cuatro laboratorios: el resto de esa sesión es anterior a esta
+// compuerta y no se ha reescrito.
+if (existsSync('sesion-1.html')) {
+  const s1 = readFileSync('sesion-1.html', 'utf8');
+  const labs1 = s1.split(/(?=<section\b)/).slice(1)
+    .filter((x) => x.includes('class="ex-num"')).slice(0, 4);
+  labs1.length === 4
+    ? ok('sesión 1: cuatro laboratorios en el bloque 1 para revisar')
+    : fail(`sesión 1: ${labs1.length} laboratorios en el bloque 1`);
+
+  const texto1 = labs1.map((x) => visible(x)).join(' ').toLowerCase();
+  const jerga1 = JERGA.filter(([t]) => texto1.includes(t));
+  jerga1.length === 0
+    ? ok('sesión 1 · bloque 1: sin jerga de la lista negra')
+    : jerga1.forEach(([t, alt]) => fail(`sesión 1 · bloque 1: dice «${t}» — usa ${alt}`));
+
+  let problemas1 = 0;
+  for (const bruto of labs1) {
+    const x = sinCodigo(bruto);
+    const titulo = (bruto.match(/<h2 class="ex-title">([^<]+)</) || [, '?'])[1];
+    for (const f of parrafos(x).flatMap(frases)) {
+      if (palabras(f) > MAX_PALABRAS_FRASE) {
+        problemas1 += 1;
+        fail(`sesión 1 · «${titulo}»: frase de ${palabras(f)} palabras`);
+      }
+    }
+    const cuerpo = [bloqueDe(x, 'situation'), bloqueDe(x, 'decision'),
+                    ...[...x.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => sinEtiquetas(m[1]))].join(' ');
+    const gritos1 = [...new Set(cuerpo.match(/\b[A-ZÁÉÍÓÚÑ]{4,}\b/g) || [])].filter((w) => !ROTULOS.has(w));
+    if (gritos1.length) {
+      problemas1 += 1;
+      fail(`sesión 1 · «${titulo}» grita: ${gritos1.join(', ')}`);
+    }
+    if (!CASABAT.some((c) => visible(bruto).toLowerCase().includes(c))) {
+      problemas1 += 1;
+      fail(`sesión 1 · «${titulo}» no nombra nada de CasaBat`);
+    }
+  }
+  if (problemas1 === 0) ok('sesión 1 · bloque 1: frases cortas, sin gritos y anclado en CasaBat');
+}
+
 console.log(oks.map((o) => `  ok   ${o}`).join('\n'));
 if (fails.length) {
   console.log('\n' + fails.map((f) => `  FALLA ${f}`).join('\n'));
