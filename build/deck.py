@@ -441,6 +441,30 @@ def recipe(rail_l, h1_html, intro, pasos, bloque_label, bloque_html, nota=None):
     return b
 
 
+def comparativa(rail_l, h1_html, intro, columnas, filas, nota=None):
+    """Tabla comparativa de herramientas. columnas: [titulo, …];
+    filas: [(etiqueta, [celda por columna])]. Para datos que se leen de un
+    vistazo y se comparan en vertical, que es lo que una tarjeta no deja hacer."""
+    def b(i, total):
+        cabecera = ''.join(f'<div class="cmp-col">{c}</div>' for c in columnas)
+        cuerpo = []
+        for etiqueta, celdas in filas:
+            cuerpo.append(f'      <div class="cmp-fila">\n'
+                          f'        <div class="cmp-et">{etiqueta}</div>\n'
+                          + ''.join(f'        <div class="cmp-celda">{c}</div>\n' for c in celdas)
+                          + f'      </div>')
+        pie = f'\n    <p class="cmp-nota">{nota}</p>' if nota else ''
+        return (f'{_rail(rail_l, f"{i:02d} / {total:02d}")}\n'
+                f'    <h1 class="display" style="margin-top:22px;font-size:68px;">{h1_html}</h1>\n'
+                f'    <p class="intro-cards">{intro}</p>\n'
+                f'    <div class="comparativa">\n'
+                f'      <div class="cmp-fila cmp-cabecera">\n        <div class="cmp-et"></div>\n'
+                f'{cabecera}\n      </div>\n'
+                + '\n'.join(cuerpo) +
+                f'\n    </div>{pie}')
+    return b
+
+
 def divider_anexo(h1_html, rotulo, herramientas, objetivo, entregable):
     """Divider de la seccion de anexos: no es un bloque de la sesion, asi que
     no declara minutos — de lo contrario descuadraria la agenda."""
