@@ -142,21 +142,25 @@ d.add('Cómo se trabaja', 'paper', howto(
      ('Lo que salga lo revisas tú',
       'La IA no aprueba una cotización ni publica un procedimiento. Eso lleva tu firma.')]))
 
+# Los archivos se agrupan por para qué sirven, no por si son nuevos: el grupo
+# llega sin haber visto ninguno.
 d.add('Los materiales', 'paper', filelist(
     'ARCHIVOS DE LA SESIÓN',
-    'Tres archivos nuevos.<br/><span style="color:var(--brand);">Casos inventados de CasaBat</span>.',
-    'Están en la página del taller. No hay que preparar nada antes de empezar.',
-    [('NUEVOS EN ESTA SESIÓN', [
-        ('17_tecnicas_y_cuando_usarlas.docx', 'Las nueve técnicas con su fuente y su caso'),
-        ('16_maestro_procedimientos.xlsx', 'Cuarenta y un procedimientos con fallos reales'),
+    'Nueve archivos.<br/><span style="color:var(--brand);">No hay que traer nada</span>.',
+    'Todos se descargan de la página del taller. Son casos inventados de Casa de las '
+    'Baterías: ninguno trae información real de clientes.',
+    [('PARA LOS PEDIDOS Y TU VOZ', [
+        ('17_tecnicas_y_cuando_usarlas.docx', 'Las nueve técnicas, con su fuente y su caso'),
         ('15_prompts_que_fallaron.docx', 'Ocho pedidos flojos y su versión arreglada'),
-        ('04_ventas_sucursales_2026.xlsx', 'Ventas del semestre en cuatro países'),
-     ]),
-     ('YA LOS CONOCES', [
-        ('09_reglas_de_nomenclatura.docx', 'La regla contra la que se revisan los nombres'),
-        ('03_politica_garantia.docx', 'Qué cubre la garantía y qué no'),
         ('06_correos_de_referencia.docx', 'Tres textos para sacar tu forma de escribir'),
-        ('08_reporte_mensual_mayo.docx', 'El reporte del mes anterior, como referencia'),
+        ('03_politica_garantia.docx', 'Qué cubre la garantía y qué no'),
+     ]),
+     ('PARA LAS CIFRAS Y LOS PROCEDIMIENTOS', [
+        ('04_ventas_sucursales_2026.xlsx', 'Ventas del semestre en cuatro países'),
+        ('16_maestro_procedimientos.xlsx', 'Cuarenta y un procedimientos con fallos a propósito'),
+        ('09_reglas_de_nomenclatura.docx', 'La regla contra la que se revisan los nombres'),
+        ('10_PR-ADM-014_v3_BORRADOR.docx', 'Una versión propuesta, todavía sin firmar'),
+        ('08_reporte_mensual_mayo.docx', 'Un reporte de cierre, como referencia'),
      ])]))
 
 # ---------------------------------------------------------------- bloque 1

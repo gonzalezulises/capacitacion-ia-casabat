@@ -204,7 +204,14 @@ const bloqueDe = (s, clase) => {
 // --- 3. mayúsculas-concepto en el cuerpo del laboratorio ---
 // Un nombre de archivo o de código va en <code> y puede llevar mayúsculas con
 // todo derecho (PR-OPE-190_..._BORRADOR.docx). Eso no es gritar: se excluye.
-const sinCodigo = (s) => s.replace(/<code>[\s\S]*?<\/code>/g, ' ');
+// Fuera del análisis: los nombres de archivo y los rótulos que pone el molde
+// («QUÉ TIENES QUE DECIDIR», «CON QUÉ SALES»). Ninguno lo escribe el redactor
+// del laboratorio, así que no son suyos ni puede arreglarlos desde el texto.
+const sinCodigo = (s) => s
+  .replace(/<code>[\s\S]*?<\/code>/g, ' ')
+  .replace(/<span class="label[^"]*">[^<]*<\/span>/g, ' ')
+  .replace(/<b>[A-ZÁÉÍÓÚÑ\s]{3,}<\/b>/g, ' ')
+  .replace(/<span>[A-ZÁÉÍÓÚÑ\s·\/\d]+<\/span>/g, ' ');
 let gritos = 0;
 for (const bruto of labs) {
   const s = sinCodigo(bruto);
@@ -219,6 +226,29 @@ for (const bruto of labs) {
   }
 }
 if (gritos === 0) ok('ningún laboratorio grita conceptos en mayúsculas');
+
+// --- 3b. nada de dar por visto lo que no vieron ---
+// El grupo llega nuevo: no ha hecho las otras sesiones ni conoce los archivos.
+// Un slide que diga «ya los conoces» deja fuera a toda la sala.
+const SUPUESTOS = [
+  ['ya los conoces', 'agrupa los archivos por para qué sirven, no por si son nuevos'],
+  ['ya conoces', 'no des por visto nada: el grupo llega nuevo'],
+  ['nuevos en esta sesión', '«nuevo» solo tiene sentido si vieron los anteriores'],
+  ['archivos nuevos', 'para ellos todos son nuevos'],
+  ['como vimos', 'no hubo un antes'],
+  ['como ya sabes', 'no lo des por sabido'],
+  ['ya saben', 'no lo des por sabido'],
+  ['recordarás', 'no hay nada que recordar'],
+  ['la sesión anterior', 'esta sesión se da suelta'],
+  ['sesión pasada', 'esta sesión se da suelta'],
+  ['en la sesión 1', 'puede que no la hayan hecho'],
+  ['en la sesión 2', 'puede que no la hayan hecho'],
+];
+const supuestos = SUPUESTOS.filter(([frase]) => enBajo.includes(frase));
+supuestos.length === 0
+  ? ok(`no da por visto nada: ${SUPUESTOS.length} fórmulas de conocimiento previo ausentes`)
+  : supuestos.forEach(([frase, por_que]) =>
+      fail(`dice «${frase}» — ${por_que}`));
 
 // --- 4. cada laboratorio aterriza en CasaBat ---
 const sinContexto = labs.filter((s) => {

@@ -133,6 +133,33 @@ CSS = r"""
   section.cover .footer{color:var(--muted-l);}
   section.cover .footer .dot{background:var(--brand);}
 
+
+  /* === Botón de copiar del prompt === */
+  .prompt-top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;}
+  .prompt-top .label{margin-bottom:0;}
+  .copiar{
+    flex-shrink:0;
+    font-family:var(--mono);font-size:16px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--brand);background:transparent;
+    border:1px solid var(--brand);border-radius:0;
+    padding:6px 14px;cursor:pointer;
+    transition:background .15s ease,color .15s ease;
+  }
+  .copiar:hover{background:var(--brand);color:#fff;}
+  .copiar:focus-visible{outline:2px solid var(--brand);outline-offset:3px;}
+  .copiar.ok{background:var(--brand);color:#fff;border-color:var(--brand);}
+  /* En un slide claro la tarjeta del prompt es oscura, así que el botón va en
+     el azul claro; en un slide oscuro la tarjeta es clara y va en el azul de
+     marca. Sin esto el botón se pierde sobre el fondo. */
+  section.paper .prompt-card .copiar{color:var(--brand-br);border-color:var(--brand-br);}
+  section.paper .prompt-card .copiar:hover,
+  section.paper .prompt-card .copiar.ok{background:var(--brand-br);color:var(--ink);border-color:var(--brand-br);}
+  section:not(.paper) .prompt-card .copiar{color:var(--brand);border-color:var(--brand);}
+  .case-body .prompt-card .prompt-top{margin-bottom:13px;}
+  .case-body .prompt-card .label{margin-bottom:0;}
+  /* Al imprimir a PDF el botón no pinta nada. */
+  @media print{.copiar{display:none;}}
+
   /* ===== Agenda ===== */
   .agenda-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 64px;margin-top:36px;}
   .ag-block{padding:20px 0 0;border-top:1px solid var(--rule-d);}
@@ -235,7 +262,7 @@ CSS = r"""
   section:not(.paper) .demo .observa b{color:var(--brand-br);}
 
   /* ===== Ejercicios ===== */
-  .ex-header{display:grid;grid-template-columns:170px 1fr;gap:40px;margin:36px 0 28px;align-items:end;}
+  .ex-header{display:grid;grid-template-columns:170px 1fr;gap:40px;margin:36px 0 40px;align-items:end;}
   .ex-num-label{font-size:22px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted-l);margin-bottom:10px;font-weight:500;}
   .ex-num{font-family:var(--display);font-size:150px;line-height:0.8;letter-spacing:-0.02em;color:var(--brand);font-weight:700;}
   section:not(.paper) .ex-num{color:var(--brand-br);}
@@ -261,8 +288,8 @@ CSS = r"""
   section:not(.paper) .case-meta b{color:var(--brand-br);}
 
   .case-body{gap:36px;}
-  .case-body .col{gap:17px;}
-  .case-body .concept-block .label{margin-bottom:9px;}
+  .case-body .col{gap:30px;}
+  .case-body .concept-block .label{margin-bottom:15px;}
   .situation{font-family:var(--display);font-size:28px;line-height:1.16;color:var(--graphite);font-weight:600;}
   .situation b{color:var(--brand);font-weight:650;}
   section:not(.paper) .situation{color:var(--bone);}
@@ -272,21 +299,21 @@ CSS = r"""
   .decision b{color:var(--graphite);font-weight:650;}
   section:not(.paper) .decision{border-color:var(--rule-d);color:var(--bone-2);}
   section:not(.paper) .decision b{color:var(--bone);}
-  .case-body .steps-block .label{margin-bottom:11px;}
-  .case-body ol.steps li{font-size:20px;line-height:1.32;padding:0 0 9px 45px;}
+  .case-body .steps-block .label{margin-bottom:17px;}
+  .case-body ol.steps li{font-size:20px;line-height:1.38;padding:0 0 17px 48px;}
   .case-body ol.steps li::before{font-size:19px;}
-  .case-body .prompt-card{font-size:19px;line-height:1.34;padding:20px 24px;}
+  .case-body .prompt-card{font-size:19px;line-height:1.42;padding:28px 32px;}
   .case-body .prompt-card .label{font-size:18px;margin-bottom:13px;}
-  .case-body .prompt-card.dense{font-size:17.5px;line-height:1.3;padding:18px 22px;}
-  .case-body .prompt-card.denser{font-size:16px;line-height:1.26;padding:16px 20px;}
-  .case-body .result{font-size:19px;line-height:1.32;padding-top:11px;}
-  .case-body .result > b{font-size:18px;margin-bottom:7px;}
-  .criterion{margin-top:9px;padding-top:8px;border-top:1px solid var(--rule-l);}
+  .case-body .prompt-card.dense{font-size:17.5px;line-height:1.38;padding:26px 30px;}
+  .case-body .prompt-card.denser{font-size:16px;line-height:1.34;padding:24px 28px;}
+  .case-body .result{font-size:19px;line-height:1.38;padding-top:20px;}
+  .case-body .result > b{font-size:18px;margin-bottom:11px;}
+  .criterion{margin-top:16px;padding-top:14px;border-top:1px solid var(--rule-l);}
   .criterion span{color:var(--brand);font-size:16px;letter-spacing:.18em;font-weight:650;margin-right:10px;}
   section:not(.paper) .criterion{border-color:var(--rule-d);}
   section:not(.paper) .criterion span{color:var(--brand-br);}
 
-  .ex-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .ex-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
   .col{display:flex;flex-direction:column;gap:24px;}
 
   .concept-block .label{margin-bottom:16px;display:block;}
@@ -332,7 +359,7 @@ CSS = r"""
     font-family:var(--sans);font-size:22px;letter-spacing:0.28em;
   }
   section:not(.paper) .prompt-card .label{color:var(--brand);}
-  .prompt-card p{margin:0 0 10px;}
+  .prompt-card p{margin:0 0 14px;}
   .prompt-card p:last-child{margin-bottom:0;}
   .prompt-card .kw{color:var(--brand-br);font-weight:500;}
   section:not(.paper) .prompt-card .kw{color:var(--brand);}

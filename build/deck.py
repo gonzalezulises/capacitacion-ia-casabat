@@ -40,6 +40,52 @@ def _enlazar(html):
                 f'<code>{nombre}</code></a>')
     return re.sub(r'<code>([^<]+)</code>', sub, html)
 
+COPIAR_JS = """<script>
+// Copia el texto del prompt al portapapeles. Vive aquí y no en deck-stage.js
+// porque ese archivo es el motor original y su sha1 está verificado.
+(function () {
+  function texto(tarjeta) {
+    return [...tarjeta.querySelectorAll('p')]
+      .map(function (p) { return p.innerText.trim(); })
+      .filter(Boolean)
+      .join('\\n\\n');
+  }
+  document.addEventListener('click', function (e) {
+    var boton = e.target.closest('.copiar');
+    if (!boton) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var tarjeta = boton.closest('.prompt-card');
+    if (!tarjeta) return;
+    var listo = function () {
+      boton.textContent = 'copiado';
+      boton.classList.add('ok');
+      setTimeout(function () {
+        boton.textContent = 'copiar';
+        boton.classList.remove('ok');
+      }, 1800);
+    };
+    var contenido = texto(tarjeta);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(contenido).then(listo, function () { respaldo(contenido, listo); });
+    } else {
+      respaldo(contenido, listo);
+    }
+  }, true);
+  function respaldo(contenido, listo) {
+    var area = document.createElement('textarea');
+    area.value = contenido;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.appendChild(area);
+    area.select();
+    try { document.execCommand('copy'); listo(); } catch (err) {}
+    document.body.removeChild(area);
+  }
+})();
+</script>"""
+
 FOOT_L = 'R I Z O . M A'
 FOOT_R = 'C A S A B A T'
 FONTS = ("https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700"
@@ -87,7 +133,7 @@ class Deck:
             f'<style>{CSS}</style>\n</head>\n<body>\n\n'
             '<deck-stage width="1920" height="1080">\n\n'
             + cuerpo +
-            '\n</deck-stage>\n\n</body>\n</html>\n'
+            '\n</deck-stage>\n\n' + COPIAR_JS + '\n</body>\n</html>\n'
         )
 
 
@@ -189,7 +235,7 @@ def exercise(num, rail_l, minutos, titulo, herramienta, concepto, pasos, prompt_
         ps = '\n'.join(f'            <li>{p}</li>' for p in pasos)
         cav = ''
         if caveat:
-            cav = f'\n        <div class="caveat"><b>Límite</b>{caveat}</div>'
+            cav = f'\n        <div class="caveat"><b>Ojo con esto</b>{caveat}</div>'
         return (f'{_rail(rail_l, "APLICACIÓN PRÁCTICA")}\n'
                 f'    <div class="ex-header">\n'
                 f'      <div class="ex-num-block">\n'
@@ -238,7 +284,7 @@ def exercise_case(num, rail_l, minutos, titulo, rol, entrada, herramienta, situa
         ps = '\n'.join(f'            <li>{p}</li>' for p in pasos)
         cav = ''
         if caveat:
-            cav = f'\n        <div class="caveat"><b>Límite</b>{caveat}</div>'
+            cav = f'\n        <div class="caveat"><b>Ojo con esto</b>{caveat}</div>'
         return (f'{_rail(rail_l, "APLICACIÓN PRÁCTICA")}\n'
                 f'    <div class="ex-header case-header">\n'
                 f'      <div class="ex-num-block">\n'
@@ -248,9 +294,9 @@ def exercise_case(num, rail_l, minutos, titulo, rol, entrada, herramienta, situa
                 f'      <div>\n'
                 f'        <h2 class="ex-title">{titulo}</h2>\n'
                 f'        <div class="case-meta">\n'
-                f'          <span class="role"><b>ROL</b>{rol}</span>\n'
-                f'          <span class="input"><b>ENTRADA</b>{entrada}</span>\n'
-                f'          <span class="case-tool"><b>IA</b>{herramienta}</span>\n'
+                f'          <span class="role"><b>QUIÉN</b>{rol}</span>\n'
+                f'          <span class="input"><b>ARCHIVO</b>{entrada}</span>\n'
+                f'          <span class="case-tool"><b>HERRAMIENTA</b>{herramienta}</span>\n'
                 f'        </div>\n'
                 f'      </div>\n'
                 f'    </div>\n'
@@ -260,7 +306,7 @@ def exercise_case(num, rail_l, minutos, titulo, rol, entrada, herramienta, situa
                 f'          <span class="label acc">SITUACIÓN CASABAT</span>\n'
                 f'          <div class="situation">{situacion}</div>\n'
                 f'        </div>\n'
-                f'        <div class="decision"><span class="label">DECISIÓN</span>{decision}</div>\n'
+                f'        <div class="decision"><span class="label">QUÉ TIENES QUE DECIDIR</span>{decision}</div>\n'
                 f'        <div class="steps-block">\n'
                 f'          <span class="label">PASO A PASO</span>\n'
                 f'          <ol class="steps">\n{ps}\n          </ol>\n'
@@ -268,12 +314,15 @@ def exercise_case(num, rail_l, minutos, titulo, rol, entrada, herramienta, situa
                 f'      </div>\n'
                 f'      <div class="col">\n'
                 f'        <div class="prompt-card{dens}">\n'
-                f'          <span class="label">{prompt_label}</span>\n'
+                f'          <div class="prompt-top">\n'
+                f'            <span class="label">{prompt_label}</span>\n'
+                f'            <button class="copiar" type="button">copiar</button>\n'
+                f'          </div>\n'
                 f'{prompt_html}\n'
                 f'        </div>\n'
                 f'        <div class="result">\n'
-                f'          <b>ENTREGABLE</b>\n          {entregable}\n'
-                f'          <div class="criterion"><span>CRITERIO</span>{criterio}</div>\n'
+                f'          <b>CON QUÉ SALES</b>\n          {entregable}\n'
+                f'          <div class="criterion"><span>ESTÁ BIEN SI</span>{criterio}</div>\n'
                 f'        </div>{cav}\n'
                 f'      </div>\n'
                 f'    </div>')
@@ -379,7 +428,10 @@ def recipe(rail_l, h1_html, intro, pasos, bloque_label, bloque_html, nota=None):
                 f'      </div>\n'
                 f'      <div class="col">\n'
                 f'        <div class="prompt-card denser">\n'
-                f'          <span class="label">{bloque_label}</span>\n'
+                f'          <div class="prompt-top">\n'
+                f'            <span class="label">{bloque_label}</span>\n'
+                f'            <button class="copiar" type="button">copiar</button>\n'
+                f'          </div>\n'
                 f'{bloque_html}\n'
                 f'        </div>\n'
                 f'      </div>\n'

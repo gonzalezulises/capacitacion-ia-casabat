@@ -73,6 +73,27 @@ for (const file of DECKS) {
     }
   }
 
+  // Cada prompt se copia con un botón: el participante no transcribe a mano.
+  const tarjetas = (html.match(/class="prompt-card/g) || []).length;
+  const botones = (html.match(/class="copiar"/g) || []).length;
+  botones === tarjetas
+    ? ok(`${file}: las ${tarjetas} tarjetas de prompt traen botón de copiar`)
+    : fail(`${file}: ${tarjetas} tarjetas de prompt y solo ${botones} botones de copiar`);
+  if (tarjetas > 0 && !html.includes('navigator.clipboard')) {
+    fail(`${file}: los botones de copiar no traen su script`);
+  }
+
+  // Rótulos que no se entendían solos. «Límite» no decía límite de qué, y
+  // «criterio» no decía criterio de qué.
+  for (const [viejo, nuevoRotulo] of [
+    ['<b>Límite</b>', '«Ojo con esto»'],
+    ['<span>CRITERIO</span>', '«ESTÁ BIEN SI»'],
+    ['<b>ENTREGABLE</b>', '«CON QUÉ SALES»'],
+    ['<span class="label">DECISIÓN</span>', '«QUÉ TIENES QUE DECIDIR»'],
+  ]) {
+    if (html.includes(viejo)) fail(`${file}: vuelve el rótulo ${viejo} — usa ${nuevoRotulo}`);
+  }
+
   const labsPorBloque = {};
   for (const s of bloquesSeccion) {
     if (!s.includes('class="ex-num"')) continue;
