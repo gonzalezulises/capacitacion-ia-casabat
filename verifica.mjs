@@ -94,6 +94,25 @@ for (const file of DECKS) {
     if (html.includes(viejo)) fail(`${file}: vuelve el rótulo ${viejo} — usa ${nuevoRotulo}`);
   }
 
+  // Una cadena se enseña entera. Un prompt que arranca en «Paso 2 de 3» deja al
+  // participante sin el paso que falta y rompe la progresión del ejercicio.
+  for (const sec of bloquesSeccion) {
+    if (!sec.includes('class="prompt-card')) continue;
+    const titulo = (sec.match(/<h2 class="ex-title">([^<]+)</) || [, '?'])[1];
+    const anunciado = sec.match(/Paso (\d+) de (\d+)/i);
+    if (anunciado && anunciado[1] !== '1') {
+      fail(`${file}: «${titulo}» empieza su prompt en el paso ${anunciado[1]} de ${anunciado[2]}`);
+    }
+    const pasos = [...sec.matchAll(/<span class="kw">PASO (\d+)<\/span>/g)].map(m => Number(m[1]));
+    if (pasos.length) {
+      const esperado = pasos.map((_, i) => i + 1);
+      if (JSON.stringify(pasos) !== JSON.stringify(esperado)) {
+        fail(`${file}: «${titulo}» numera los pasos ${pasos.join(',')} — se esperaba 1..${pasos.length}`);
+      }
+      if (pasos.length < 2) fail(`${file}: «${titulo}» muestra un solo paso de una cadena`);
+    }
+  }
+
   const labsPorBloque = {};
   for (const s of bloquesSeccion) {
     if (!s.includes('class="ex-num"')) continue;

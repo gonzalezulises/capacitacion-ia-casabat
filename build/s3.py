@@ -171,22 +171,22 @@ d.add('Laboratorio 3', 'paper', exercise_case(
     prompt_label='TÉCNICA 3 · TU ESTILO'))
 
 d.add('Laboratorio 4', 'paper', exercise_case(
-    4, RAIL1, 8, 'Tu caso: qué técnica pide tu tarea de siempre.',
+    4, RAIL1, 8, 'La tarea que vuelve cada lunes, en menos pasos.',
     'Cada participante, con su propio trabajo', 'tu tarea más repetida de la semana',
     TODAS + ' · <code>17_tecnicas_y_cuando_usarlas.docx</code>',
-    'Cada tarea pide unas técnicas y no otras. Usar las nueve en todo es tan malo como no '
-    'usar ninguna.',
-    'Cuáles le tocan a tu tarea, y cuáles puedes dejar fuera sin perder nada.',
-    ['Escribe tu tarea y busca su fila en la tabla de decisión del material.',
-     'Arma el pedido solo con las técnicas que esa fila indica.',
-     'Pruébalo y anota qué técnica sobró.'],
+    'Hay una tarea que reaparece cada semana. Nueve técnicas disponibles y, para esa tarea, '
+    'con dos suele bastar.',
+    '¿Cuáles le tocan, y cuáles puedes dejar fuera sin perder nada?',
+    ['Escribe la tarea y busca su fila en la tabla de decisión.',
+     'Arma el pedido solo con las técnicas de esa fila.',
+     'Pruébalo y tacha la que no aportó nada.'],
     prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi tarea es [descríbela] y el '
            'archivo que uso es [cuál].',
            'Según la tabla de decisión, le tocan estas técnicas: [cuáles]. Arma el pedido '
            'aplicándolas.',
            'Al final dime qué técnica de las que puse no aportó nada aquí, y por qué.'),
-    'Tu pedido armado con dos o tres técnicas, no con nueve.',
-    'Sale usable en el primer intento y puedes decir qué técnica sobraba.',
+    'El pedido de esa tarea, con dos o tres técnicas y ni una de más.',
+    'Sale usable al primer intento y puedes señalar la técnica que sobraba.',
     'Más detalle no siempre es mejor. OpenAI lo dice en su guía: a un modelo que razona se le '
     'da la idea general; a otro, instrucciones precisas.',
     prompt_label='TÉCNICA 4 · ELEGIR, NO ACUMULAR'))
@@ -253,12 +253,13 @@ d.add('Laboratorio 7', 'paper', exercise_case(
     ['Paso uno: pide el borrador del reporte con las cifras ya calculadas.',
      'Paso dos: en un pedido nuevo, que lo revise contra cuatro criterios tuyos.',
      'Paso tres: que lo reescriba aplicando solo las correcciones que apruebes.'],
-    prompt('Paso 2 de 3. Este es el borrador del reporte de cierre: [pégalo].',
-           'Revísalo contra estos cuatro criterios: cada cifra tiene su fuente, ninguna '
-           'afirmación va más allá del dato, el orden sigue al del mes anterior y no hay '
-           'frases de relleno.',
-           'Dame solo la lista de problemas, con la frase exacta y el criterio que rompe. '
-           'No lo reescribas todavía.'),
+    prompt('<span class="kw">PASO 1</span> · Con estas cifras [pégalas] y el reporte del mes '
+           'anterior como modelo, escríbeme el borrador del cierre. Cada cifra con su fuente.',
+           '<span class="kw">PASO 2</span> · Revisa ese borrador contra cuatro criterios: cada '
+           'cifra tiene fuente, ninguna frase va más allá del dato, el orden sigue al del mes '
+           'anterior, no hay relleno. Dame solo la lista de problemas y no lo reescribas.',
+           '<span class="kw">PASO 3</span> · Ahora reescríbelo aplicando solo las correcciones '
+           'que te marqué. Lo demás queda igual.'),
     'El borrador, la lista de problemas y la versión final con los cambios aprobados.',
     'Puedes señalar qué cambió entre el borrador y la versión final, y por qué.',
     'Si la tarea sale bien de una, no la partas. Encadena cuando necesites revisar el paso '
@@ -266,23 +267,25 @@ d.add('Laboratorio 7', 'paper', exercise_case(
     prompt_label='TÉCNICA 8 · PARTIR Y ENCADENAR'))
 
 d.add('Laboratorio 8', 'paper', exercise_case(
-    8, RAIL2, 8, 'Tu caso: el documento que siempre te cuesta.',
+    8, RAIL2, 8, 'Ese documento que lleva tres semanas en la lista.',
     'Cada participante, con su propio trabajo',
     'un documento de tu área, sin datos de clientes', TODAS,
-    'Cada quien tiene un documento que se resiste: un procedimiento, un informe mensual, '
-    'una política que nadie recuerda bien.',
-    'Si el trabajo pide cita, cadena, o las dos cosas.',
-    ['Decide si tu caso necesita citar el documento o partir el trabajo en pasos.',
-     'Arma el pedido con el orden correcto: documento arriba, pregunta al final.',
-     'Comprueba una cita abriendo el documento original.'],
+    'Siempre hay uno: el procedimiento sin actualizar, el informe que nadie lee entero, la '
+    'política que cambió y no se avisó. Hoy le toca a ese.',
+    '¿Tu caso necesita que cite el documento, que parta el trabajo en pasos, o las dos cosas?',
+    ['Escribe en una línea qué quieres que pase con ese documento.',
+     'Monta el pedido: el documento arriba, tu pregunta al final.',
+     'Abre una cita y compruébala. Que un compañero intente tumbar otra.'],
     prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi documento es [cuál] y lo que '
            'necesito es [qué].',
            'Pon el documento arriba, con su nombre. Antes de responder, copia los párrafos '
            'en los que te apoyas.',
            'Si el trabajo tiene varios pasos, dime cuáles y dónde conviene que yo revise '
            'antes de seguir.'),
-    'Tu caso resuelto, con las citas comprobadas en el documento original.',
-    'Cada afirmación se puede rastrear a un párrafo que existe de verdad.',
+    'Ese documento destrabado, con dos citas comprobadas.',
+    'Cada afirmación lleva a un párrafo que existe, y el documento sale de la lista.',
+    'Si la cita no aparece donde dice, acabas de evitar una corrección en público. Eso '
+    'también cuenta como resultado.',
     prompt_label='TÉCNICAS 5 Y 6 · ORDEN Y CITA'))
 
 # ---------------------------------------------------------------- bloque 3
@@ -477,22 +480,24 @@ d.add('Receta gráfico · Claude', 'paper', recipe(
     'en un archivo de diapositivas.'))
 
 d.add('Laboratorio 12', 'paper', exercise_case(
-    12, RAIL3, 11, 'Tu caso: el tablero de tu área.',
+    12, RAIL3, 11, 'Las cifras de tu área, en una sola pantalla.',
     'Cada participante, con su propio trabajo',
     'un archivo tuyo sin datos de clientes, o el de ventas del curso', TODAS,
-    'Cada área mira sus cifras: cobros, cierre de caja, inventario, cotizaciones del mes. Hoy '
-    'sale el tablero de las tuyas.',
-    'Qué cinco cifras son las tuyas y quién más las va a mirar.',
-    ['Escribe tus cinco cifras y de dónde sale cada una.',
-     'Usa la receta de tu herramienta para armarlo.',
-     'Muéstraselo a un compañero y que te diga qué no entiende.'],
+    'Cobros, cierre de caja, inventario, cotizaciones del mes. Cada área abre las suyas el '
+    'lunes temprano y las busca en sitios distintos.',
+    '¿Cuáles son tus cinco cifras, y quién más las va a mirar?',
+    ['Escribe tus cinco cifras y de qué columna sale cada una.',
+     'Arma el tablero con la receta de tu herramienta.',
+     'Dáselo a un compañero sin explicarle nada y escucha qué entiende.'],
     prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Mis cinco cifras son [escríbelas] '
            'y salen de [qué archivo].',
            'Hazme un tablero de una pantalla con esas cinco y un gráfico que las explique.',
            'Dime también qué cifra no se puede calcular bien con lo que te di, y qué columna '
            'me falta.'),
-    'Tu tablero, con tus cifras, probado por otra persona.',
-    'Tu compañero lo mira y entiende las cinco cifras sin que se las expliques.',
+    'Tu tablero, con tus cifras, estrenado por otra persona.',
+    'Tu compañero nombra las cinco cifras sin que nadie se las explique.',
+    'Si hay que explicárselo para que lo entienda, el tablero todavía no está listo. Es la '
+    'prueba más barata que existe.',
     prompt_label='TÉCNICAS 1 Y 7 · INSTRUCCIÓN Y COLUMNAS'))
 
 # ---------------------------------------------------------------- bloque 4
@@ -554,11 +559,13 @@ d.add('Laboratorio 15', 'paper', exercise_case(
     ['Paso uno: pide las diez preguntas para el dueño, por orden de lo que más decide.',
      'Paso dos: con sus respuestas, pide el borrador y la tabla de cambios.',
      'Paso tres: revisa la tabla antes de que redacte la versión final.'],
-    prompt('Paso 1 de 3. Tengo veinte días para actualizar este procedimiento y media hora '
-           'con su dueño.',
-           'Dame diez preguntas concretas, ordenadas por lo que más decide. Nada de preguntas '
-           'de relleno ni de cosas que ya están escritas en el documento.',
-           'Para cada pregunta, dime qué parte del procedimiento cambia según la respuesta.'),
+    prompt('<span class="kw">PASO 1</span> · Tengo veinte días para actualizar este '
+           'procedimiento y media hora con su dueño. Dame diez preguntas, ordenadas por lo que '
+           'más decide, y qué cambia según cada respuesta.',
+           '<span class="kw">PASO 2</span> · Estas son sus respuestas [pégalas]. Redacta el '
+           'borrador y una tabla de cambios: qué cambió, por qué y quién lo pidió.',
+           '<span class="kw">PASO 3</span> · Revisa la tabla conmigo. Lo que no se haya '
+           'decidido en la media hora, déjalo como estaba.'),
     'Las diez preguntas, el borrador y la tabla de cambios.',
     'La tabla deja ver qué cambió y por qué; el borrador no toca nada sin decidir.',
     'El borrador sigue siendo borrador hasta que alguien lo firme. No le pongas fecha de '
@@ -566,21 +573,22 @@ d.add('Laboratorio 15', 'paper', exercise_case(
     prompt_label='TÉCNICA 8 · PARTIR Y ENCADENAR'))
 
 d.add('Laboratorio 16', 'paper', exercise_case(
-    16, RAIL4, 9, 'Tu caso: el procedimiento que tienes pendiente.',
+    16, RAIL4, 9, 'El procedimiento que nadie ha abierto en dos años.',
     'Cada participante, con su propio trabajo', 'un procedimiento de tu área, sin datos de clientes', TODAS,
-    'Todos tienen uno pendiente: el que nadie ha actualizado, el que tiene anexos sueltos, el '
-    'que dos áreas usan distinto.',
-    'Qué parte puedes dejar resuelta hoy y qué necesitas pedirle a alguien.',
+    'En toda área hay uno así: sin actualizar desde hace años, con anexos sueltos, o que dos '
+    'sucursales aplican de forma distinta.',
+    '¿Qué parte dejas resuelta hoy y qué tienes que pedirle a alguien?',
     ['Escribe cuál es y qué le falta.',
-     'Aplícale la revisión de nombre y el cruce de anexos.',
-     'Saca las preguntas para su dueño y ponles fecha.'],
+     'Pásale la revisión de nombre y el cruce de anexos.',
+     'Saca las preguntas para su dueño, con fecha y nombre.'],
     prompt('<span class="kw">APLICACIÓN INDIVIDUAL</span> · Mi procedimiento pendiente es '
            '[cuál] y le falta [qué].',
            'Revísale el nombre y el código con la regla que te pego arriba. Cruza sus anexos '
            'en las dos direcciones.',
            'Después dame las preguntas para su dueño y qué puedo redactar yo sin esperarlo.'),
-    'Tu procedimiento revisado y las preguntas listas con fecha.',
-    'Sales con una tarea concreta y con nombre de la persona a quien se la vas a pedir.',
+    'El procedimiento revisado y las preguntas listas, con fecha y destinatario.',
+    'Sales con una tarea concreta y con el nombre de quien tiene que contestarla.',
+    'Salir con la pregunta escrita y la fecha puesta rinde más que salir con medio borrador.',
     prompt_label='TÉCNICAS 5, 7 Y 8 · ORDEN, COLUMNAS Y CADENA'))
 
 d.add('Cierre', None, closing(
