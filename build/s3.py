@@ -36,20 +36,21 @@ d.add('Portada', 'cover', cover(
     'Sesión 3 · Edición 2026', 180))
 
 d.add('Punto de partida', None, statement(
-    'PUNTO DE PARTIDA',
-    'El oficio ya lo tienen.<br/>Hoy lo <span style="color:var(--brand-br);">multiplican</span>.',
+    'CÓMO FUNCIONA Y QUÉ SE DESARROLLA HOY',
+    'Sin fuente, completa.<br/>Con fuente, <span style="color:var(--brand-br);">cita</span>.',
     '<p style="font-size:28px;line-height:1.48;color:var(--bone-2);max-width:1480px;margin-top:34px;">'
-    'Las cinco personas del formulario ya usan IA a diario. Este grupo arranca con ventaja. '
-    'La IA no sabe cómo se cotiza aquí, qué cubre la garantía ni cómo se nombra un '
-    'procedimiento. <b style="color:var(--bone);">Eso lo ponen ustedes; hoy sumamos las '
-    'técnicas que lo convierten en horas ganadas.</b></p>', 80))
+    'Un modelo de lenguaje predice la continuación más probable de un texto. No consulta la '
+    'lista de precios ni la política de garantía: hay que ponérselas delante. '
+    '<b style="color:var(--bone);">De ahí salen las cuatro capacidades de la sesión: '
+    'especificar el pedido, acotar la fuente, fijar el formato de salida y verificar contra '
+    'el documento.</b></p>', 84))
 
 d.add('Lo que pidieron', 'paper', cards(
     'LAS CUATRO NECESIDADES DEL FORMULARIO',
     'Cuatro pedidos.<br/>Cuatro bloques.',
     'Entre comillas, lo que escribieron. Debajo, dónde se resuelve hoy.',
     [('«Qué prompts usar»',
-      'Tres de cinco. Uno añadió: «tengo que corregir demasiado lo que genera».',
+      'Pedido tres veces en el formulario previo.',
       'Bloque 1. Nueve técnicas con su criterio de cuándo sí y cuándo no.'),
      ('«Que no se vea que es IA»',
       'La misma persona lo escribió dos veces. También: «que no salga genérica».',
