@@ -118,6 +118,21 @@ CSS = r"""
     color:var(--bone-2);max-width:1300px;margin-top:60px;
   }
 
+  /* La portada va sobre el blanco exacto del logotipo (#FDFFFE, medido en el
+     propio JPG). Antes la marca llevaba una placa blanca para no verse sucia
+     sobre la tinta azul, y esa placa se leía como un cuadrado pegado. Al
+     igualar el fondo del slide al del archivo, la placa desaparece. El resto
+     del deck conserva su azul. */
+  section.cover{background:#FDFFFE;color:var(--graphite);}
+  section.cover .marca{background:none;padding:0;}
+  section.cover h1{color:var(--brand-dark);}
+  section.cover h1 .acc{color:var(--red);}
+  section.cover .eyebrow{color:var(--brand);}
+  section.cover .sub{color:var(--muted-l);}
+  section.cover .top-rail,
+  section.cover .footer{color:var(--muted-l);}
+  section.cover .footer .dot{background:var(--brand);}
+
   /* ===== Agenda ===== */
   .agenda-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 64px;margin-top:36px;}
   .ag-block{padding:20px 0 0;border-top:1px solid var(--rule-d);}
