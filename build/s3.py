@@ -9,7 +9,7 @@ materiales/17_tecnicas_y_cuando_usarlas.docx.
 Cada laboratorio declara qué técnica practica. El lenguaje lo vigila
 verifica-lenguaje.mjs; la correspondencia con el material, verifica-tecnicas.mjs.
 """
-from deck import (Deck, cover, statement, agenda, howto, divider,
+from deck import (Deck, cover, statement, agenda, divider,
                   exercise_case, closing, filelist, cards, recipe)
 
 
@@ -32,7 +32,7 @@ d = Deck('Sesión 3 · IA para Administración y Gerencia Comercial · Casa de l
 d.add('Portada', 'cover', cover(
     'CASA DE LAS BATERÍAS · ADMINISTRACIÓN Y GERENCIA COMERCIAL',
     'IA PARA ADMINISTRACIÓN<br/>Y <span class="acc">GERENCIA COMERCIAL</span>.',
-    'Sesión 3 · 16 laboratorios sobre nueve técnicas documentadas y las cuatro necesidades del grupo.',
+    'Sesión 3 · 16 laboratorios sobre nueve técnicas documentadas, con datos y documentos de Casa de las Baterías.',
     'Sesión 3 · Edición 2026', 180))
 
 d.add('Punto de partida', None, statement(
@@ -45,26 +45,9 @@ d.add('Punto de partida', None, statement(
     'especificar el pedido, acotar la fuente, fijar el formato de salida y verificar contra '
     'el documento.</b></p>', 84))
 
-d.add('Lo que pidieron', 'paper', cards(
-    'LAS CUATRO NECESIDADES DEL FORMULARIO',
-    'Cuatro pedidos.<br/>Cuatro bloques.',
-    'Entre comillas, lo que escribieron. Debajo, dónde se resuelve hoy.',
-    [('«Qué prompts usar»',
-      'Pedido tres veces en el formulario previo.',
-      'Bloque 1. Nueve técnicas con su criterio de cuándo sí y cuándo no.'),
-     ('«Que no se vea que es IA»',
-      'La misma persona lo escribió dos veces. También: «que no salga genérica».',
-      'Bloque 1, laboratorio 3. Tiene nombre: es la técnica de los ejemplos.'),
-     ('«Ejemplo de dashboard o gráficos»',
-      'Tres de cinco. Otro pidió indicadores presentados en menos tiempo.',
-      'Bloque 3. Un tablero real, con la receta de cada herramienta.'),
-     ('«Nomenclatura y códigos»',
-      'El pedido más concreto: nombres, códigos y cruce de anexos de procedimientos.',
-      'Bloque 4. Cuarenta y un procedimientos en una pasada.')], cols=4))
-
 d.add('Las herramientas', 'paper', cards(
     'ESTADO DEL ARTE · OCTUBRE DE 2026',
-    'Tres herramientas maduras.<br/>Ninguna gana en <span style="color:var(--brand);">todo</span>.',
+    'Análisis comparativo<br/>de <span style="color:var(--brand);">herramientas líderes</span>.',
     'Hoy las tres resuelven el trabajo de oficina con solvencia. La diferencia ya no está en '
     'cuál escribe mejor, sino en dónde vive cada una y qué te deja en la mano al terminar.',
     [('GEMINI',
@@ -85,7 +68,7 @@ d.add('Las herramientas', 'paper', cards(
 
 d.add('Agenda', 'paper', agenda(
     '4 BLOQUES <span class="sep"></span> 16 LABORATORIOS <span class="sep"></span> RITMO DEL FACILITADOR',
-    'De la técnica suelta<br/>al trabajo de cada día.',
+    'Lo que exploraremos hoy.',
     [('01 · BLOQUE 1', 'Elegir la técnica',
       [('Dos pedidos, la misma tarea', ''), ('Tres ejemplos', ''),
        ('Tu estilo', ''), ('Tu caso', '')]),
@@ -99,23 +82,9 @@ d.add('Agenda', 'paper', agenda(
       [('Cuarenta y un nombres', ''), ('El anexo fantasma', ''),
        ('Veinte días', ''), ('Tu caso', '')])]))
 
-d.add('Cómo se trabaja', 'paper', howto(
-    'REGLAS DE LA SESIÓN',
-    'Usa la herramienta que ya tienes.<br/>Sal con algo hecho.',
-    [('Da igual cuál uses',
-      'Gemini, ChatGPT o Claude. Los tableros y los gráficos traen receta para cada una. '
-      'Sin acceso, trabaja en pareja.'),
-     ('Cada laboratorio nombra su técnica',
-      'Está en la tarjeta del prompt. El detalle completo, con su fuente, en el material de '
-      'consulta.'),
-     ('Lo que salga lo revisas tú',
-      'La IA no aprueba una cotización ni publica un procedimiento. Eso lleva tu firma.')]))
-
-# Los archivos se agrupan por para qué sirven, no por si son nuevos: el grupo
-# llega sin haber visto ninguno.
 d.add('Los materiales', 'paper', filelist(
     'ARCHIVOS DE LA SESIÓN',
-    'Nueve archivos.<br/><span style="color:var(--brand);">No hay que traer nada</span>.',
+    'Material de trabajo<br/>en la <span style="color:var(--brand);">sesión</span>.',
     'Todos se descargan de la página del taller. Son casos inventados de Casa de las '
     'Baterías: ninguno trae información real de clientes.',
     [('PARA LOS PEDIDOS Y TU VOZ', [

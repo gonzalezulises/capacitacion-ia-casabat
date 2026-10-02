@@ -277,13 +277,14 @@ juicios.length === 0
 // lo que les falta, el oficio que tienen. Nadie pidió ese diagnóstico. La
 // apertura explica cómo funciona la herramienta y qué capacidades se
 // desarrollan; de los asistentes no dice nada.
-const apertura = (html.split(/(?=<section\b)/).find((x) => /data-label="02/.test(x)) || '');
+const apertura = html.split(/(?=<section\b)/)
+  .filter((x) => /data-label="0[12]/.test(x)).join(' ');   // portada y punto de partida
 const SOBRE_LA_SALA = ['ustedes', 'el grupo', 'los participantes', 'las cinco personas',
   'nadie es', 'ya usan', 'el oficio', 'arranca con ventaja', 'lo tienen', 'ya saben',
   'principiante', 'cada quien', 'la sala'];
 const sobran = SOBRE_LA_SALA.filter((f) => visible(apertura).toLowerCase().includes(f));
 sobran.length === 0
-  ? ok('la apertura habla de la herramienta, no de quien asiste')
+  ? ok('portada y apertura hablan de la herramienta, no de quien asiste')
   : sobran.forEach((f) => fail(`la apertura habla de la audiencia: «${f}» — descríbela técnicamente`));
 
 // Y sí dice qué capacidades se desarrollan: es una apertura de curso.
