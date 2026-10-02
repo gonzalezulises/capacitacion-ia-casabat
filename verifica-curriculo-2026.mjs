@@ -84,30 +84,61 @@ const leerDocx = (ruta) => JSON.parse(
     { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 })).text;
 
 const politica = leerDocx('materiales/03_politica_garantia.docx');
-const plazoMoto = (politica.match(/Batería de moto:\s*(\d+)\s*meses/i) || [])[1];
-plazoMoto === '6'
-  ? ok(`sesión 1: la política sigue dando ${plazoMoto} meses a la batería de moto`)
-  : fail(`sesión 1: la política da ${plazoMoto} meses a la moto; el laboratorio 1 dice seis`);
-/ocho meses/i.test(bloque1S1) && plazoMoto === '6'
-  ? ok('sesión 1: el caso de ocho meses sigue quedando fuera de plazo')
-  : fail('sesión 1: el caso de garantía ya no queda fuera de plazo');
+
+// Laboratorio 1: una batería de auto de diez meses está dentro del plazo pero
+// cae en la zona prorrateada, así que no le toca una unidad nueva. Si la
+// política cambia esos números, el laboratorio deja de tener respuesta.
+const plazoAuto = (politica.match(/Batería automotriz línea estándar:\s*(\d+)\s*meses/i) || [])[1];
+const desdeMes = (politica.match(/prorrateado a partir del mes\s*(\d+)/i) || [])[1];
+const mesesCaso = 10;
+(Number(desdeMes) <= mesesCaso && mesesCaso <= Number(plazoAuto))
+  ? ok(`sesión 1: diez meses sigue cayendo en la zona prorrateada (mes ${desdeMes} a ${plazoAuto})`)
+  : fail(`sesión 1: con ${plazoAuto} meses y prorrateo desde el ${desdeMes}, el caso de diez meses ya no enseña nada`);
+/prorrate/i.test(bloque1S1)
+  ? ok('sesión 1: el laboratorio 1 exige nombrar el prorrateo')
+  : fail('sesión 1: el laboratorio 1 ya no menciona el prorrateo');
 
 const vigente = leerDocx('materiales/expediente-PR-ADM-014/PR-ADM-014_Gestion_de_Cotizaciones_v2.docx');
-const borrador = leerDocx('materiales/10_PR-ADM-014_v3_BORRADOR.docx');
-const umbral = (texto) => {
-  const m = texto.match(/supera los\s*([\d.,]+)\s*dólares/i);
-  return m ? Number(m[1].replace(/[.,]/g, '')) : null;
-};
-const umbralVigente = umbral(vigente);
-const umbralBorrador = umbral(borrador);
-const montoCaso = 4200;
-(umbralVigente && umbralBorrador && umbralVigente < montoCaso && montoCaso < umbralBorrador)
-  ? ok(`sesión 1: 4.200 sigue cayendo entre el umbral vigente (${umbralVigente}) y el del borrador (${umbralBorrador})`)
-  : fail(`sesión 1: con umbrales ${umbralVigente} y ${umbralBorrador}, una cotización de 4.200 ya no distingue las dos versiones`);
 
-/4\.200/.test(bloque1S1)
-  ? ok('sesión 1: el laboratorio 2 usa el monto que separa las dos versiones')
-  : fail('sesión 1: el laboratorio 2 ya no usa el monto de 4.200');
+// Laboratorio 2: el procedimiento manda enviar por correo y no menciona
+// WhatsApp. El vacío es el ejercicio; si alguien añade la palabra, se acaba.
+const expediente = readdirSync('materiales/expediente-PR-ADM-014')
+  .filter(n => n.endsWith('.docx'))
+  .map(n => leerDocx(`materiales/expediente-PR-ADM-014/${n}`)).join('\n');
+/por correo desde el sistema comercial/i.test(vigente)
+  ? ok('sesión 1: la cláusula del envío por correo sigue en el procedimiento')
+  : fail('sesión 1: el procedimiento ya no fija el canal de envío');
+!/whatsapp/i.test(expediente)
+  ? ok('sesión 1: el expediente sigue sin mencionar WhatsApp, que es el vacío del laboratorio 2')
+  : fail('sesión 1: el expediente ya menciona WhatsApp; el laboratorio 2 pierde su vacío');
+
+// Laboratorio 6 de la sesión 3: el crédito por encima del estándar.
+const ventas = JSON.parse(execFileSync('python3',
+  ['build/office_reader.py', 'xlsx', 'materiales/04_ventas_sucursales_2026.xlsx'],
+  { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 })).rows;
+const numero = (v) => Number(String(v).replace(/,/g, '')) || 0;
+const estandar = Number((vigente.match(/plazo estándar es de\s*(\d+)\s*días/i) || [])[1]);
+const sobreEstandar = ventas.filter(r => numero(r.dias_credito) > estandar);
+const montoSobre = sobreEstandar.reduce((a, r) => a + numero(r.ingreso_usd), 0);
+const s3txt = read('sesion-3.html');
+const declaradas = Number((s3txt.match(/(\d+)\s+ventas con cuarenta y cinco/i) || [])[1]);
+estandar === 30
+  ? ok(`sesión 3: el plazo estándar del procedimiento sigue en ${estandar} días`)
+  : fail(`sesión 3: el plazo estándar cambió a ${estandar} días`);
+declaradas === sobreEstandar.length
+  ? ok(`sesión 3: las ${sobreEstandar.length} ventas sobre el plazo coinciden con lo publicado`)
+  : fail(`sesión 3 publica ${declaradas} ventas sobre el plazo; el archivo tiene ${sobreEstandar.length}`);
+new RegExp(String(Math.floor(montoSobre)).replace(/\B(?=(\d{3})+(?!\d))/g, '\\.')).test(s3txt)
+  ? ok(`sesión 3: el monto publicado coincide con el archivo (${montoSobre.toFixed(2)})`)
+  : fail(`sesión 3: el monto de esas ventas es ${montoSobre.toFixed(2)} y no coincide con lo publicado`);
+!ventas[0].hasOwnProperty('aprobacion')
+  ? ok('sesión 3: el archivo sigue sin columna de aprobación, que es la trampa del laboratorio 6')
+  : fail('sesión 3: el archivo ya registra aprobaciones; el laboratorio 6 pierde su trampa');
+
+// Laboratorio 5 de la sesión 3: excluida por uso, no por plazo.
+/equipo distinto al declarado/i.test(politica)
+  ? ok('sesión 3: la política sigue excluyendo el uso en un equipo distinto al declarado')
+  : fail('sesión 3: la política ya no excluye por uso; el laboratorio 5 pierde su caso');
 
 // El anexo que se cita y no existe es lo que el laboratorio 3 hace descubrir.
 const anexosQueExisten = readdirSync('materiales/expediente-PR-ADM-014')
@@ -270,6 +301,35 @@ for (const material of [
   'materiales/16_maestro_procedimientos.xlsx',
 ]) {
   existsSync(material) ? ok(`${material}: presente`) : fail(`${material}: falta`);
+}
+
+// --- ningún caso se cuenta dos veces ---
+// Antes, la cotización de 4.200 dólares aparecía en las tres sesiones y la
+// batería de moto de ocho meses en dos. Quien hiciera dos sesiones resolvía el
+// mismo caso dos veces. Cada firma de caso debe vivir en una sola sesión.
+const sesiones = {
+  1: read('sesion-1.html'),
+  2: read('sesion-2.html'),
+  3: read('sesion-3.html'),
+};
+const labsDe = (html) => html.split(/(?=<section\b)/).filter(x => x.includes('class="ex-num"')).join('\n');
+const FIRMAS = [
+  [/diez meses|prorrate/i, 'la batería de auto con prorrateo'],
+  [/montacargas|equipo distinto al declarado/i, 'la batería usada en otro equipo'],
+  [/WhatsApp/i, 'el canal que el procedimiento no contempla'],
+  [/4\.?200|4\.?320/i, 'la cotización contra el umbral'],
+  [/Anexo E/i, 'el anexo que se cita y no existe'],
+  [/cuarenta y cinco o sesenta|137\.512/i, 'el crédito por encima del plazo estándar'],
+  [/cuarenta y un|41 procedimientos/i, 'el maestro de procedimientos'],
+  [/ocho meses/i, 'la batería de moto de ocho meses'],
+];
+for (const [firma, caso] of FIRMAS) {
+  const donde = Object.entries(sesiones)
+    .filter(([, html]) => firma.test(labsDe(html)))
+    .map(([n]) => n);
+  donde.length <= 1
+    ? ok(`caso único: ${caso}${donde.length ? ` (sesión ${donde[0]})` : ' (sin usar)'}`)
+    : fail(`caso repetido: ${caso} aparece en las sesiones ${donde.join(' y ')}`);
 }
 
 const publicables = [

@@ -92,45 +92,46 @@ d.add('Bloque 1', 'section-div', divider(
     'Tres respuestas comparadas, una decisión con su cita y un resumen auditado.'))
 
 d.add('Laboratorio 1', 'paper', exercise_case(
-    1, RAIL1, 12, 'La misma pregunta en tres sitios, tres respuestas.',
+    1, RAIL1, 12, 'La respuesta correcta no es sí ni no.',
     'Asistente de Administración', '<code>03_politica_garantia.docx</code>',
     'Gemini · chat, cuaderno y búsqueda',
-    'Un cliente reclama el reemplazo de una batería de moto que compró hace ocho meses. '
-    'Haces la misma pregunta tres veces y vuelven tres respuestas.',
-    'De dónde salió cada una, y cuál puedes defender delante del cliente.',
+    'Un cliente vuelve con una batería de auto que compró hace diez meses. Pide el cambio '
+    'completo. Está dentro del plazo, pero no le toca una batería nueva.',
+    'Qué le corresponde exactamente, y de dónde sale esa respuesta.',
     ['Pregunta en el chat, sin cargar ni pegar nada.',
      'Vuelve a preguntar con la política de garantía cargada.',
-     'Pregunta otra vez, pidiendo que busque en internet.'],
-    prompt('Un cliente reclama reemplazo de una batería de moto comprada hace ocho meses. '
-           '¿Le corresponde?',
-           'Dime el plazo que aplica, de dónde sacas ese plazo y qué pasa si no trae el '
-           'comprobante.',
-           'Si el plazo no sale de un documento que yo te di, dilo con esas palabras.'),
-    'Las tres respuestas, con la fuente de cada una escrita al lado.',
-    'Solo la del cuaderno cita el plazo de la política de CasaBat.',
-    'La política da seis meses para moto, sin prorrateo. Si una respuesta dice doce, está '
-    'contestando por una batería de auto.',
+     'Compara: cuál de las dos menciona el prorrateo.'],
+    prompt('Un cliente trae una batería de auto de línea estándar comprada hace diez meses y '
+           'pide cambio completo. ¿Qué le corresponde?',
+           'Dime el plazo, si hay prorrateo, desde qué mes empieza y qué recibe exactamente '
+           'el cliente.',
+           'Si el dato no sale de un documento que yo te di, dilo con esas palabras.'),
+    'Las dos respuestas enfrentadas, con la fuente de cada una.',
+    'La del cuaderno dice que hay prorrateo desde el mes siete y que recibe un descuento.',
+    'La política da doce meses a la batería de auto estándar, pero prorrateados desde el mes '
+    'siete. Responder solo «sí, está en garantía» le promete al cliente una batería nueva.',
     prompt_label='DE DÓNDE SALE LA RESPUESTA'))
 
 d.add('Laboratorio 2', 'paper', exercise_case(
-    2, RAIL1, 13, 'Dos umbrales, una cotización esperando aprobación.',
-    'Jefatura de Administración',
-    '<code>expediente-PR-ADM-014/</code> · <code>10_PR-ADM-014_v3_BORRADOR.docx</code>',
+    2, RAIL1, 13, 'Lo que el procedimiento no dice.',
+    'Jefatura de Administración', '<code>expediente-PR-ADM-014/</code>',
     'NotebookLM / Gemini Notebook',
-    'Llega una cotización de 4.200 dólares para aprobar. El procedimiento vigente dice una cosa '
-    'y un borrador más nuevo dice otra.',
-    'Quién la aprueba hoy, y en qué documento consta.',
-    ['Carga el expediente y el borrador en un cuaderno.',
-     'Pregunta quién aprueba y pide la cita de cada respuesta.',
-     'Mira la fecha de vigencia de cada documento antes de decidir.'],
-    prompt('Con estos documentos: ¿quién aprueba hoy una cotización de 4.200 dólares?',
-           'Dame el umbral, el documento que lo fija, su versión y su fecha de vigencia. Copia '
-           'la frase exacta donde lo dice.',
-           'Si dos documentos se contradicen, dímelo. No elijas uno por ser el más nuevo.'),
-    'La respuesta con su cita y la contradicción señalada.',
-    'Responde Jefatura de Administración y avisa de que el borrador no tiene fecha de vigencia.',
-    'El borrador sube el umbral a 5.000 dólares. Si alguien lo aplicara hoy, esa cotización '
-    'saldría sin aprobar.',
+    'Una de cada cuatro ventas del semestre entra por WhatsApp. Un asistente pregunta si puede '
+    'mandar una cotización por ahí, y nadie sabe contestar.',
+    'Si el procedimiento lo permite, lo prohíbe o sencillamente no lo contempla.',
+    ['Carga los seis documentos del expediente en un cuaderno.',
+     'Pregunta por el canal de envío y pide la cláusula exacta.',
+     'Decide cuál de las tres respuestas es la verdadera.'],
+    prompt('Con estos documentos: ¿puedo enviarle a un cliente una cotización aprobada por '
+           'WhatsApp?',
+           'Cópiame la cláusula que regula el envío. Si ninguna menciona WhatsApp, dímelo así, '
+           'con esas palabras.',
+           'No completes el vacío con lo que suele hacerse en otras empresas. Si el documento '
+           'no lo dice, no lo dice.'),
+    'La cláusula del envío copiada, y la respuesta de que el canal no está contemplado.',
+    'Distingues «el procedimiento lo prohíbe» de «el procedimiento no habla de esto».',
+    'La cláusula 4.7 manda enviar por correo desde el sistema comercial. No prohíbe WhatsApp: '
+    'no lo menciona. Ese vacío lo resuelve el dueño del proceso, no la IA.',
     prompt_label='PREGUNTA AL CUADERNO'))
 
 d.add('Laboratorio 3', 'paper', exercise_case(
